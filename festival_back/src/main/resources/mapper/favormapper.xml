@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ssafy.favor.mapper.FavorMapper">
+
+	<resultMap type="favorDto" id="favormap">
+		<result column="user_id" property="userId" />
+		<result column="festival_id" property="festivalId" />
+	</resultMap>
+	
+	<delete id="favorDelete" parameterType="map">
+		Delete from Favor 
+		where user_id = #{userId} 
+		<if test="festivalId != null">
+			and festival_id = #{festivalId}
+		</if>
+	</delete>
+	
+	<insert id="favorAdd" parameterType="map">
+		insert into favor (user_id,festival_id) values(#{userId},#{festivalId})
+	</insert>
+	
+	<select id="favorList" parameterType="string" resultMap="favormap">
+		select user_id, festival_id
+		from favor
+		where user_id = #{userId}
+	</select>
+	
+</mapper>
