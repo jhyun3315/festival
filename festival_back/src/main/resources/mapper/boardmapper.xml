@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ssafy.board.mapper.BoardMapper">
+	
+	<resultMap type="boardDto" id="boardmap">
+		<result column="board_id" property="boardId" />
+		<result column="user_id" property="userId" />
+		<result column="festival_id" property="festivalId" />
+		<result column="regist_date" property="registerTime" />
+	</resultMap>
+	
+	<resultMap type="boardDto" id="boarddetailmap">
+		<result column="board_id" property="boardId" />
+		<result column="user_id" property="userId" />
+		<result column="festival_id" property="festivalId" />
+		<result column="regist_date" property="registerTime" />
+		
+		<result column="comment_id" property="commentId" />
+		<result column="comment_content" property="commentContent" />
+		<result column="comment_userid" property="commentUserId" />
+		<result column="comment_registtime" property="commentRegisterTime" />
+	</resultMap>
+	
+	
+	<insert id="writeArticle" parameterType="boardDto">
+		insert into board (title, content, user_id, festival_id, regist_date)
+		values (#{title}, #{content},#{userId}, #{festivalId}, now())
+	</insert>
+	
+	<select id="listArticle" parameterType="map" resultMap="boardmap">
+		select board_id, title, content, user_id, festival_id, date_format(regist_date,'%Y-%m-%d') regist_date
+		from board
+	</select>
+	
+	<select id="totalArticleCount" resultType="int">
+		select count(board_id)
+		from board
+	</select>
+	
+	<select id="getArticle" parameterType="int" resultMap="boarddetailmap">
+		select b.board_id,b.title, b.content, b.user_id, b.festival_id, date_format(b.regist_date,'%Y-%m-%d') regist_date,
+		c.comment_id, c.user_id comment_userid, c.content comment_content , date_format(c.regist_date,'%Y-%m-%d') comment_registtime
+		from board b join comment c on b.board_id=c.board_id
+		where b.board_id = #{boardId}
+	</select>
+	
+	<select id="getArticleDetail" parameterType="int" resultMap="boarddetailmap">
+		select b.board_id,b.title, b.content, b.user_id, b.festival_id, date_format(b.regist_date,'%Y-%m-%d') regist_date,
+		c.comment_id, c.user_id comment_userid, c.content comment_content , date_format(c.regist_date,'%Y-%m-%d') comment_registtime
+		from board b join comment c on b.board_id=c.board_id
+		where b.board_id = #{boardId}
+	</select>
+	
+	<update id="modifyArticle" parameterType="boardDto">
+		update board
+		set title = #{title}, content=#{content},regist_date = now() 
+		where board_id = #{boardId}
+	</update>
+	
+	<delete id="deleteArticle" parameterType="int">
+		delete from board
+		where board_id = #{boardId}
+	</delete>	
+</mapper>
