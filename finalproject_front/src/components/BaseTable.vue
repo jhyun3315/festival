@@ -23,33 +23,30 @@
   </table>
 </template>
 <script>
+import api from '@/util/api';
+
 export default {
   name: 'base-table',
   props: {
     columns: {
       type: Array,
-      default: () => [],
-      description: 'Table columns'
+      default: () => [], 
     },
     data: {
       type: Array,
-      default: () => [],
-      description: 'Table data'
+      default: () => [], 
     },
     type: {
       type: String, // striped | hover
-      default: '',
-      description: 'Whether table is striped or hover type'
+      default: '', 
     },
     theadClasses: {
       type: String,
-      default: '',
-      description: '<thead> css classes'
+      default: '', 
     },
     tbodyClasses: {
       type: String,
-      default: '',
-      description: '<tbody> css classes'
+      default: '', 
     }
   },
   computed: {
@@ -58,6 +55,10 @@ export default {
     }
   },
   methods: {
+    getData(d) {
+      
+    },
+
     hasValue(item, column) {
       return item[column.toLowerCase()] !== 'undefined';
     },

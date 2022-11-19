@@ -1,69 +1,34 @@
 <template>
   <div> 
     <base-header class="pb-3 pb-6 pt-5 pt-md-8 bg-gradient-success" > 
-    <b-row>
-      <b-col></b-col>
-      <b-col>
-      <b-carousel
-      id="carousel-1"
-      v-model="slide"
-      :interval="4000"
-      controls
-      indicators
-      background="#ababab"
-      img-width="720"
-      img-height="480"
-      style="text-shadow: 1px 1px 2px #333;"
-      @sliding-start="onSlideStart"
-      @sliding-end="onSlideEnd"
-    >
-      <!-- Text slides with image -->
-      <b-carousel-slide
-        caption="First slide"
-        text="Nulla vitae elit libero, a pharetra augue mollis interdum."
-        img-src="https://www.mcst.go.kr/attachFiles/cultureInfoCourt/localFestival/notifyFestival/1628640646413.jpg"
-      ></b-carousel-slide>
-
-      <!-- Slides with custom text -->
-      <b-carousel-slide img-src="https://www.mcst.go.kr/attachFiles/cultureInfoCourt/localFestival/notifyFestival/1666590171973.png">
-        <h1>Hello world!</h1>
-      </b-carousel-slide>
-
-      <!-- Slides with image only -->
-      <b-carousel-slide img-src="https://www.mcst.go.kr/attachFiles/cultureInfoCourt/localFestival/notifyFestival/1610323603671.jpg"></b-carousel-slide>
-
-      <!-- Slides with img slot -->
-      <!-- Note the classes .d-block and .img-fluid to prevent browser default image alignment -->
-      <b-carousel-slide>
-        <template #img>
-          <img
-            class="d-block img-fluid w-100"
-            width="720"
-            height="480"
-            src="https://picsum.photos/1024/480/?image=55"
-            alt="image slot"
-          >
-        </template>
-      </b-carousel-slide>
-
-      <!-- Slide with blank fluid image to maintain slide aspect ratio -->
-      <b-carousel-slide caption="Blank Image" img-blank img-alt="Blank image">
-        <p>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse eros felis, tincidunt
-          a tincidunt eget, convallis vel est. Ut pellentesque ut lacus vel interdum.
-        </p>
-      </b-carousel-slide>
-    </b-carousel>
-    <p class="mt-4">
-      Slide #: {{ slide }}<br>
-      Sliding: {{ sliding }}
-    </p>
-    </b-col>
-
-    <b-col></b-col>
-  </b-row>
-    </base-header>
-
+ 
+        <div class="wrap-home-resources"> 
+          <div class="home-resources-content">
+            <div class="container">
+              <div class="row">
+                <div class="col-md-12">
+                  <div id="carousel-home-resources" class="carousel-home-resources">
+                    <carousel-3d :autoplay="true" :autoplay-timeout="5000"  
+                                :perspective="30"
+                                :border="0"
+                                :width="960"
+                                :height="540"
+                                :controls-visible="true"
+                                :space="500"
+                                :clickable="true">
+                                
+                      <slide v-for="(slide, i) in slides" :index="i">
+                        <!--https://source.unsplash.com/user/erondu/960x540-->
+                      <img src="https://source.unsplash.com/featured/?festival">
+                    </slide>
+                   </carousel-3d>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>  
+    </base-header> 
     <!--Charts-->
     <b-container fluid class="mt--7">
       <b-row>
@@ -147,12 +112,12 @@
 
   // Components
   import BaseProgress from '@/components/BaseProgress';
-  import StatsCard from '@/components/Cards/StatsCard';
-
+  import StatsCard from '@/components/Cards/StatsCard'; 
   // Tables
   import SocialTrafficTable from './Main/SocialTrafficTable';
   import PageVisitsTable from './Main/PageVisitsTable'; 
- 
+
+  import { Carousel3d, Slide} from 'vue-carousel-3d';
 
   export default {
     components: {
@@ -161,12 +126,13 @@
       BaseProgress,
       StatsCard,
       PageVisitsTable,
-      SocialTrafficTable
+      SocialTrafficTable,
+      Carousel3d,
+    Slide 
     },
   data() {
     return {
-        slide: 0,
-        sliding: null, 
+        slides: 4, 
             
         bigLineChart: {
           allData: [
@@ -222,18 +188,17 @@
       this.initBigChart(0); 
     }
 };
-
-
  
-                
 </script>
-<style>
-.carousel { 
-  width:640px;
-  height:360px;
+<style>  
+.carousel-home-resources{
+  .left-1{ 
+    transform: translateX(-500px) translateZ(-400px) rotateY(-30deg) !important;
+  }
+
+  .right-1 {
+    transform: translateX(500px) translateZ(-400px) rotateY(30deg) !important;
+  }
 }
-.el-table .cell{
-  padding-left: 0px;
-  padding-right: 0px;
-}
+
 </style>
