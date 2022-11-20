@@ -8,17 +8,14 @@
       </b-col>
       <b-col lg="6">
         <b-nav align="center" class="nav-footer justify-content-lg-end">
-          <b-nav-item href="https://www.creative-tim.com"  target="_blank">
-            Creative Tim
+          <b-nav-item href="https://lab.ssafy.com/sjb378/finalfestival"  target="_blank">
+            ssafy8기 대전6반 4조
           </b-nav-item>
-          <b-nav-item href="https://www.creative-tim.com/presentation" target="_blank">
-           About Us
+          <b-nav-item href="https://github.com/deokisys"  target="_blank">
+            서준배
           </b-nav-item>
-          <b-nav-item href="http://blog.creative-tim.com" target="_blank">
-            Blog
-          </b-nav-item>
-          <b-nav-item href="https://www.creative-tim.com/license" target="_blank">
-            License
+          <b-nav-item href="https://github.com/jhyun3315" target="_blank">
+            이지현
           </b-nav-item>
         </b-nav>
       </b-col>
