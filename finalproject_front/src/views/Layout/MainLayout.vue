@@ -26,13 +26,7 @@
                   icon: 'ni ni-bullet-list-67 text-red'
                 }">
         </sidebar-item>
-        <sidebar-item
-              :link="{
-                name: 'User Profile',
-                path: '/profile',
-                icon: 'ni ni-single-02 text-yellow'
-                }">
-        </sidebar-item>
+        
         <sidebar-item
               :link="{
                 name: 'test게시판',
@@ -56,6 +50,14 @@
         </sidebar-item>
 
 
+
+        <sidebar-item
+              :link="{
+                name: '마이페이지',
+                path: '/profile',
+                icon: 'ni ni-single-02 text-yellow'
+                }">
+        </sidebar-item>
         <sidebar-item
                   :link="{
                     name: 'Login',
@@ -73,7 +75,6 @@
       </template> 
     </side-bar>
     <div class="main-content">
-      <!-- <main-navbar :type="$route.meta.navbarType"></main-navbar>  -->
       <div @click="$sidebar.displaySidebar(false)">
         <fade-transition :duration="200" origin="center top" mode="out-in">
           <!-- your content here -->
@@ -104,14 +105,12 @@
     }
   }
 
-  import MainNavbar from './MainNavbar.vue';
   import ContentFooter from './ContentFooter.vue';
   import MainContent from './Content.vue';
   import { FadeTransition } from 'vue2-transitions';
 
   export default {
     components: {
-      MainNavbar,
       ContentFooter,
       MainContent,
       FadeTransition
