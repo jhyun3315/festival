@@ -1,6 +1,5 @@
 <template>
     <div id="map-wrapper" class="map-wrapper">
-  
     </div>
   </template>
   
@@ -161,7 +160,7 @@
           // Highlight the clicked province
           mapLayer.selectAll('path')
             .style('fill', function(d){
-              return centered && d===centered ? '#D5708B' : fillFn(d);
+              return centered && d===centered ? '#FF9900' : fillFn(d);
           });
    
           // g.transition()
@@ -231,12 +230,12 @@
         ]; 
   
         // 확대/축소 이벤트 처리
-        const zoomed = () =>{
-        mapLayer.attr('transform', d3.event.transform)
-        iconsLayer.attr('transform', d3.event.transform)
-      }
-      const zoom = d3.zoom().scaleExtent([1, 8]).on('zoom', zoomed)
-      svg.call(zoom)
+        // const zoomed = () =>{
+        // mapLayer.attr('transform', d3.event.transform)
+        // iconsLayer.attr('transform', d3.event.transform)
+      // }
+      // const zoom = d3.zoom().scaleExtent([1, 8]).on('zoom', zoomed)
+      // svg.call(zoom)
        
       }
     }
