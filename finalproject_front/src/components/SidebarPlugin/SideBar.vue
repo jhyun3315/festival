@@ -82,28 +82,23 @@
                 <!--Divider-->
                 <hr class="my-3">
                 <!--Heading-->
-                <h6 class="navbar-heading text-muted">Documentation</h6>
-                <!--Navigation-->
-                <ul class="navbar-nav mb-md-3">
-                    <li class="nav-item">
-                        <a class="nav-link"
-                           href="https://www.creative-tim.com/learning-lab/bootstrap-vue/alerts/argon-dashboard">
-                            <i class="ni ni-spaceship"></i> Getting started
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link"
-                           href="https://www.creative-tim.com/learning-lab/bootstrap-vue/colors/argon-dashboard">
-                            <i class="ni ni-palette"></i> Foundation
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link"
-                           href="https://www.creative-tim.com/learning-lab/bootstrap-vue/alerts/argon-dashboard">
-                            <i class="ni ni-ui-04"></i> Components
-                        </a>
-                    </li>
-                </ul>
+                <h6 class="navbar-heading text-muted">Made By</h6>
+                <!--Navigation--> 
+
+                <div class="nav-item">
+                        <i class="ni ni-circle-08"></i> 이지현: ljh@ssafy.com
+                        <br/>
+                        <i class="ni ni-circle-08"></i> 서준배: sjb@ssafy.com 
+                </div>
+                <br/>
+                
+                    <base-button icon class="btn-github btn-icon" >
+                    <a href="https://lab.ssafy.com/sjb378/finalfestival" style="color: white"> 
+                    <span class="btn-inner--icon"><i class="fab fa-github"></i></span>
+                    <span class="btn-inner--text">Github</span>
+                </a>
+                  </base-button>  
+                  <br/>
             </div>
             </div>
     </nav>
@@ -115,6 +110,9 @@
     name: 'sidebar',
     components: {
       NavbarToggleButton
+  },
+  methods: {
+ 
     },
     props: {
       logo: {

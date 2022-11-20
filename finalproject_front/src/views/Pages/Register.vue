@@ -1,7 +1,7 @@
-<template>
+<template >
   <div>
     <!-- Header -->
-    <div class="header bg-gradient-success py-7 py-lg-8 pt-lg-9">
+    <div class="header bg-gradient-success py-7 py-lg-8 pt-lg-9" id="vantaRef">
       <b-container class="container">
         <div class="header-body text-center mb-7">
           <b-row class="justify-content-center">
@@ -14,10 +14,7 @@
         </div>
       </b-container>
       <div class="separator separator-bottom separator-skew zindex-100">
-        <svg x="0" y="0" viewBox="0 0 2560 100" preserveAspectRatio="none" version="1.1"
-             xmlns="http://www.w3.org/2000/svg">
-          <polygon class="fill-default" points="2560 0 2560 100 0 100"></polygon>
-        </svg>
+ 
       </div>
     </div>
     <!-- Page content -->
@@ -95,8 +92,10 @@
     </b-container>
   </div>
 </template>
-<script>
 
+
+<script>
+import * as THREE from '@/assets/three.r134.min.js';
   export default {
     name: 'register',
     data() {
@@ -113,7 +112,25 @@
       onSubmit() {
         // this will be called only after form is valid. You can do an api call here to register users
       }
+  },
+  async mounted() {
+    if (process.browser) {  
+      const { default: BIRDS } = await import("vanta/dist/vanta.birds.min");
+      BIRDS({
+        el: "#vantaRef",
+        mouseControls: true,
+      touchControls: true,
+      gyroControls: false,
+      minHeight: 200.00,
+      minWidth: 200.00,
+      scale: 1.00,
+      scaleMobile: 1.00,
+      backgroundColor: 0x5bb19b,
+      color1: 0xef00ff,
+        THREE: window.THREE
+      });
     }
+  },
 
   };
 </script>

@@ -9,7 +9,7 @@
             icon: 'ni ni-shop text-primary',
           }"
         >
-          <sidebar-item :link="{ name: 'Dashboard', path: '/dashboard' }"></sidebar-item>
+          <sidebar-item :link="{ name: 'main', path: '/main' }"></sidebar-item>
         </sidebar-item>
       </template>
     </side-bar>

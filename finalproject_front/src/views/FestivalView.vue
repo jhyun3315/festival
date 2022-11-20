@@ -4,29 +4,33 @@
     </div>
 
     <b-container fluid class="mt--6">
-      <b-row>
-        
-        <b-col>
+      <b-row> 
+        <!-- <b-col>
             <b-button class="btn btn-info">축제 지도</b-button>
             <festival-map></festival-map> 
-            <b-button class="btn btn-info">축제 캘린더</b-button>
+        </b-col>  -->
+        <b-col>
+            <b-button class="btn btn-info">축제 캘린더</b-button> 
             <festival-calendar></festival-calendar>
-        </b-col>
-      </b-row>
+          </b-col> 
+  </b-row>
     </b-container>
   </div>
-</template>
- 
-
-<script>
+</template>  
+<script> 
 import FestivalMap from '@/views/Festival/DrawMap';  
-import FestivalCalendar from '@/views/Festival/FestivalCalendar';
+import FestivalCalendar from '@/views/Festival/FestivalCalendar'; 
 
-export default {
+export default { 
     components: {
         FestivalMap,
         FestivalCalendar
+  },
+  data() {
+    return {
     }
+  },
+
 }
     
 </script>  

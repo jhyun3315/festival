@@ -1,27 +1,18 @@
-<template>
-  <div>
+ <template>  
     <!-- Header -->
-    <div class="header bg-gradient-success py-7 py-lg-8 pt-lg-9">
+    <div class="header bg-gradient-success py-7 py-lg-8 pt-lg-9" id="vantaRef" >
       <b-container>
         <div class="header-body text-center mb-7">
           <b-row class="justify-content-center">
             <b-col xl="5" lg="6" md="8" class="px-5">
               <h1 class="text-white">Welcome!</h1>
-              <p class="text-lead text-white">Use these awesome forms to login or create new account in your project for
-                free.</p>
             </b-col>
           </b-row>
         </div>
       </b-container>
-      <div class="separator separator-bottom separator-skew zindex-100">
-        <svg x="0" y="0" viewBox="0 0 2560 100" preserveAspectRatio="none" version="1.1"
-             xmlns="http://www.w3.org/2000/svg">
-          <polygon class="fill-default" points="2560 0 2560 100 0 100"></polygon>
-        </svg>
-      </div>
-    </div>
+ 
     <!-- Page content -->
-    <b-container class="mt--8 pb-5">
+    <b-container class="mt--8 pb-5" >
       <b-row class="justify-content-center">
         <b-col lg="5" md="7">
           <b-card no-body class="bg-secondary border-0 mb-0">
@@ -83,8 +74,9 @@
       </b-row>
     </b-container>
   </div>
-</template>
-<script>
+</template> 
+<script> 
+import * as THREE from '@/assets/three.r134.min.js';
   export default {
     data() {
       return {
@@ -99,6 +91,31 @@
       onSubmit() {
         // this will be called only after form is valid. You can do api call here to login
       }
+  },
+  async mounted() {
+    if (process.browser) {  
+      const { default: BIRDS } = await import("vanta/dist/vanta.birds.min");
+      BIRDS({
+        el: "#vantaRef",
+        mouseControls: true,
+        touchControls: true,
+        gyroControls: false,
+        minHeight: 200.00,
+        minWidth: 200.00,
+        scale: 1.00,
+        scaleMobile: 1.00,
+        backgroundColor: 0x63d7b1,
+        color1: 0xff00e0,
+        THREE: window.THREE
+      });
     }
+  },
+  
+  beforeDestroy() {
+    if (this.vantaEffect) {
+      this.vantaEffect.destroy()
+    }
+  }
   };
 </script>
+ 

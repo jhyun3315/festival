@@ -13,7 +13,7 @@
         </sidebar-item>  
         <sidebar-item
               :link="{
-                name: '축제 보러가기',
+                name: '축제 캘린더',
                 path: '/festival',
                 icon: 'ni ni-pin-3 text-orange'
               }">
@@ -21,7 +21,7 @@
 
         <sidebar-item
                 :link="{
-                  name: 'My 축제',
+                  name: '축제 지도',
                   path: '/user',
                   icon: 'ni ni-bullet-list-67 text-red'
                 }">
