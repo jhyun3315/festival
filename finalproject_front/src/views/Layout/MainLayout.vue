@@ -33,6 +33,27 @@
                 icon: 'ni ni-single-02 text-yellow'
                 }">
         </sidebar-item>
+        <sidebar-item
+              :link="{
+                name: 'test게시판',
+                path: '/board',
+                icon: 'ni ni-single-02 text-yellow'
+                }">
+        </sidebar-item>
+        <sidebar-item
+              :link="{
+                name: 'test게시글',
+                path: '/article',
+                icon: 'ni ni-single-02 text-yellow'
+                }">
+        </sidebar-item>
+        <sidebar-item
+              :link="{
+                name: 'test게시글작성',
+                path: '/articlewrite',
+                icon: 'ni ni-single-02 text-yellow'
+                }">
+        </sidebar-item>
 
 
         <sidebar-item
@@ -52,7 +73,7 @@
       </template> 
     </side-bar>
     <div class="main-content">
-      <main-navbar :type="$route.meta.navbarType"></main-navbar> 
+      <!-- <main-navbar :type="$route.meta.navbarType"></main-navbar>  -->
       <div @click="$sidebar.displaySidebar(false)">
         <fade-transition :duration="200" origin="center top" mode="out-in">
           <!-- your content here -->

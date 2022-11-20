@@ -29,6 +29,21 @@ const routes = [
         path: '/user',
         name: 'user',
         component: () => import(/* webpackChunkName: "demo" */ '../views/UserView.vue')
+      },
+      {
+        path: '/board',
+        name: 'festivalboard',
+        component: () => import ('../views/BoardView.vue')
+      },
+      {
+        path: '/article',
+        name: 'articleboard',
+        component: () => import ('../views/ArticleView.vue')
+      },
+      {
+        path: '/articlewrite',
+        name: 'articlewriteboard',
+        component: () => import ('../views/ArticlewriteView.vue')
       }
     ]
   },
