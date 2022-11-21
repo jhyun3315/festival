@@ -59,11 +59,12 @@ public class BoardController {
 	}
 	
 	
-	@GetMapping("/list/{pgno}")
-	public ResponseEntity<?> list(@PathVariable("pgno") String pgno) throws Exception{
+	@GetMapping()
+	public ResponseEntity<?> list(@RequestParam Map<String,String> map) throws Exception{
+		String pgno = map.get("pgno");
 		int page = ParameterCheck.notNumberToOne(pgno);
 		
-		Map<String, Object> map = new HashMap<String, Object>();
+		Map<String, Object> res = new HashMap<String, Object>();
 		try {
 			List<BoardDto> list = service.listArticle(page, 10);
 			for (int i = 0; i < list.size(); i++) {				
@@ -72,13 +73,13 @@ public class BoardController {
 				list.get(i).setContent(toRN(list.get(i).getContent()));
 				list.get(i).setRegisterTime(ParameterCheck.nullToBlank(list.get(i).getRegisterTime()));
 			}
-	        map.put("boardList", list);
-	        map.put("status", "ok");
-			return new ResponseEntity<Map<String, Object>>(map,HttpStatus.OK);
+			res.put("boardList", list);
+			res.put("status", "ok");
+			return new ResponseEntity<Map<String, Object>>(res,HttpStatus.OK);
 		} catch (Exception e) {
 			e.printStackTrace();
-			map.put("status", "fail");
-			return new ResponseEntity<Map<String, Object>>(map,HttpStatus.OK);
+			res.put("status", "fail");
+			return new ResponseEntity<Map<String, Object>>(res,HttpStatus.OK);
 		}
 	}
 	

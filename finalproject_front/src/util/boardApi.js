@@ -7,8 +7,8 @@ async function articleWrite(article, success, fail) {
 }
 
 //게시글 확인
-async function articleList(success, fail) {
-  await api.get(`/board`).then(success).catch(fail);
+async function articleList(param,success, fail) {
+  await api.get(`/board`,{ params: param }).then(success).catch(fail);
 }
 
 export { articleWrite, articleList };
