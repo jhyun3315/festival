@@ -82,13 +82,6 @@ public class BoardController {
 		}
 	}
 	
-	//파일 입력 테스트
-	@PostMapping("/testfile")
-    public String uploadFile(@RequestParam("file") MultipartFile file,@RequestParam Map<String,String> map) throws Exception {
-		service.writeArticle(file,map);
-        return "hi";
-    }
-	
 //  이미지 출력
    @GetMapping("/images/{boardId}")
    @ResponseBody
@@ -102,22 +95,16 @@ public class BoardController {
    }
    
    
-	@PostMapping()
-	public ResponseEntity<?> write(@RequestBody Map<String,String> map, HttpServletRequest request) throws Exception {
-		
-		
+   //게시글 작성
+   @PostMapping()
+   public ResponseEntity<?> write(@RequestParam("file") MultipartFile file,@RequestParam Map<String,String> map, HttpServletRequest request) throws Exception {
 		Map<String, Object> res = new HashMap<String, Object>();
 
 		if (jwtService.checkToken(request.getHeader("access-token"))) {			
 			try {
 				String userId = jwtService.getUserId();
-				BoardDto board = new BoardDto();
-				board.setTitle(map.get("title"));
-				board.setContent(toBR(map.get("content")));
-				board.setFestivalId(map.get("festivalId"));
-				board.setUserId(userId);
-				
-//				service.writeArticle(board);
+				map.put("userId",userId);
+				service.writeArticle(file,map);
 				res.put("status", "ok");
 				return new ResponseEntity<Map<String, Object>>(res,HttpStatus.OK);
 			}catch (Exception e) {

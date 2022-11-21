@@ -30,21 +30,21 @@
         <sidebar-item
               :link="{
                 name: 'test게시판',
-                path: '/board',
+                path: '/board/1095732',
                 icon: 'ni ni-single-02 text-yellow'
                 }">
         </sidebar-item>
         <sidebar-item
               :link="{
                 name: 'test게시글',
-                path: '/article',
+                path: '/article/3',
                 icon: 'ni ni-single-02 text-yellow'
                 }">
         </sidebar-item>
         <sidebar-item
               :link="{
                 name: 'test게시글작성',
-                path: '/articlewrite',
+                path: '/articlewrite/1095732',
                 icon: 'ni ni-single-02 text-yellow'
                 }">
         </sidebar-item>

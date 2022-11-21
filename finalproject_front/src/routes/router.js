@@ -60,17 +60,17 @@ const routes = [
         component: () => import(/* webpackChunkName: "demo" */ '../views/UserView.vue')
       },
       {
-        path: '/board',
+        path: '/board/:festivalId',
         name: 'festivalboard',
         component: () => import ('../views/BoardView.vue')
       },
       {
-        path: '/article',
+        path: '/article/:festivalId/:boardId',
         name: 'articleboard',
         component: () => import ('../views/ArticleView.vue')
       },
       {
-        path: '/articlewrite',
+        path: '/articlewrite/:festivalId',
         name: 'articlewriteboard',
         beforeEnter: onlyAuthUser,
         component: () => import ('../views/ArticlewriteView.vue')

@@ -48,13 +48,16 @@
 
 <script>
 import { mapState} from "vuex";
-import {fileApi} from "@/util/api.js";
+import {articleWrite} from "@/util/boardApi.js";
 const memberStore = "memberStore";
 
 export default {
+  created(){
+    this.festivalId = this.$route.params.festivalId;
+  },
  data(){
   return{
-    festivalId:"1095732", // 페스티벌 아이디
+    festivalId:"", // 페스티벌 아이디
     cate:"",
     cateoptions:[
     { value: "", text: '말머리를 선택해주세요' },
@@ -77,7 +80,21 @@ export default {
     formData.append("title", this.title);
     formData.append("content", this.content);
     formData.append("file", this.file);
-    fileApi.post("/board/testfile",formData)
+
+    articleWrite(formData,
+    ({data})=>{
+      if(data.status==="ok"){
+        alert("등록 성공")
+        this.$router.push(`/board/${this.festivalId}`);
+      }else{
+        alert("등록실패")
+        this.$router.push("/")
+      }
+    },
+    ()=>{
+      alert("등록실패")
+      this.$router.push("/")
+    })
   }
  },computed:{
     ...mapState(memberStore, ["userInfo"]),
