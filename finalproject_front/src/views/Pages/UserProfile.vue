@@ -56,11 +56,22 @@ const memberStore = "memberStore";
 
 export default {
   created(){
-    this.userData = this.userInfo;
+    this.userData.userId = this.userInfo.userId;
+    this.userData.userPw = this.userInfo.userPw;
+    this.userData.userName = this.userInfo.userName;
+    this.userData.email = this.userInfo.email;
+    this.userData.phoneNumber = this.userInfo.phoneNumber;
+    // this.userData = this.userInfo;
   },
   data(){
     return{
-      userData:""
+      userData:{
+        userId:"",
+        userPw:"",
+        userName:"",
+        email:"",
+        phoneNumber:""
+      }
     }
   },
   methods:{
