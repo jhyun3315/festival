@@ -91,12 +91,9 @@
                         <i class="ni ni-circle-08"></i> 서준배: sjb@ssafy.com 
                 </div>
                 <br/>
-                
-                    <base-button icon class="btn-github btn-icon" >
-                    <a href="https://lab.ssafy.com/sjb378/finalfestival" style="color: white"> 
+                    <base-button icon class="btn-github btn-icon" @click="gogit">
                     <span class="btn-inner--icon"><i class="fab fa-github"></i></span>
                     <span class="btn-inner--text">Github</span>
-                </a>
                   </base-button>  
                   <br/>
             </div>
@@ -112,7 +109,9 @@
       NavbarToggleButton
   },
   methods: {
- 
+    gogit() {
+      window.open("https://lab.ssafy.com/sjb378/finalfestival");
+    }
     },
     props: {
       logo: {
