@@ -7,7 +7,7 @@ async function join(user, success, fail) {
 
 //로그인
 async function login(user, success, fail) {
-  await api.post(`/user/login`, JSON.stringify(user)).then(success).catch(fail);
+  await api.post(`/user/login`, user).then(success).catch(fail);
 }
 
 //수정

@@ -34,8 +34,10 @@ const memberStore = {
     },
   },
   actions: {
-    async userConfirm({ commit,user }) {
-      console.log("dhkTsi")
+    async userConfirm({commit},user ) {
+      console.log("여긴 컨펌이다")
+      console.log(user)
+
       await login(
         user,
         ({ data }) => {

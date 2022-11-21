@@ -105,7 +105,7 @@ export default {
       // console.log(this.tttmp)
       console.log(this.user)
       console.log("제발")
-      await this.userConfirm({user:this.user});
+      await this.userConfirm(this.user);
       // let token = sessionStorage.getItem("access-token");
       console.log("confirm도 함")
       if (this.isLogin) {
@@ -113,7 +113,7 @@ export default {
         await this.getUserInfo();//유저정보 가져오기
         this.$router.push({ name: "main" });
       }else{
-        console.oog("로그인 안됨")
+        console.log("로그인 안됨")
       }
     },
   },
