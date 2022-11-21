@@ -8,7 +8,7 @@
     <!-- Navbar links -->
     <b-navbar-nav class="align-items-center ml-md-auto">
       <!-- This item dont have <b-nav-item> because item have data-action/data-target on tag <a>, wich we cant add -->
-      <div>
+      <div v-if="userInfo">
         <base-dropdown menu-on-right
                         class="nav-item"
                         tag="li"
@@ -20,7 +20,7 @@
                         <img alt="Image placeholder" src="img/theme/team-4.jpg">
                     </span>
                 <b-media-body class="ml-2 d-none d-lg-block">
-                <span class="mb-0 text-sm  font-weight-bold">John Snow</span>
+                <span class="mb-0 text-sm  font-weight-bold">{{userInfo.userName}}님 안녕하세요</span>
                 </b-media-body>
             </b-media>
             </a> 
@@ -46,7 +46,7 @@
             </template>
         </base-dropdown>
       </div>
-      <div>
+      <div v-else>
         <b-button size="sm" variant="primary" @click="gologin">
             <i class="ni ni-badge"></i> 로그인</b-button>
         <b-button size="sm" variant="dark"  @click="gojoin">
@@ -58,6 +58,8 @@
 <script>
 import { CollapseTransition } from 'vue2-transitions';
 import { BaseNav, Modal } from '@/components';
+import { mapState, mapGetters, mapActions } from "vuex";
+const memberStore = "memberStore";
 
 export default {
   components: {
@@ -87,6 +89,7 @@ export default {
     };
   },
   methods: {
+    ...mapActions(memberStore, ["userLogout"]),
     capitalizeFirstLetter(string) {
       return string.charAt(0).toUpperCase() + string.slice(1);
     },
@@ -106,8 +109,19 @@ export default {
         this.$router.push("/register")
     }
     ,gologout(){
+        console.log(this.userInfo.userId)
+        console.log(this.isLogin)
+        this.userLogout(this.userInfo.userId);
         console.log("로그아웃")
+        sessionStorage.removeItem("access-token"); //저장된 토큰 없애기
+        sessionStorage.removeItem("refresh-token"); //저장된 토큰 없애기
+        console.log("끝")
+        if (this.$route.path != "/main") this.$router.push({name:"main"});//메인으로 이동
     }
+  },
+  computed:{
+    ...mapState(memberStore, ["isLogin", "userInfo"]),
+    ...mapGetters(["checkUserInfo"]),
   }
 };
 </script>

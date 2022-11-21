@@ -22,9 +22,8 @@ async function idcheck(userid, success, fail) {
 }
 
 //로그아웃
-async function logout(success, fail) {
-  api.defaults.headers["access-token"] = sessionStorage.getItem("access-token");
-  await api.get(`/user/logout`).then(success).catch(fail);
+async function logout(userid, success, fail) {
+  await api.get(`/user/logout/${userid}`).then(success).catch(fail);
 }
 
 //유저 정보 가져오기 - 마이페이지

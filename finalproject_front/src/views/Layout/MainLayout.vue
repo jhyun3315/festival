@@ -49,36 +49,6 @@
                 }">
         </sidebar-item>
       </template> 
-      <template slot="links-after">
-        <!-- <sidebar-item
-              :link="{
-                name: '마이페이지',
-                path: '/profile',
-                icon: 'ni ni-single-02 text-yellow'
-                }">
-        </sidebar-item> -->
-        <!-- <sidebar-item
-            :link="{
-              name: '로그아웃',
-              path: '/',
-              icon: 'ni ni-key-25 text-info'
-            }">
-        </sidebar-item>
-        <sidebar-item
-                  :link="{
-                    name: '로그인',
-                    path: '/login',
-                    icon: 'ni ni-key-25 text-info'
-                  }">
-        </sidebar-item>
-        <sidebar-item
-                  :link="{
-                    name: 'Register',
-                    path: '/register',
-                    icon: 'ni ni-circle-08 text-pink'
-                  }">
-        </sidebar-item> -->
-      </template>
     </side-bar>
     <div class="main-content">
       <main-navbar :type="$route.meta.navbarType"></main-navbar> 
@@ -116,9 +86,8 @@ import MainNavbar from './MainNavbar.vue';
 import ContentFooter from './ContentFooter.vue';
 import MainContent from './Content.vue';
 import { FadeTransition } from 'vue2-transitions';
-import { mapState, mapGetters, mapActions } from "vuex";
 
-const memberStore = "memberStore";
+
 
 export default {
   components: {
@@ -128,7 +97,6 @@ export default {
     FadeTransition
   },
   methods: {
-    ...mapActions(memberStore, ["userLogout"]),
     initScrollbar() {
       let isWindows = navigator.platform.startsWith('Win');
       if (isWindows) {
@@ -138,10 +106,6 @@ export default {
     testetste(){
       console.log("dsafljdsakl")
     }
-  },
-  computed:{
-    ...mapState(memberStore, ["isLogin", "userInfo"]),
-    ...mapGetters(["checkUserInfo"]),
   },
   mounted() {
     this.initScrollbar()

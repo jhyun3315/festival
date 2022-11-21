@@ -190,19 +190,21 @@ public class UserController {
 		}
 	}
 	
-	@GetMapping("/logout")
-	public ResponseEntity<?> logout() {
+	@GetMapping("/logout/{userId}")
+	public ResponseEntity<?> logout(@PathVariable("userId") String userId, HttpServletRequest request) {
 		Map<String, Object> res = new HashMap<>();
 		HttpStatus status = HttpStatus.ACCEPTED;
 		try {
+//			String token = request.getHeader("refresh-token");
+//			System.out.println(token);
 			System.out.println("가자");
-			String userId = jwtService.getUserId();
+//			String userId = jwtService.getUserId();
 			System.out.println("로그인 확인"+userId);
 			userService.deleteRefreshToken(userId);
-			res.put("states", "ok");
+			res.put("status", "ok");
 			status = HttpStatus.ACCEPTED;
 		} catch (Exception e) {
-			res.put("states", "fail");
+			res.put("status", "fail");
 			status = HttpStatus.INTERNAL_SERVER_ERROR;
 		}
 		return new ResponseEntity<Map<String, Object>>(res, status);

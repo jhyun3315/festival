@@ -73,6 +73,7 @@ const memberStore = {
             commit("SET_USER_INFO", data.user);
             // console.log("3. getUserInfo data >> ", data);
           } else {
+            console.log("유저 정보 가져와야지")
             console.log("유저 정보 없음!!!!");
           }
         },
@@ -101,7 +102,7 @@ const memberStore = {
             console.log("갱신 실패");
             // 다시 로그인 전 DB에 저장된 RefreshToken 제거.
             await logout(
-            //   state.userInfo.userid,
+              state.userInfo.userId,
               ({ data }) => {
                 if (data.status === "ok") {
                   console.log("리프레시 토큰 제거 성공");
@@ -124,15 +125,17 @@ const memberStore = {
         }
       );
     },
-    async userLogout({ commit }) {
+    async userLogout({ commit },userid) {
       await logout(
-        // userid,
+        userid,
         ({ data }) => {
+          console.log(data)
           if (data.status === "ok") {
             commit("SET_IS_LOGIN", false);
             commit("SET_USER_INFO", null);
             commit("SET_IS_VALID_TOKEN", false);
           } else {
+            console.log("로그아웃해야지")
             console.log("유저 정보 없음!!!!");
           }
         },
