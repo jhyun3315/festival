@@ -48,19 +48,25 @@
                 icon: 'ni ni-single-02 text-yellow'
                 }">
         </sidebar-item>
-
-
-
-        <sidebar-item
+      </template> 
+      <template slot="links-after">
+        <!-- <sidebar-item
               :link="{
                 name: '마이페이지',
                 path: '/profile',
                 icon: 'ni ni-single-02 text-yellow'
                 }">
+        </sidebar-item> -->
+        <!-- <sidebar-item
+            :link="{
+              name: '로그아웃',
+              path: '/',
+              icon: 'ni ni-key-25 text-info'
+            }">
         </sidebar-item>
         <sidebar-item
                   :link="{
-                    name: 'Login',
+                    name: '로그인',
                     path: '/login',
                     icon: 'ni ni-key-25 text-info'
                   }">
@@ -71,10 +77,11 @@
                     path: '/register',
                     icon: 'ni ni-circle-08 text-pink'
                   }">
-        </sidebar-item>
-      </template> 
+        </sidebar-item> -->
+      </template>
     </side-bar>
     <div class="main-content">
+      <main-navbar :type="$route.meta.navbarType"></main-navbar> 
       <div @click="$sidebar.displaySidebar(false)">
         <fade-transition :duration="200" origin="center top" mode="out-in">
           <!-- your content here -->
@@ -86,47 +93,60 @@
   </div>
 </template>
 <script>
-  /* eslint-disable no-new */
-  import PerfectScrollbar from 'perfect-scrollbar';
-  import 'perfect-scrollbar/css/perfect-scrollbar.css';
+/* eslint-disable no-new */
+import PerfectScrollbar from 'perfect-scrollbar';
+import 'perfect-scrollbar/css/perfect-scrollbar.css';
 
-  function hasElement(className) {
-    return document.getElementsByClassName(className).length > 0;
+function hasElement(className) {
+  return document.getElementsByClassName(className).length > 0;
+}
+
+function initScrollbar(className) {
+  if (hasElement(className)) {
+    new PerfectScrollbar(`.${className}`);
+  } else {
+    // try to init it later in case this component is loaded async
+    setTimeout(() => {
+      initScrollbar(className);
+    }, 100);
   }
+}
 
-  function initScrollbar(className) {
-    if (hasElement(className)) {
-      new PerfectScrollbar(`.${className}`);
-    } else {
-      // try to init it later in case this component is loaded async
-      setTimeout(() => {
-        initScrollbar(className);
-      }, 100);
-    }
-  }
+import MainNavbar from './MainNavbar.vue';
+import ContentFooter from './ContentFooter.vue';
+import MainContent from './Content.vue';
+import { FadeTransition } from 'vue2-transitions';
+import { mapState, mapGetters, mapActions } from "vuex";
 
-  import ContentFooter from './ContentFooter.vue';
-  import MainContent from './Content.vue';
-  import { FadeTransition } from 'vue2-transitions';
+const memberStore = "memberStore";
 
-  export default {
-    components: {
-      ContentFooter,
-      MainContent,
-      FadeTransition
-    },
-    methods: {
-      initScrollbar() {
-        let isWindows = navigator.platform.startsWith('Win');
-        if (isWindows) {
-          initScrollbar('sidenav');
-        }
+export default {
+  components: {
+    MainNavbar,
+    ContentFooter,
+    MainContent,
+    FadeTransition
+  },
+  methods: {
+    ...mapActions(memberStore, ["userLogout"]),
+    initScrollbar() {
+      let isWindows = navigator.platform.startsWith('Win');
+      if (isWindows) {
+        initScrollbar('sidenav');
       }
     },
-    mounted() {
-      this.initScrollbar()
+    testetste(){
+      console.log("dsafljdsakl")
     }
-  };
+  },
+  computed:{
+    ...mapState(memberStore, ["isLogin", "userInfo"]),
+    ...mapGetters(["checkUserInfo"]),
+  },
+  mounted() {
+    this.initScrollbar()
+  }
+};
 </script>
 <style lang="scss">
 </style>
