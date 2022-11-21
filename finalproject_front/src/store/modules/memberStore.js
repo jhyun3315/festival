@@ -1,6 +1,6 @@
 // import jwtDecode from "jwt-decode";
 import router from "@/routes/router.js";
-import { login, findById, tokenRegeneration, logout } from "@/util/userApi.js";
+import { login, findById, tokenRegeneration, logout,update } from "@/util/userApi.js";
 
 const memberStore = {
   namespaced: true,
@@ -34,12 +34,10 @@ const memberStore = {
     },
   },
   actions: {
-    async userConfirm({ commit,user }) {
-      console.log("dhkTsi")
+    async userConfirm({commit},user ) {
       await login(
         user,
         ({ data }) => {
-            console.log("오메")
           if (data.status === "ok") {
             let accessToken = data["access-token"];
             let refreshToken = data["refresh-token"];
@@ -56,7 +54,6 @@ const memberStore = {
           }
         },
         (error) => {
-            console.log("안댐")
           console.log(error);
         }
       );
@@ -81,10 +78,12 @@ const memberStore = {
         }
       );
     },
-    async tokenRegeneration({ commit }) {
+    async tokenRegeneration({ commit,state }) {
       console.log("토큰 재발급 >> 기존 토큰 정보 : {}", sessionStorage.getItem("access-token"));
+      console.log("뭐야진짜")
+      console.log(state)
       await tokenRegeneration(
-        // JSON.stringify(state.userInfo),
+        state.userInfo,
         ({ data }) => {
           if (data.status === "ok") {
             let accessToken = data["access-token"];
@@ -99,7 +98,7 @@ const memberStore = {
             console.log("갱신 실패");
             // 다시 로그인 전 DB에 저장된 RefreshToken 제거.
             await logout(
-            //   state.userInfo.userid,
+              state.userInfo.userId,
               ({ data }) => {
                 if (data.status === "ok") {
                   console.log("리프레시 토큰 제거 성공");
@@ -122,15 +121,17 @@ const memberStore = {
         }
       );
     },
-    async userLogout({ commit }) {
+
+    async userLogout({ commit },userid) {
       await logout(
-        // userid,
+        userid,
         ({ data }) => {
           if (data.status === "ok") {
             commit("SET_IS_LOGIN", false);
             commit("SET_USER_INFO", null);
             commit("SET_IS_VALID_TOKEN", false);
           } else {
+            console.log("로그아웃해야지")
             console.log("유저 정보 없음!!!!");
           }
         },
@@ -139,6 +140,24 @@ const memberStore = {
         }
       );
     },
+    async userUpdate({ commit,dispatch,state },user){
+      console.log("유저 정보 수정점요")
+      console.log(user)
+      await update(
+        user,
+        ({data})=>{
+          console.log("와 수정완료")
+          if (data.status === "ok") {
+            commit("SET_USER_INFO", user);
+          } else {
+            console.log("수정실패?")
+          }
+        },
+        async (e)=>{
+          console.log("토큰 만료요")
+          await dispatch("tokenRegeneration")
+        })
+    }
   },
 };
 

@@ -18,6 +18,8 @@ USE `ssafyfestival` ;
 -- -----------------------------------------------------
 -- Table `ssafyfestival`.`user`
 -- -----------------------------------------------------
+DROP TABLE IF EXISTS `ssafyfestival`.`user` ;
+
 CREATE TABLE IF NOT EXISTS `ssafyfestival`.`user` (
   `id` VARCHAR(100) NOT NULL,
   `pw` VARCHAR(100) NULL,
@@ -32,6 +34,8 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `ssafyfestival`.`festival`
 -- -----------------------------------------------------
+DROP TABLE IF EXISTS `ssafyfestival`.`festival` ;
+
 CREATE TABLE IF NOT EXISTS `ssafyfestival`.`festival` (
   `festival_id` VARCHAR(100) NOT NULL,
   `festival_name` VARCHAR(1000) NULL,
@@ -53,6 +57,8 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `ssafyfestival`.`favor`
 -- -----------------------------------------------------
+DROP TABLE IF EXISTS `ssafyfestival`.`favor` ;
+
 CREATE TABLE IF NOT EXISTS `ssafyfestival`.`favor` (
   `user_id` VARCHAR(100) NOT NULL,
   `festival_id` VARCHAR(100) NOT NULL,
@@ -74,6 +80,8 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `ssafyfestival`.`board`
 -- -----------------------------------------------------
+DROP TABLE IF EXISTS `ssafyfestival`.`board` ;
+
 CREATE TABLE IF NOT EXISTS `ssafyfestival`.`board` (
   `board_id` INT NOT NULL AUTO_INCREMENT,
   `title` VARCHAR(100) NULL,
@@ -81,6 +89,10 @@ CREATE TABLE IF NOT EXISTS `ssafyfestival`.`board` (
   `regist_date` TIMESTAMP NULL,
   `user_id` VARCHAR(100) NOT NULL,
   `festival_id` VARCHAR(100) NOT NULL,
+  `cate` VARCHAR(45) NULL,
+  `file_ori_name` VARCHAR(1000) NULL,
+  `file_path` VARCHAR(4000) NULL,
+  `file_save_name` VARCHAR(1000) NULL,
   PRIMARY KEY (`board_id`),
   INDEX `user_id_idx` (`user_id` ASC) VISIBLE,
   INDEX `board_festival_id_idx` (`festival_id` ASC) VISIBLE,
@@ -100,6 +112,8 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `ssafyfestival`.`comment`
 -- -----------------------------------------------------
+DROP TABLE IF EXISTS `ssafyfestival`.`comment` ;
+
 CREATE TABLE IF NOT EXISTS `ssafyfestival`.`comment` (
   `comment_id` INT NOT NULL AUTO_INCREMENT,
   `board_id` INT NOT NULL,

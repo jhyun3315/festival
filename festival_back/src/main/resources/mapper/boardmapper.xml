@@ -9,6 +9,9 @@
 		<result column="user_id" property="userId" />
 		<result column="festival_id" property="festivalId" />
 		<result column="regist_date" property="registerTime" />
+		<result column="file_ori_name" property="fileOriName" />
+		<result column="file_save_name" property="fileSaveName" />
+		<result column="file_path" property="filePath" />
 	</resultMap>
 	
 	<resultMap type="boardDto" id="boarddetailmap">
@@ -16,6 +19,9 @@
 		<result column="user_id" property="userId" />
 		<result column="festival_id" property="festivalId" />
 		<result column="regist_date" property="registerTime" />
+		<result column="file_ori_name" property="fileOriName" />
+		<result column="file_save_name" property="fileSaveName" />
+		<result column="file_path" property="filePath" />
 		
 		<result column="comment_id" property="commentId" />
 		<result column="comment_content" property="commentContent" />
@@ -25,12 +31,12 @@
 	
 	
 	<insert id="writeArticle" parameterType="boardDto">
-		insert into board (title, content, user_id, festival_id, regist_date)
-		values (#{title}, #{content},#{userId}, #{festivalId}, now())
+		insert into board (title, content, user_id, festival_id, file_path,file_ori_name,file_save_name,cate,regist_date)
+		values (#{title}, #{content},#{userId}, #{festivalId},#{filePath},#{fileOriName},#{fileSaveName},#{cate}, now())
 	</insert>
 	
 	<select id="listArticle" parameterType="map" resultMap="boardmap">
-		select board_id, title, content, user_id, festival_id, date_format(regist_date,'%Y-%m-%d') regist_date
+		select board_id, title, content, user_id, festival_id, date_format(regist_date,'%Y-%m-%d') regist_date,file_path,file_ori_name,file_save_name,cate
 		from board
 	</select>
 	
@@ -40,16 +46,16 @@
 	</select>
 	
 	<select id="getArticle" parameterType="int" resultMap="boarddetailmap">
-		select b.board_id,b.title, b.content, b.user_id, b.festival_id, date_format(b.regist_date,'%Y-%m-%d') regist_date,
+		select b.board_id,b.title, b.content, b.user_id, b.festival_id, date_format(b.regist_date,'%Y-%m-%d') regist_date,b.file_path,b.file_ori_name,b.file_save_name, b.cate,
 		c.comment_id, c.user_id comment_userid, c.content comment_content , date_format(c.regist_date,'%Y-%m-%d') comment_registtime
-		from board b join comment c on b.board_id=c.board_id
+		from board b left outer join comment c on b.board_id=c.board_id
 		where b.board_id = #{boardId}
 	</select>
 	
 	<select id="getArticleDetail" parameterType="int" resultMap="boarddetailmap">
-		select b.board_id,b.title, b.content, b.user_id, b.festival_id, date_format(b.regist_date,'%Y-%m-%d') regist_date,
+		select b.board_id,b.title, b.content, b.user_id, b.festival_id, date_format(b.regist_date,'%Y-%m-%d') regist_date,b.file_path,b.file_ori_name,b.file_save_name, b.cate,
 		c.comment_id, c.user_id comment_userid, c.content comment_content , date_format(c.regist_date,'%Y-%m-%d') comment_registtime
-		from board b join comment c on b.board_id=c.board_id
+		from board b left outer join comment c on b.board_id=c.board_id
 		where b.board_id = #{boardId}
 	</select>
 	

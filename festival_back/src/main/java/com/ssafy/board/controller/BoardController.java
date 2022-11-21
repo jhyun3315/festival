@@ -7,6 +7,8 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -17,7 +19,9 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.ssafy.board.model.BoardDto;
 import com.ssafy.board.service.BoardService;
@@ -78,23 +82,29 @@ public class BoardController {
 		}
 	}
 	
-	
-	@PostMapping()
-	public ResponseEntity<?> write(@RequestBody Map<String,String> map, HttpServletRequest request) throws Exception {
-		
-		
+//  이미지 출력
+   @GetMapping("/images/{boardId}")
+   @ResponseBody
+   public Resource downloadImage(@PathVariable("boardId") String boardId) throws Exception{
+	   System.out.println(boardId);
+	   BoardDto board = service.getArticle(Integer.parseInt(boardId));
+	   System.out.println("결과에요");
+	   System.out.println(board);
+	   System.out.println(board.getFilePath());
+       return new UrlResource("file:" + board.getFilePath());
+   }
+   
+   
+   //게시글 작성
+   @PostMapping()
+   public ResponseEntity<?> write(@RequestParam("file") MultipartFile file,@RequestParam Map<String,String> map, HttpServletRequest request) throws Exception {
 		Map<String, Object> res = new HashMap<String, Object>();
 
 		if (jwtService.checkToken(request.getHeader("access-token"))) {			
 			try {
 				String userId = jwtService.getUserId();
-				BoardDto board = new BoardDto();
-				board.setTitle(map.get("title"));
-				board.setContent(toBR(map.get("content")));
-				board.setFestivalId(map.get("festivalId"));
-				board.setUserId(userId);
-				
-				service.writeArticle(board);
+				map.put("userId",userId);
+				service.writeArticle(file,map);
 				res.put("status", "ok");
 				return new ResponseEntity<Map<String, Object>>(res,HttpStatus.OK);
 			}catch (Exception e) {

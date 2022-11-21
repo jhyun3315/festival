@@ -1,8 +1,101 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
-import routes from './routes';
+
+import MainLayout from '@/views/Layout/MainLayout.vue';
+import AuthLayout from '@/views/Pages/AuthLayout.vue';
+import NotFound from '@/views/ErrorView.vue';
+import store from "@/store";
 
 Vue.use(VueRouter);
+
+
+// https://v3.router.vuejs.org/kr/guide/advanced/navigation-guards.html
+const onlyAuthUser = async (to, from, next) => {
+  const checkUserInfo = store.getters["memberStore/checkUserInfo"];
+  const checkToken = store.getters["memberStore/checkToken"];
+  let token = sessionStorage.getItem("access-token");
+  console.log("로그인 처리 전", checkUserInfo, token);
+
+  if (checkUserInfo != null && token) {
+    console.log("토큰 유효성 체크하러 가자!!!!");
+    // await store.dispatch("memberStore/getUserInfo", token);
+    await store.dispatch("memberStore/getUserInfo");
+  }
+  if (!checkToken || checkUserInfo === null) {
+    alert("로그인이 필요한 페이지입니다..");
+    // next({ name: "login" });
+    router.push({ name: "login" });
+  } else {
+    console.log("로그인 했다!!!!!!!!!!!!!.");
+    next();
+  }
+};
+
+const routes = [
+  {
+    path: '/',
+    redirect: 'main',
+    component: MainLayout,
+    children: [
+      {
+        path: '/main',
+        name: 'main', 
+        component: () => import(/* webpackChunkName: "demo" */ '../views/MainView.vue')
+      },
+ 
+      {
+        path: '/profile',
+        name: 'profile',
+        beforeEnter: onlyAuthUser,
+        component: () => import(/* webpackChunkName: "demo" */ '../views/Pages/UserProfile.vue')
+      },
+      {
+        path: '/festival',
+        name: 'festival',
+        component: () => import(/* webpackChunkName: "demo" */ '../views/FestivalView.vue')
+      },
+      {
+        path: '/user',
+        name: 'user',
+        component: () => import(/* webpackChunkName: "demo" */ '../views/UserView.vue')
+      },
+      {
+        path: '/board/:festivalId',
+        name: 'festivalboard',
+        component: () => import ('../views/BoardView.vue')
+      },
+      {
+        path: '/article/:festivalId/:boardId',
+        name: 'articleboard',
+        component: () => import ('../views/ArticleView.vue')
+      },
+      {
+        path: '/articlewrite/:festivalId',
+        name: 'articlewriteboard',
+        beforeEnter: onlyAuthUser,
+        component: () => import ('../views/ArticlewriteView.vue')
+      }
+    ]
+  },
+  {
+    path: '/',
+    redirect: 'login',
+    component: AuthLayout,
+    children: [
+      {
+        path: '/login',
+        name: 'login',
+        component: () => import(/* webpackChunkName: "demo" */ '../views/Pages/Login.vue')
+      },
+      {
+        path: '/register',
+        name: 'register',
+        component: () => import(/* webpackChunkName: "demo" */ '../views/Pages/Register.vue')
+      },
+      { path: '*', component: NotFound }
+    ]
+  }
+];
 
 // configure router
 const router = new VueRouter({

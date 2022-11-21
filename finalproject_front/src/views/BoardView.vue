@@ -7,14 +7,14 @@
     <div class="header-wrap">
       <div class="header-content">
         <div>
-          <b-dropdown text="말머리" class="m-2" size="sm" variant="success" @change="test">
+          <b-dropdown text="말머리" class="m-2" size="sm" variant="success">
             <b-dropdown-item @click="selCate('all')">전체</b-dropdown-item>
             <b-dropdown-item @click="selCate('hugi')">후기</b-dropdown-item>
             <b-dropdown-item @click="selCate('deal')">거래</b-dropdown-item>
           </b-dropdown>
         </div>
         <div>
-          <b-button size="sm" class="m-2" variant="primary">
+          <b-button size="sm" class="m-2" variant="primary" @click="goWrite">
             게시글 등록
           </b-button>
         </div>
@@ -59,6 +59,7 @@
 export default {
   data(){
     return{
+      festivalId:"",
       currentPage:1,
       rows:100,//전체 게시글 수
       perPage:5,//하나의 페이지당 보여질 게시글
@@ -66,6 +67,7 @@ export default {
     }
   },
   created(){
+    this.festivalId = this.$route.params.festivalId;
     this.boardList=[
       {
         title:"안녕",
@@ -82,6 +84,10 @@ export default {
     },
     selCate(cate){
       console.log(cate+"뭔데")
+    },
+    goWrite(){
+      console.log(this.festivalId)
+      this.$router.push(`/articlewrite/${this.festivalId}`)
     }
   }
 }

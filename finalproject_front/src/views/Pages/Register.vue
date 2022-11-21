@@ -39,7 +39,24 @@
                 <small>Or sign up with credentials</small>
               </div> -->
               <validation-observer v-slot="{handleSubmit}" ref="formValidator">
-                <b-form role="form" @submit.prevent="handleSubmit(onSubmit)">
+                <b-form role="form" @submit.prevent="handleSubmit(submitJoin)">
+                  <base-input alternative
+                              class="mb-3"
+                              prepend-icon="ni ni-badge"
+                              placeholder="ID"
+                              name="id"
+                              :rules="{required: true}"
+                              v-model="user.userId">
+                  </base-input>
+                  <base-input alternative
+                              class="mb-3"
+                              prepend-icon="ni ni-lock-circle-open"
+                              placeholder="password"
+                              type="password"
+                              name="Password"
+                              :rules="{required: true}"
+                              v-model="user.userPw">
+                  </base-input>
                   <base-input alternative
                               class="mb-3"
                               prepend-icon="ni ni-badge"
@@ -63,7 +80,7 @@
                               placeholder="Name"
                               name="Name"
                               :rules="{required: true}"
-                              v-model="model.name">
+                              v-model="user.userName">
                   </base-input>
 
                   <base-input alternative
@@ -72,7 +89,7 @@
                               placeholder="Email"
                               name="Email"
                               :rules="{required: true, email: true}"
-                              v-model="model.email">
+                              v-model="user.email">
                   </base-input>
 
                   <base-input alternative
@@ -81,7 +98,7 @@
                               placeholder="PhoneNumber"
                               name="PhoneNumber"
                               :rules="{required: true}"
-                              v-model="model.phoneNumber">
+                              v-model="user.phoneNumber">
                   </base-input>
 
                   <!-- <div class="text-muted font-italic"><small>아이디 확인: 
@@ -111,24 +128,33 @@
 
 
 <script>
+import { join } from "@/util/userApi.js";
 import * as THREE from '@/assets/three.r134.min.js';
   export default {
     name: 'register',
     data() {
       return {
-        model: {
-          id:'',
-          pw: '',
-          name: '',
+        user: {
+          userId:'',
+          userPw: '',
+          userName: '',
           email: '',
-          phoneNumber: '',
-          agree: false
+          phoneNumber: ''
         }
       }
     },
     methods: {
-      onSubmit() {
-        // this will be called only after form is valid. You can do an api call here to register users
+      submitJoin() {
+        join(this.user,({data})=>{
+          // console.log("가입 완료")
+          // console.log(data)
+          alert("가입완료")
+          this.$router.push("/")
+        },(e)=>{
+          console.log("잘못됨")
+          alert("가입실패")
+          this.$router.push("/")
+        })
       }
   },
   async mounted() {

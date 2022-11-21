@@ -30,51 +30,28 @@
         <sidebar-item
               :link="{
                 name: 'test게시판',
-                path: '/board',
+                path: '/board/1095732',
                 icon: 'ni ni-single-02 text-yellow'
                 }">
         </sidebar-item>
         <sidebar-item
               :link="{
                 name: 'test게시글',
-                path: '/article',
+                path: '/article/3',
                 icon: 'ni ni-single-02 text-yellow'
                 }">
         </sidebar-item>
         <sidebar-item
               :link="{
                 name: 'test게시글작성',
-                path: '/articlewrite',
+                path: '/articlewrite/1095732',
                 icon: 'ni ni-single-02 text-yellow'
                 }">
-        </sidebar-item>
-
-
-
-        <sidebar-item
-              :link="{
-                name: '마이페이지',
-                path: '/profile',
-                icon: 'ni ni-single-02 text-yellow'
-                }">
-        </sidebar-item>
-        <sidebar-item
-                  :link="{
-                    name: 'Login',
-                    path: '/login',
-                    icon: 'ni ni-key-25 text-info'
-                  }">
-        </sidebar-item>
-        <sidebar-item
-                  :link="{
-                    name: 'Register',
-                    path: '/register',
-                    icon: 'ni ni-circle-08 text-pink'
-                  }">
         </sidebar-item>
       </template> 
     </side-bar>
     <div class="main-content">
+      <main-navbar :type="$route.meta.navbarType"></main-navbar> 
       <div @click="$sidebar.displaySidebar(false)">
         <fade-transition :duration="200" origin="center top" mode="out-in">
           <!-- your content here -->
@@ -86,47 +63,52 @@
   </div>
 </template>
 <script>
-  /* eslint-disable no-new */
-  import PerfectScrollbar from 'perfect-scrollbar';
-  import 'perfect-scrollbar/css/perfect-scrollbar.css';
+/* eslint-disable no-new */
+import PerfectScrollbar from 'perfect-scrollbar';
+import 'perfect-scrollbar/css/perfect-scrollbar.css';
 
-  function hasElement(className) {
-    return document.getElementsByClassName(className).length > 0;
+function hasElement(className) {
+  return document.getElementsByClassName(className).length > 0;
+}
+
+function initScrollbar(className) {
+  if (hasElement(className)) {
+    new PerfectScrollbar(`.${className}`);
+  } else {
+    // try to init it later in case this component is loaded async
+    setTimeout(() => {
+      initScrollbar(className);
+    }, 100);
   }
+}
 
-  function initScrollbar(className) {
-    if (hasElement(className)) {
-      new PerfectScrollbar(`.${className}`);
-    } else {
-      // try to init it later in case this component is loaded async
-      setTimeout(() => {
-        initScrollbar(className);
-      }, 100);
-    }
-  }
+import MainNavbar from './MainNavbar.vue';
+import ContentFooter from './ContentFooter.vue';
+import MainContent from './Content.vue';
+import { FadeTransition } from 'vue2-transitions';
 
-  import ContentFooter from './ContentFooter.vue';
-  import MainContent from './Content.vue';
-  import { FadeTransition } from 'vue2-transitions';
-
-  export default {
-    components: {
-      ContentFooter,
-      MainContent,
-      FadeTransition
-    },
-    methods: {
-      initScrollbar() {
-        let isWindows = navigator.platform.startsWith('Win');
-        if (isWindows) {
-          initScrollbar('sidenav');
-        }
+export default {
+  components: {
+    MainNavbar,
+    ContentFooter,
+    MainContent,
+    FadeTransition
+  },
+  methods: {
+    initScrollbar() {
+      let isWindows = navigator.platform.startsWith('Win');
+      if (isWindows) {
+        initScrollbar('sidenav');
       }
     },
-    mounted() {
-      this.initScrollbar()
+    testetste(){
+      console.log("dsafljdsakl")
     }
-  };
+  },
+  mounted() {
+    this.initScrollbar()
+  }
+};
 </script>
 <style lang="scss">
 </style>
