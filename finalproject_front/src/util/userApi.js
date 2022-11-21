@@ -1,4 +1,4 @@
-import  api from "./api.js";
+import  {api} from "./api.js";
 
 //가입
 async function join(user, success, fail) {

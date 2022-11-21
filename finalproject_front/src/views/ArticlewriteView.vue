@@ -11,7 +11,7 @@
         <card class="col-md-6">
           <b-row>
             말머리
-            <b-form-select v-model="horsehead" :options="horseheadoptions" ></b-form-select>
+            <b-form-select v-model="cate" :options="cateoptions" ></b-form-select>
           </b-row>
           <b-row>
             제목
@@ -22,11 +22,11 @@
             <b-form-textarea rows="8" no-resize v-model="content" required></b-form-textarea>
           </b-row>
           <b-row>
-            <b-form-file v-model="file" class="mt-3" plain></b-form-file>
+            <b-form-file accept="image/*" v-model="file" class="mt-3" plain></b-form-file>
           </b-row>
           <b-row align-h="center" align-v="center" >
             <div>
-              <b-button variant="primary">
+              <b-button variant="primary" @click="writeSubmit">
                 작성
               </b-button>
               <b-button variant="danger">
@@ -47,20 +47,41 @@
 </template>
 
 <script>
+import { mapState} from "vuex";
+import {fileApi} from "@/util/api.js";
+const memberStore = "memberStore";
+
 export default {
  data(){
   return{
-    horsehead:"",
-    horseheadoptions:[
+    festivalId:"1095732", // 페스티벌 아이디
+    cate:"",
+    cateoptions:[
     { value: "", text: '말머리를 선택해주세요' },
     { value: "deal", text: '거래' },
     { value: "hugi", text: '후기' }
     ],
     title:"",
     content:"",
-    file:"",
+    file:null,
   }
- }
+ },
+ methods:{
+  writeSubmit(){
+    let formData = new FormData(); // formData 객체를 생성한다.
+
+    formData.append("userId", this.userInfo.userId);//작성자 유저 아이디
+    formData.append("festivalId", this.festivalId);
+
+    formData.append("cate", this.cate);
+    formData.append("title", this.title);
+    formData.append("content", this.content);
+    formData.append("file", this.file);
+    fileApi.post("/board/testfile",formData)
+  }
+ },computed:{
+    ...mapState(memberStore, ["userInfo"]),
+  }
 }
 
 </script>

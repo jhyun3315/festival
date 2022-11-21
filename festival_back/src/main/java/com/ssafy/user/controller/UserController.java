@@ -65,6 +65,7 @@ public class UserController {
 	//마이 페이지
 	@GetMapping()
 	public ResponseEntity<?> mypage(HttpServletRequest request) throws Exception {
+		System.out.println("마이페이지야");
 		Map<String, Object> map = new HashMap<String, Object>();
 		if (jwtService.checkToken(request.getHeader("access-token"))) {			
 			try {			
