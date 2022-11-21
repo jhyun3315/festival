@@ -1,6 +1,6 @@
 // import jwtDecode from "jwt-decode";
 import router from "@/routes/router.js";
-import { login, findById, tokenRegeneration, logout } from "@/util/userApi.js";
+import { login, findById, tokenRegeneration, logout,update } from "@/util/userApi.js";
 
 const memberStore = {
   namespaced: true,
@@ -146,6 +146,24 @@ const memberStore = {
         }
       );
     },
+    async userUpdate({ commit,dispatch,state },user){
+      console.log("유저 정보 수정점요")
+      console.log(user)
+      await update(
+        user,
+        ({data})=>{
+          console.log("와 수정완료")
+          if (data.status === "ok") {
+            commit("SET_USER_INFO", user);
+          } else {
+            console.log("수정실패?")
+          }
+        },
+        async (e)=>{
+          console.log("토큰 만료요")
+          await dispatch("tokenRegeneration")
+        })
+    }
   },
 };
 
