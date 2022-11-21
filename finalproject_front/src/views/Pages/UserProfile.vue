@@ -77,7 +77,7 @@ export default {
   methods:{
     ...mapActions(memberStore, ["getUserInfo","userUpdate"]),
     goUpdate(){
-      this.userUpdate(this.userData);
+      this.userUpdate({...this.userData});
       alert("정보수정 완료")
     }
   },
