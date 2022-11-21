@@ -75,7 +75,7 @@ public class UserController {
 					map.put("user", userDto);
 					return new ResponseEntity<Map<String, Object>>(map,HttpStatus.OK);
 				}else {
-					System.out.println("실패");
+					System.out.println("내 유저가 아님");
 					map.put("status", "fail");
 					return new ResponseEntity<Map<String, Object>>(map,HttpStatus.OK);	
 				}
@@ -85,6 +85,7 @@ public class UserController {
 				return new ResponseEntity<Map<String, Object>>(map,HttpStatus.OK);	
 			}
 		}else {
+			System.out.println("인증만료");
 			map.put("status", "fail");
 			return new ResponseEntity<Map<String, Object>>(map,HttpStatus.UNAUTHORIZED);	
 		}

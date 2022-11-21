@@ -6,7 +6,7 @@
     <b-container class="bv-example-row">
       <card>
         <b-card-header>
-          hi
+          {{userData.userId}}
         </b-card-header>
         <b-card-body>
 
@@ -17,7 +17,24 @@
   </div>
 </template>
 <script>
+import { mapActions,mapState } from "vuex";
+const memberStore = "memberStore";
+
 export default {
+  async created(){
+    console.log(this.userInfo)
+  },
+  data(){
+    return{
+      userData:""
+    }
+  },
+  methods:{
+    ...mapActions(memberStore, ["getUserInfo"]),
+  },
+  computed:{
+    ...mapState(memberStore, ["isLogin", "userInfo"]),
+  },
   components: {
   }
 };

@@ -108,10 +108,11 @@ export default {
     gojoin(){
         this.$router.push("/register")
     }
-    ,gologout(){
+    ,
+    async gologout(){
         console.log(this.userInfo.userId)
         console.log(this.isLogin)
-        this.userLogout(this.userInfo.userId);
+        await this.userLogout(this.userInfo.userId);
         console.log("로그아웃")
         sessionStorage.removeItem("access-token"); //저장된 토큰 없애기
         sessionStorage.removeItem("refresh-token"); //저장된 토큰 없애기
