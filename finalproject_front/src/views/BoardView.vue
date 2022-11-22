@@ -62,13 +62,17 @@ export default {
       rows:0,//전체 게시글 수
       perPage:4,//하나의 페이지당 보여질 게시글
       limit:10,//네비게이션에 보여지는 페이지 갯수
-      boardList:[]
+      boardList:[],
+      cate:"all"
     }
   },
   created(){
     this.festivalId = this.$route.params.festivalId;//축제 번호
     articleList(
-      {pgno:this.currentPage},
+      {
+        pgno:this.currentPage,
+        cate:this.cate
+      },
       ({data})=>{
         this.rows = data.articleCnt;
         this.boardList = data.boardList;
@@ -83,7 +87,10 @@ export default {
     pageClick(_,page){
       this.currentPage = page;
       articleList(
-        {pgno:page},
+        {
+          pgno:this.currentPage,
+          cate:this.cate
+        },
         ({data})=>{
           this.rows = data.articleCnt;
           this.boardList = data.boardList;
@@ -92,16 +99,27 @@ export default {
           alert("잘못된 접근입니다.")
         })
     },
-    selCate(cate){
-      console.log(cate+"뭔데")
+    selCate(cate){//말머리 변경
+      this.cate = cate;
+      articleList(
+      {
+        pgno:1,
+        cate:this.cate
+      },
+      ({data})=>{
+        this.rows = data.articleCnt;
+        this.boardList = data.boardList;
+        this.currentPage=1;//1페이지로 초기화
+      },
+      ()=>{
+        alert("잘못된 접근입니다.")
+      })
     },
     goWrite(){
-      console.log(this.festivalId)
       this.$router.push(`/articlewrite/${this.festivalId}`)
     },
     showImage(boardId){
       let tmp = getImage(boardId)
-      console.log(tmp)
       return tmp
     }
   }

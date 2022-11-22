@@ -38,13 +38,29 @@
 	<select id="listArticle" parameterType="map" resultMap="boardmap">
 		select board_id, title, content, user_id, festival_id, date_format(regist_date,'%Y-%m-%d') regist_date,file_path,file_ori_name,file_save_name,cate
 		from board
+		<choose>
+			<when test="cate.equals('deal')">
+				where cate like 'deal'
+			</when>
+			<when test="cate.equals('hugi')">
+				where cate like 'hugi'
+			</when>
+		</choose>
 		order by regist_date
 		limit #{start}, #{viewPage}
 	</select>
 	
-	<select id="totalArticleCount" resultType="int">
+	<select id="totalArticleCount" parameterType="string" resultType="int">
 		select count(board_id)
 		from board
+		<choose>
+			<when test="cate.equals('deal')">
+				where cate like 'deal'
+			</when>
+			<when test="cate.equals('hugi')">
+				where cate like 'hugi'
+			</when>
+		</choose>
 	</select>
 	
 	<select id="getArticle" parameterType="int" resultMap="boarddetailmap">

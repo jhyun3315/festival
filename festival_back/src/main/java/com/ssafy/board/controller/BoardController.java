@@ -61,14 +61,15 @@ public class BoardController {
 	
 	@GetMapping()
 	public ResponseEntity<?> list(@RequestParam Map<String,String> map) throws Exception{
-		String pgno = map.get("pgno");
+		String pgno = map.get("pgno");//페이지
+		String cate = map.get("cate");//말머리
+
 		int viewPage = 4;//페이지당 보여질 갯수
 		int page = ParameterCheck.notNumberToOne(pgno);
-		
 		Map<String, Object> res = new HashMap<String, Object>();
 		try {
-			int cnt = service.totalArticleCount();
-			List<BoardDto> list = service.listArticle(page, viewPage);
+			int cnt = service.totalArticleCount(cate);
+			List<BoardDto> list = service.listArticle(page, viewPage,cate);
 			for (int i = 0; i < list.size(); i++) {				
 				list.get(i).setBoardId(ParameterCheck.nullToBlank(list.get(i).getBoardId()));
 				list.get(i).setTitle(ParameterCheck.nullToBlank(list.get(i).getTitle()));
