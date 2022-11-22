@@ -35,9 +35,9 @@ public class CommentController {
 	}
 		
 	
-	@GetMapping("/{boardId}/{pgno}")
-	public ResponseEntity<?> list(@PathVariable("boardId") String boardId, @PathVariable("pgno") String pgno) throws Exception{
-		int page = ParameterCheck.notNumberToOne(pgno);
+	@GetMapping("/{boardId}")
+	public ResponseEntity<?> list(@PathVariable("boardId") String boardId) throws Exception{
+		int page=1;
 		
 		Map<String, Object> map = new HashMap<String, Object>();
 		try {

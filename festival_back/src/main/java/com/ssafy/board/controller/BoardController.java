@@ -40,10 +40,23 @@ public class BoardController {
 		this.jwtService= jwtService;
 	}
 	
+//  이미지 출력
+   @GetMapping("/image/{boardId}")
+   @ResponseBody
+   public Resource downloadImage(@PathVariable("boardId") String boardId) throws Exception{
+	   System.out.println("이미지 가지로옴");
+	   System.out.println(boardId);
+	   BoardDto board = service.getArticle(Integer.parseInt(boardId));
+	   System.out.println("결과에요");
+	   System.out.println(board);
+	   System.out.println(board.getFilePath());
+       return new UrlResource("file:" + board.getFilePath());
+   }
+   
 	//게시판 가져오기
 	@GetMapping("/{boardId}")
 	public ResponseEntity<?> getarticle(@PathVariable("boardId") String boardId) throws Exception{
-	
+		System.out.println("왜 터져"+boardId);
 		Map<String, Object> map = new HashMap<String, Object>();
 		try {
 			List<BoardDto> board = service.getArticleDetail(Integer.parseInt(boardId));
@@ -52,6 +65,7 @@ public class BoardController {
 	        map.put("status", "ok");
 			return new ResponseEntity<Map<String, Object>>(map,HttpStatus.OK);
 		} catch (Exception e) {
+			System.out.println("문제있니?");
 			e.printStackTrace();
 			map.put("status", "fail");
 			return new ResponseEntity<Map<String, Object>>(map,HttpStatus.OK);
@@ -88,17 +102,7 @@ public class BoardController {
 		}
 	}
 	
-//  이미지 출력
-   @GetMapping("/image/{boardId}")
-   @ResponseBody
-   public Resource downloadImage(@PathVariable("boardId") String boardId) throws Exception{
-	   System.out.println(boardId);
-	   BoardDto board = service.getArticle(Integer.parseInt(boardId));
-	   System.out.println("결과에요");
-	   System.out.println(board);
-	   System.out.println(board.getFilePath());
-       return new UrlResource("file:" + board.getFilePath());
-   }
+
    
    
    //게시글 작성

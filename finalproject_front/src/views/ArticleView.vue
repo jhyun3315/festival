@@ -38,7 +38,7 @@
                   <b-row>
                     {{ele.userId}}
                   </b-row>
-                  <b-row >
+                  <b-row v-if="authorCheck(ele.userId)">
                     <b-button squared variant="danger" size="sm">삭제</b-button>
                   </b-row>
                 </b-col>
@@ -53,7 +53,7 @@
               <b-form-input v-model="commentText" placeholder="댓글"></b-form-input>
             </b-col>
             <b-col >
-              <b-button squared variant="primary" size="sm">등록</b-button>
+              <b-button squared variant="primary" size="sm" @click="commentWrite">등록</b-button>
             </b-col>
           </b-row>
       </card>
@@ -64,7 +64,7 @@
         <b-button variant="primary">
           목록
         </b-button>
-        <div class="author" >
+        <div class="author" v-if="authorCheck(article.userId)">
           <b-button variant="warning">
             수정
           </b-button>
@@ -81,7 +81,9 @@
 
 <script>
 import {getArticle,getImage} from "@/util/boardApi"
-import {mapState} from "vuex";
+import {writeComment,commentList} from "@/util/commentApi"
+
+import {mapState, mapGetters, mapActions} from "vuex";
 
 const memberStore = "memberStore";
 
@@ -94,20 +96,17 @@ export default {
     await getArticle(
       this.boardId,
       ({data})=>{
-        // console.log("무야호")
         this.article = data.board[0]
-
         //댓글
-        this.comments = data.board.filter(ele=>ele.commentId!=null).map(ele=>{
+        let test = data.board.filter(ele=>ele.commentId!=null).map(ele=>{
           return {
-            id:commentId,
+            id:ele.commentId,
             content:ele.commentContent,
             userId:ele.commentUserId,
             registDate:ele.commentRegisterTime
             }
         })
-        console.log(this.article)
-        // console.log(this.comments)
+        this.comments = test;
       },
       ()=>{
         alert("잘못된 접근입니다.")
@@ -119,7 +118,7 @@ export default {
     return {
       festivalId:"",
       boardId:"",
-      commentText:"",//입력한 게시글
+      commentText:"",//입력한 댓글
       article:{//게시글 정보
         boardId:"",
         cate:"",
@@ -136,14 +135,44 @@ export default {
     ...mapState(memberStore, ["isLogin", "userInfo"]),
   },
   methods:{
+    ...mapActions(memberStore, ["getUserInfo"]),
     authorCheck(id){
-
       //id와 현재 id를 비교하여 true, false로 작성자 유무를 판별
       return this.userInfo.userId===id;
     },
-    showImage(boardId){
+    showImage(boardId){//이미지 출력
       let tmp = getImage(boardId)
       return tmp
+    },
+    async commentWrite(){//댓글 작성
+      await this.getUserInfo(); // 토큰 확인 및 재발급진행
+      await writeComment({
+        boardId:this.boardId,
+        content:this.commentText
+      },
+      ()=>{
+        this.commentText = "";
+        //댓글 재 호출
+        this.getComment();
+      },
+      (error)=>{
+        console.log(error.response.status)
+        //토큰 재발급 
+        alert("잘못된 접근")
+        // this.$router.push("/")
+      })
+    },
+    getComment(){      
+      commentList(this.boardId,
+      ({data})=>{
+        //댓글 재 호출
+        this.comments = data.commentlist;
+      },
+      ()=>{
+        console.log("잘못된 접근")
+        this.$router.push("/")
+      })
+
     }
   },
   filters:{

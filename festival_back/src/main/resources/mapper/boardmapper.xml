@@ -63,11 +63,10 @@
 		</choose>
 	</select>
 	
-	<select id="getArticle" parameterType="int" resultMap="boarddetailmap">
-		select b.board_id,b.title, b.content, b.user_id, b.festival_id, date_format(b.regist_date,'%Y-%m-%d') regist_date,b.file_path,b.file_ori_name,b.file_save_name, b.cate,
-		c.comment_id, c.user_id comment_userid, c.content comment_content , date_format(c.regist_date,'%Y-%m-%d') comment_registtime
-		from board b left outer join comment c on b.board_id=c.board_id
-		where b.board_id = #{boardId}
+	<select id="getArticle" parameterType="int" resultMap="boardmap">
+		select board_id,title, content, user_id, festival_id, date_format(regist_date,'%Y-%m-%d') regist_date,file_path,file_ori_name,file_save_name, cate
+		from board
+		where board_id = #{boardId}
 	</select>
 	
 	<select id="getArticleDetail" parameterType="int" resultMap="boarddetailmap">
