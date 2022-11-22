@@ -44,12 +44,7 @@ public class BoardController {
    @GetMapping("/image/{boardId}")
    @ResponseBody
    public Resource downloadImage(@PathVariable("boardId") String boardId) throws Exception{
-	   System.out.println("이미지 가지로옴");
-	   System.out.println(boardId);
 	   BoardDto board = service.getArticle(Integer.parseInt(boardId));
-	   System.out.println("결과에요");
-	   System.out.println(board);
-	   System.out.println(board.getFilePath());
        return new UrlResource("file:" + board.getFilePath());
    }
    

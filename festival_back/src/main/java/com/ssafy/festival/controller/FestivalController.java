@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.ssafy.festival.model.FestivalDto;
 import com.ssafy.festival.service.FestivalService;
 import com.ssafy.jwt.service.JwtService;
+import com.ssafy.util.ParameterCheck;
 
 @RestController
 @RequestMapping("/festival")
@@ -66,6 +67,9 @@ public class FestivalController {
 				//now:true
 			
 			List<FestivalDto> list = service.listFestival(map);
+			for (int i = 0; i < list.size(); i++) {				
+				list.get(i).setFestivalContent(toRN(list.get(i).getFestivalContent()));
+			}
 			res.put("festivalList", list);
 			res.put("status", "ok");
 			return new ResponseEntity<Map<String, Object>>(res,HttpStatus.OK);
@@ -101,5 +105,16 @@ public class FestivalController {
 			res.put("status", "fail");
 			return new ResponseEntity<Map<String, Object>>(res,HttpStatus.OK);
 		}
+	}
+	
+	private String toBR(String content) {
+		String contents = "";
+		contents = content.replace("\r\n", "<br>");
+		return contents;
+	}
+	private String toRN(String content) {
+		String contents = "";
+		contents = content.replace("<br>","\r\n");
+		return contents;
 	}
 }

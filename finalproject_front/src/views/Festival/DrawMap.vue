@@ -74,6 +74,9 @@
       }, 
       // https://codepen.io/lantoine/pen/ExxEGxg
       // https://m.blog.naver.com/PostView.nhn?blogId=jhc9639&logNo=221195987416&proxyReferer=https%3A%2F%2Fwww.google.com%2F
+      getFestival(area){
+        this.$emit("getFestival",area)
+      },
       drawMap() {
         // 지도정보
         const geojson = MAP_GEOJSON;
@@ -140,11 +143,11 @@
         }
   
         
-        function clicked(d) { //---------------------------------------------------------------클릭시 진행
+        let clicked=(d)=>{ //---------------------------------------------------------------클릭시 진행
           var x, y, k;
 
           console.log(d.properties.CTP_KOR_NM);
-          
+          this.getFestival(d.properties.CTP_KOR_NM)
           // Compute centroid of the selected path
           if (d && centered !== d) {
             var centroid = path.centroid(d);
