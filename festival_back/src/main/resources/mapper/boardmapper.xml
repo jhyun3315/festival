@@ -78,7 +78,10 @@
 	
 	<update id="modifyArticle" parameterType="boardDto">
 		update board
-		set title = #{title}, content=#{content},regist_date = now() 
+		set cate=#{cate}, title = #{title}, content=#{content},regist_date = now()
+		<if test="filePath!=null">
+			,file_path=#{filePath}, file_ori_name=#{fileOriName},file_save_name=#{fileSaveName}
+		</if>
 		where board_id = #{boardId}
 	</update>
 	

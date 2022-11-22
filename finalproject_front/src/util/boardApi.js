@@ -27,5 +27,11 @@ async function articleDelete(boardId,success, fail) {
   await api.delete(`/board/${boardId}`).then(success).catch(fail);
 }
 
-export { articleWrite, articleList, getImage, getArticle ,articleDelete};
+//게시글 수정
+async function articleUpdate(article, success, fail) {
+  fileApi.defaults.headers["access-token"] = sessionStorage.getItem("access-token");
+  await fileApi.put(`/board`,article).then(success).catch(fail);
+}
+
+export { articleWrite, articleList, getImage, getArticle ,articleDelete,articleUpdate};
   

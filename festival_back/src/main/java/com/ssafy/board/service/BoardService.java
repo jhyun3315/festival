@@ -14,6 +14,6 @@ public interface BoardService {
 	int totalArticleCount(String cate) throws Exception;
 	List<BoardDto> getArticleDetail(int boardId) throws Exception;
 	BoardDto getArticle(int boardId) throws Exception;
-	void modifyArticle(BoardDto board) throws Exception;
+	void modifyArticle(MultipartFile file,BoardDto board) throws Exception;
 	void deleteArticle(int boardId) throws Exception;
 }

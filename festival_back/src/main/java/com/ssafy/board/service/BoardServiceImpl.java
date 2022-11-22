@@ -28,24 +28,36 @@ public class BoardServiceImpl implements BoardService{
 	public int writeArticle(MultipartFile file, Map<String,String> map) throws Exception {
 		
 		BoardDto board = new BoardDto();
-		// 원래 파일 이름 추출
-        String origName = file.getOriginalFilename();
-
-        // 파일 이름으로 쓸 uuid 생성
-        String uuid = UUID.randomUUID().toString();
-
-        // 확장자 추출(ex : .png)
-        String extension = origName.substring(origName.lastIndexOf("."));
-
-        // uuid와 확장자 결합
-        String savedName = uuid + extension;
-
-        // 파일을 불러올 때 사용할 파일 경로
-        String savedPath = fileDir + savedName;
-
-
-        // 실제로 로컬에 uuid를 파일명으로 저장
-        file.transferTo(new File(savedPath));
+		
+		if(file!=null) {			
+			// 원래 파일 이름 추출
+			String origName = file.getOriginalFilename();
+			
+			// 파일 이름으로 쓸 uuid 생성
+			String uuid = UUID.randomUUID().toString();
+			
+			// 확장자 추출(ex : .png)
+			String extension = origName.substring(origName.lastIndexOf("."));
+			
+			// uuid와 확장자 결합
+			String savedName = uuid + extension;
+			
+			// 파일을 불러올 때 사용할 파일 경로
+			String savedPath = fileDir + savedName;
+			
+			
+			// 실제로 로컬에 uuid를 파일명으로 저장
+			file.transferTo(new File(savedPath));
+			 //파일관련
+	        board.setFileOriName(origName);
+	        board.setFileSaveName(savedName);
+	        board.setFilePath(savedPath);
+		}else {
+			//파일 입력을 안하면 기본이미지
+			board.setFileOriName("default.png");
+	        board.setFileSaveName("default.png");
+	        board.setFilePath(fileDir+"default.png");
+		}
         
 		
         // 게시판 엔티티 생성
@@ -55,10 +67,7 @@ public class BoardServiceImpl implements BoardService{
         board.setTitle(map.get("title"));
         board.setContent(map.get("content"));
         
-        //파일관련
-        board.setFileOriName(origName);
-        board.setFileSaveName(savedName);
-        board.setFilePath(savedPath);
+       
 		
         System.out.println(board);
 		return mapper.writeArticle(board);
@@ -91,7 +100,34 @@ public class BoardServiceImpl implements BoardService{
 	}
 
 	@Override
-	public void modifyArticle(BoardDto board) throws Exception {
+	public void modifyArticle(MultipartFile file,BoardDto board) throws Exception {
+		
+		if(file!=null) {//새로운 파일로 교체	
+			// 원래 파일 이름 추출
+			String origName = file.getOriginalFilename();
+			
+			// 파일 이름으로 쓸 uuid 생성
+			String uuid = UUID.randomUUID().toString();
+			
+			// 확장자 추출(ex : .png)
+			String extension = origName.substring(origName.lastIndexOf("."));
+			
+			// uuid와 확장자 결합
+			String savedName = uuid + extension;
+			
+			// 파일을 불러올 때 사용할 파일 경로
+			String savedPath = fileDir + savedName;
+			
+			
+			// 실제로 로컬에 uuid를 파일명으로 저장
+			file.transferTo(new File(savedPath));
+			 //파일관련
+	        board.setFileOriName(origName);
+	        board.setFileSaveName(savedName);
+	        board.setFilePath(savedPath);
+		}
+		
+		
 		mapper.modifyArticle(board);
 	}
 

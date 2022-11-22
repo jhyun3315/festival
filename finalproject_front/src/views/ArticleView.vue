@@ -65,7 +65,7 @@
           목록
         </b-button>
         <div class="author" v-if="authorCheck(article.userId)">
-          <b-button variant="warning">
+          <b-button variant="warning" @click="articleModi">
             수정
           </b-button>
           <b-button variant="danger" @click="articleDel">
@@ -210,6 +210,9 @@ export default {
           alert("잘못된 접근입니다.")
         }
       )
+    },
+    articleModi(){
+      this.$router.push(`/articlemodify/${this.festivalId}/${this.boardId}`)
     }
   },
   filters:{

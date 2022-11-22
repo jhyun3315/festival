@@ -70,6 +70,11 @@ const routes = [
         component: () => import ('../views/ArticleView.vue')
       },
       {
+        path: '/articlemodify/:festivalId/:boardId',
+        name: 'articlemodifyboard',
+        component: () => import ('../views/ArticlemodifyView.vue')
+      },
+      {
         path: '/articlewrite/:festivalId',
         name: 'articlewriteboard',
         beforeEnter: onlyAuthUser,
