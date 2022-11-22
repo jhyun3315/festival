@@ -61,7 +61,7 @@
     </b-row>
     <b-row align-h="center" align-v="center" >
 
-        <b-button variant="primary">
+        <b-button variant="primary" @click="golist">
           목록
         </b-button>
         <div class="author" v-if="authorCheck(article.userId)">
@@ -177,6 +177,9 @@ export default {
         this.$router.push("/")
       })
 
+    },
+    golist(){
+      this.$router.push(`/board/${this.festivalId}`)
     }
   },
   filters:{

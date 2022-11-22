@@ -24,10 +24,12 @@
       <div class="carousel-window">
           <div class="carousel-content" v-if="boardList.length">
             <template v-for="(ele,i) in boardList">
-              <card class="card" style="width: 300px;" :key="i">
-                <img slot="image" class="card-img-top" :src="showImage(ele.boardId)" alt="Card image cap">
-                <p class="card-text">{{ele.title}}</p>
-              </card>
+              <div :key="i" @click="goArticle(ele.boardId)">
+                <card class="card" style="width: 300px;"  >
+                  <img slot="image" class="card-img-top" :src="showImage(ele.boardId)" alt="Card image cap">
+                  <p class="card-text">{{ele.title}}</p>
+                </card>
+              </div>
             </template>
           </div>
           <div class="carousel-content" v-else>
@@ -121,6 +123,9 @@ export default {
     showImage(boardId){
       let tmp = getImage(boardId)
       return tmp
+    },
+    goArticle(boardId){
+      this.$router.push(`/article/${this.festivalId}/${boardId}`);
     }
   }
 }
