@@ -2,7 +2,7 @@ import Vue from 'vue';
 import VueRouter from 'vue-router';
 
 import MainLayout from '@/views/Layout/MainLayout.vue';
-import AuthLayout from '@/views/Pages/AuthLayout.vue';
+import AuthLayout from '@/views/User/AuthLayout.vue';
 import NotFound from '@/views/ErrorView.vue';
 import store from "@/store";
 
@@ -47,17 +47,17 @@ const routes = [
         path: '/profile',
         name: 'profile',
         beforeEnter: onlyAuthUser,
-        component: () => import(/* webpackChunkName: "demo" */ '../views/Pages/UserProfile.vue')
+        component: () => import(/* webpackChunkName: "demo" */ '../views/User/UserProfile.vue')
       },
       {
-        path: '/festival',
-        name: 'festival',
+        path: '/festivalcal',
+        name: 'festivalcal',
         component: () => import(/* webpackChunkName: "demo" */ '../views/FestivalView.vue')
       },
       {
-        path: '/user',
-        name: 'user',
-        component: () => import(/* webpackChunkName: "demo" */ '../views/UserView.vue')
+        path: '/festivalmap',
+        name: 'festivalmap',
+        component: () => import(/* webpackChunkName: "demo" */ '../views/FestivalView2.vue')
       },
       {
         path: '/board/:festivalId',
@@ -98,12 +98,12 @@ const routes = [
       {
         path: '/login',
         name: 'login',
-        component: () => import(/* webpackChunkName: "demo" */ '../views/Pages/Login.vue')
+        component: () => import(/* webpackChunkName: "demo" */ '../views/User/Login.vue')
       },
       {
         path: '/register',
         name: 'register',
-        component: () => import(/* webpackChunkName: "demo" */ '../views/Pages/Register.vue')
+        component: () => import(/* webpackChunkName: "demo" */ '../views/User/Register.vue')
       },
       { path: '*', component: NotFound }
     ]
