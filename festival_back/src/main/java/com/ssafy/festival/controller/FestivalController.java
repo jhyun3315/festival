@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ssafy.festival.model.FestivalDto;
@@ -52,11 +53,18 @@ public class FestivalController {
 	
 	//축제 리스트
 	@GetMapping("/list")
-	public ResponseEntity<?> list() throws Exception{
-		Map<String, Object> map = new HashMap<String, Object>();
+	public ResponseEntity<?> list(@RequestParam Map<String,Object> map) throws Exception{
 		Map<String, Object> res = new HashMap<String, Object>();
 		try {
-			map.put("every", true);//현재 날짜 이후 축제들 불러오기
+			
+			//현재 날짜 이후 모든 축제
+				//every
+			//map.put("every", true);//현재 날짜 이후 축제들 불러오기			
+			//해당 지역의 축제
+				//area:지역명
+			//진행중인 축제
+				//now:true
+			
 			List<FestivalDto> list = service.listFestival(map);
 			res.put("festivalList", list);
 			res.put("status", "ok");

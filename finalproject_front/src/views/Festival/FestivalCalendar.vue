@@ -82,7 +82,7 @@ import Calendar from '@/views/Festival/Calendar/Calendar.vue';
 </script>
 <style>
 #listgroup-ex{
-    margin-top: 150px;
+    /* margin-top: 150px; */
     margin-left: 20px;
 }
 </style>

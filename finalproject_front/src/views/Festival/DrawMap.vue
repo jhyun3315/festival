@@ -139,10 +139,12 @@
           return color(nameLength(d));
         }
   
-        function clicked(d) {
+        
+        function clicked(d) { //---------------------------------------------------------------클릭시 진행
           var x, y, k;
 
-          console.log(d);
+          console.log(d.properties.CTP_KOR_NM);
+          
           // Compute centroid of the selected path
           if (d && centered !== d) {
             var centroid = path.centroid(d);

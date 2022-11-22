@@ -1,25 +1,30 @@
 <template>
+<div>
+  <base-header class="pb-2 pt-5 pt-md-1 bg-gradient-success"> 
+    <h1 class="display-2 text-white">반딧불 축제게시판</h1>
+  </base-header> 
   <b-container class="map"> 
-    <b-row>
-        <b-col >
+    <b-row align-h="center" align-v="center">
+      <b-col>
           <festival-map></festival-map>
       </b-col>
       <b-col cols="6">
 			<div id="listgroup-ex" style="overflow-y:auto; width:500px; height:600px">
-                <h4 id="list-item-1">Item 1</h4>
-                <p>{{ text }}</p>
-                <h4 id="list-item-2">Item 2</h4>
-                <p>{{ text }}</p>
-                <h4 id="list-item-3">Item 3</h4>
-                <p>{{ text }}</p>
-                <h4 id="list-item-4">Item 4</h4>
-                <p>{{ text }}</p>
-                <h4 id="list-item-5">Item 5</h4>
-                <p>{{ text }}</p>
+          <h4 id="list-item-1">Item 1</h4>
+          <p>{{ text }}</p>
+          <h4 id="list-item-2">Item 2</h4>
+          <p>{{ text }}</p>
+          <h4 id="list-item-3">Item 3</h4>
+          <p>{{ text }}</p>
+          <h4 id="list-item-4">Item 4</h4>
+          <p>{{ text }}</p>
+          <h4 id="list-item-5">Item 5</h4>
+          <p>{{ text }}</p>
 		    </div>
 		</b-col>    
   </b-row>
 </b-container>
+</div>
 </template>
 <script>
 
@@ -34,11 +39,14 @@ export default {
         
     }
   },
+  methods:{
+    
+  }
 
 }
 </script>
 <style >
  .map{
-    margin-top: 200px;
+    margin-top: 10px;
   }
 </style>
