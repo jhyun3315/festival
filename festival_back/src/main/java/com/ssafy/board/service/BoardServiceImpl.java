@@ -69,7 +69,7 @@ public class BoardServiceImpl implements BoardService{
 	@Override
 	public List<BoardDto> listArticle(int page, int viewPage) throws Exception {
 		System.out.println("리스트 서비스임");
-		int start = (page-1)*10;
+		int start = (page-1)*viewPage;
 		Map<String, Object> map = new HashMap<String, Object>();
 		System.out.println(start);
 		System.out.println(viewPage);

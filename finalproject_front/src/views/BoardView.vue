@@ -22,22 +22,18 @@
     </div>
     <div class="carousel-wrap">
       <div class="carousel-window">
-          <div class="carousel-content">
-            <card class="card" style="width: 300px;">
+          <div class="carousel-content" v-if="boardList.length">
+            <template v-for="(ele,i) in boardList">
+              <card class="card" style="width: 300px;" :key="i">
+                <img slot="image" class="card-img-top" :src="showImage(ele.boardId)" alt="Card image cap">
+                <p class="card-text">{{ele.title}}</p>
+              </card>
+            </template>
+          </div>
+          <div class="carousel-content" v-else>
+            <card class="card">
               <img slot="image" class="card-img-top" src="data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%22320%22%20height%3D%22180%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20320%20180%22%20preserveAspectRatio%3D%22none%22%3E%3Cdefs%3E%3Cstyle%20type%3D%22text%2Fcss%22%3E%23holder_1664f761b63%20text%20%7B%20fill%3Argba(255%2C255%2C255%2C.75)%3Bfont-weight%3Anormal%3Bfont-family%3AHelvetica%2C%20monospace%3Bfont-size%3A16pt%20%7D%20%3C%2Fstyle%3E%3C%2Fdefs%3E%3Cg%20id%3D%22holder_1664f761b63%22%3E%3Crect%20width%3D%22320%22%20height%3D%22180%22%20fill%3D%22%23777%22%3E%3C%2Frect%3E%3Cg%3E%3Ctext%20x%3D%22110.203125%22%20y%3D%2297.35%22%3EImage%20cap%3C%2Ftext%3E%3C%2Fg%3E%3C%2Fg%3E%3C%2Fsvg%3E" alt="Card image cap">
-              <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-            </card>
-            <card class="card" style="width: 300px;">
-              <img slot="image" class="card-img-top" src="data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%22320%22%20height%3D%22180%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20320%20180%22%20preserveAspectRatio%3D%22none%22%3E%3Cdefs%3E%3Cstyle%20type%3D%22text%2Fcss%22%3E%23holder_1664f761b63%20text%20%7B%20fill%3Argba(255%2C255%2C255%2C.75)%3Bfont-weight%3Anormal%3Bfont-family%3AHelvetica%2C%20monospace%3Bfont-size%3A16pt%20%7D%20%3C%2Fstyle%3E%3C%2Fdefs%3E%3Cg%20id%3D%22holder_1664f761b63%22%3E%3Crect%20width%3D%22320%22%20height%3D%22180%22%20fill%3D%22%23777%22%3E%3C%2Frect%3E%3Cg%3E%3Ctext%20x%3D%22110.203125%22%20y%3D%2297.35%22%3EImage%20cap%3C%2Ftext%3E%3C%2Fg%3E%3C%2Fg%3E%3C%2Fsvg%3E" alt="Card image cap">
-              <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-            </card>
-            <card class="card" style="width: 300px;">
-              <img slot="image" class="card-img-top" src="data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%22320%22%20height%3D%22180%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20320%20180%22%20preserveAspectRatio%3D%22none%22%3E%3Cdefs%3E%3Cstyle%20type%3D%22text%2Fcss%22%3E%23holder_1664f761b63%20text%20%7B%20fill%3Argba(255%2C255%2C255%2C.75)%3Bfont-weight%3Anormal%3Bfont-family%3AHelvetica%2C%20monospace%3Bfont-size%3A16pt%20%7D%20%3C%2Fstyle%3E%3C%2Fdefs%3E%3Cg%20id%3D%22holder_1664f761b63%22%3E%3Crect%20width%3D%22320%22%20height%3D%22180%22%20fill%3D%22%23777%22%3E%3C%2Frect%3E%3Cg%3E%3Ctext%20x%3D%22110.203125%22%20y%3D%2297.35%22%3EImage%20cap%3C%2Ftext%3E%3C%2Fg%3E%3C%2Fg%3E%3C%2Fsvg%3E" alt="Card image cap">
-              <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-            </card>
-            <card class="card" style="width: 300px;">
-              <img slot="image" class="card-img-top" src="data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%22320%22%20height%3D%22180%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20320%20180%22%20preserveAspectRatio%3D%22none%22%3E%3Cdefs%3E%3Cstyle%20type%3D%22text%2Fcss%22%3E%23holder_1664f761b63%20text%20%7B%20fill%3Argba(255%2C255%2C255%2C.75)%3Bfont-weight%3Anormal%3Bfont-family%3AHelvetica%2C%20monospace%3Bfont-size%3A16pt%20%7D%20%3C%2Fstyle%3E%3C%2Fdefs%3E%3Cg%20id%3D%22holder_1664f761b63%22%3E%3Crect%20width%3D%22320%22%20height%3D%22180%22%20fill%3D%22%23777%22%3E%3C%2Frect%3E%3Cg%3E%3Ctext%20x%3D%22110.203125%22%20y%3D%2297.35%22%3EImage%20cap%3C%2Ftext%3E%3C%2Fg%3E%3C%2Fg%3E%3C%2Fsvg%3E" alt="Card image cap">
-              <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+              <p class="card-text">게시판에 어서오세요!</p>
             </card>
           </div>
       </div>
@@ -56,31 +52,45 @@
 </template>
 
 <script>
+import {articleList,getImage} from "@/util/boardApi.js";
+
 export default {
   data(){
     return{
       festivalId:"",
       currentPage:1,
-      rows:100,//전체 게시글 수
-      perPage:5,//하나의 페이지당 보여질 게시글
-      limit:10//네비게이션에 보여지는 페이지 갯수
+      rows:0,//전체 게시글 수
+      perPage:4,//하나의 페이지당 보여질 게시글
+      limit:10,//네비게이션에 보여지는 페이지 갯수
+      boardList:[]
     }
   },
   created(){
-    this.festivalId = this.$route.params.festivalId;
-    this.boardList=[
-      {
-        title:"안녕",
-        content:"그거",
-        img:"data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%22320%22%20height%3D%22180%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20320%20180%22%20preserveAspectRatio%3D%22none%22%3E%3Cdefs%3E%3Cstyle%20type%3D%22text%2Fcss%22%3E%23holder_1664f761b63%20text%20%7B%20fill%3Argba(255%2C255%2C255%2C.75)%3Bfont-weight%3Anormal%3Bfont-family%3AHelvetica%2C%20monospace%3Bfont-size%3A16pt%20%7D%20%3C%2Fstyle%3E%3C%2Fdefs%3E%3Cg%20id%3D%22holder_1664f761b63%22%3E%3Crect%20width%3D%22320%22%20height%3D%22180%22%20fill%3D%22%23777%22%3E%3C%2Frect%3E%3Cg%3E%3Ctext%20x%3D%22110.203125%22%20y%3D%2297.35%22%3EImage%20cap%3C%2Ftext%3E%3C%2Fg%3E%3C%2Fg%3E%3C%2Fsvg%3E"
-      }
-    ]
+    this.festivalId = this.$route.params.festivalId;//축제 번호
+    articleList(
+      {pgno:this.currentPage},
+      ({data})=>{
+        this.rows = data.articleCnt;
+        this.boardList = data.boardList;
+      },
+      ()=>{
+        alert("잘못된 접근입니다.")
+      })
   },
   components:{
   },
   methods:{
     pageClick(_,page){
-      console.log("현재 클릭한 페이지"+page)
+      this.currentPage = page;
+      articleList(
+        {pgno:page},
+        ({data})=>{
+          this.rows = data.articleCnt;
+          this.boardList = data.boardList;
+        },
+        ()=>{
+          alert("잘못된 접근입니다.")
+        })
     },
     selCate(cate){
       console.log(cate+"뭔데")
@@ -88,6 +98,11 @@ export default {
     goWrite(){
       console.log(this.festivalId)
       this.$router.push(`/articlewrite/${this.festivalId}`)
+    },
+    showImage(boardId){
+      let tmp = getImage(boardId)
+      console.log(tmp)
+      return tmp
     }
   }
 }
@@ -127,5 +142,9 @@ export default {
   width:1200px;
   display: flex;
   justify-content: space-between;
+}
+.card-img-top{
+  height:300px;
+  object-fit: cover;
 }
 </style>

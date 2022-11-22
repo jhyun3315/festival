@@ -62,17 +62,21 @@ public class BoardController {
 	@GetMapping()
 	public ResponseEntity<?> list(@RequestParam Map<String,String> map) throws Exception{
 		String pgno = map.get("pgno");
+		int viewPage = 4;//페이지당 보여질 갯수
 		int page = ParameterCheck.notNumberToOne(pgno);
 		
 		Map<String, Object> res = new HashMap<String, Object>();
 		try {
-			List<BoardDto> list = service.listArticle(page, 10);
+			int cnt = service.totalArticleCount();
+			List<BoardDto> list = service.listArticle(page, viewPage);
 			for (int i = 0; i < list.size(); i++) {				
 				list.get(i).setBoardId(ParameterCheck.nullToBlank(list.get(i).getBoardId()));
 				list.get(i).setTitle(ParameterCheck.nullToBlank(list.get(i).getTitle()));
 				list.get(i).setContent(toRN(list.get(i).getContent()));
 				list.get(i).setRegisterTime(ParameterCheck.nullToBlank(list.get(i).getRegisterTime()));
 			}
+			
+			res.put("articleCnt", cnt);
 			res.put("boardList", list);
 			res.put("status", "ok");
 			return new ResponseEntity<Map<String, Object>>(res,HttpStatus.OK);
@@ -84,7 +88,7 @@ public class BoardController {
 	}
 	
 //  이미지 출력
-   @GetMapping("/images/{boardId}")
+   @GetMapping("/image/{boardId}")
    @ResponseBody
    public Resource downloadImage(@PathVariable("boardId") String boardId) throws Exception{
 	   System.out.println(boardId);

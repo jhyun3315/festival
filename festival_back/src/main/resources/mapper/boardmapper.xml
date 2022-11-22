@@ -38,6 +38,8 @@
 	<select id="listArticle" parameterType="map" resultMap="boardmap">
 		select board_id, title, content, user_id, festival_id, date_format(regist_date,'%Y-%m-%d') regist_date,file_path,file_ori_name,file_save_name,cate
 		from board
+		order by regist_date
+		limit #{start}, #{viewPage}
 	</select>
 	
 	<select id="totalArticleCount" resultType="int">
