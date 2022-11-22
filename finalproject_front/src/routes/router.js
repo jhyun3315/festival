@@ -2,7 +2,7 @@ import Vue from 'vue';
 import VueRouter from 'vue-router';
 
 import MainLayout from '@/views/Layout/MainLayout.vue';
-import AuthLayout from '@/views/Pages/AuthLayout.vue';
+import AuthLayout from '@/views/User/AuthLayout.vue';
 import NotFound from '@/views/ErrorView.vue';
 import store from "@/store";
 
@@ -47,33 +47,46 @@ const routes = [
         path: '/profile',
         name: 'profile',
         beforeEnter: onlyAuthUser,
-        component: () => import(/* webpackChunkName: "demo" */ '../views/Pages/UserProfile.vue')
+        component: () => import(/* webpackChunkName: "demo" */ '../views/User/UserProfile.vue')
       },
       {
-        path: '/festival',
-        name: 'festival',
+        path: '/festivalcal',
+        name: 'festivalcal',
         component: () => import(/* webpackChunkName: "demo" */ '../views/FestivalView.vue')
       },
       {
-        path: '/user',
-        name: 'user',
-        component: () => import(/* webpackChunkName: "demo" */ '../views/UserView.vue')
+        path: '/festivalmap',
+        name: 'festivalmap',
+        component: () => import(/* webpackChunkName: "demo" */ '../views/FestivalView2.vue')
       },
       {
         path: '/board/:festivalId',
         name: 'festivalboard',
-        component: () => import ('../views/BoardView.vue')
-      },
-      {
-        path: '/article/:festivalId/:boardId',
-        name: 'articleboard',
-        component: () => import ('../views/ArticleView.vue')
-      },
-      {
-        path: '/articlewrite/:festivalId',
-        name: 'articlewriteboard',
-        beforeEnter: onlyAuthUser,
-        component: () => import ('../views/ArticlewriteView.vue')
+        redirect: 'boardlist/:festivalId',
+        component: () => import ('../views/BoardView.vue'),
+        children:[
+          {
+            path: '/boardlist/:festivalId',
+            name: 'boardList',
+            component: () => import ('../views/Board/BoardList.vue')
+          },
+          {
+            path: '/boardmodify/:festivalId/:boardId',
+            name: 'boardModify',
+            component: () => import ('../views/Board/BoardModify.vue')
+          },
+          {
+            path: '/boardview/:festivalId/:boardId',
+            name: 'boardView',
+            component: () => import ('../views/Board/BoardView.vue')
+          },
+          {
+            path: '/boardwrite/:festivalId',
+            name: 'boardWrite',
+            beforeEnter: onlyAuthUser,
+            component: () => import ('../views/Board/BoardWrite.vue')
+          }
+        ]
       }
     ]
   },
@@ -85,12 +98,12 @@ const routes = [
       {
         path: '/login',
         name: 'login',
-        component: () => import(/* webpackChunkName: "demo" */ '../views/Pages/Login.vue')
+        component: () => import(/* webpackChunkName: "demo" */ '../views/User/Login.vue')
       },
       {
         path: '/register',
         name: 'register',
-        component: () => import(/* webpackChunkName: "demo" */ '../views/Pages/Register.vue')
+        component: () => import(/* webpackChunkName: "demo" */ '../views/User/Register.vue')
       },
       { path: '*', component: NotFound }
     ]

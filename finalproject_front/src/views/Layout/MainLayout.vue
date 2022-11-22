@@ -14,7 +14,7 @@
         <sidebar-item
               :link="{
                 name: '축제 캘린더',
-                path: '/festival',
+                path: '/festivalcal',
                 icon: 'ni ni-pin-3 text-orange'
               }">
         </sidebar-item>
@@ -22,7 +22,7 @@
         <sidebar-item
                 :link="{
                   name: '축제 지도',
-                  path: '/user',
+                  path: '/festivalmap',
                   icon: 'ni ni-bullet-list-67 text-red'
                 }">
         </sidebar-item>
@@ -31,20 +31,6 @@
               :link="{
                 name: 'test게시판',
                 path: '/board/1095732',
-                icon: 'ni ni-single-02 text-yellow'
-                }">
-        </sidebar-item>
-        <sidebar-item
-              :link="{
-                name: 'test게시글',
-                path: '/article/3',
-                icon: 'ni ni-single-02 text-yellow'
-                }">
-        </sidebar-item>
-        <sidebar-item
-              :link="{
-                name: 'test게시글작성',
-                path: '/articlewrite/1095732',
                 icon: 'ni ni-single-02 text-yellow'
                 }">
         </sidebar-item>

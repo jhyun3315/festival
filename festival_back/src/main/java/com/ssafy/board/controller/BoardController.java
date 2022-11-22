@@ -40,14 +40,25 @@ public class BoardController {
 		this.jwtService= jwtService;
 	}
 	
+//  이미지 출력
+   @GetMapping("/image/{boardId}")
+   @ResponseBody
+   public Resource downloadImage(@PathVariable("boardId") String boardId) throws Exception{
+	   System.out.println("이미지 가지로옴");
+	   System.out.println(boardId);
+	   BoardDto board = service.getArticle(Integer.parseInt(boardId));
+	   System.out.println("결과에요");
+	   System.out.println(board);
+	   System.out.println(board.getFilePath());
+       return new UrlResource("file:" + board.getFilePath());
+   }
+   
 	//게시판 가져오기
 	@GetMapping("/{boardId}")
 	public ResponseEntity<?> getarticle(@PathVariable("boardId") String boardId) throws Exception{
-	
 		Map<String, Object> map = new HashMap<String, Object>();
 		try {
 			List<BoardDto> board = service.getArticleDetail(Integer.parseInt(boardId));
-			System.out.println(board);
 	        map.put("board", board);
 	        map.put("status", "ok");
 			return new ResponseEntity<Map<String, Object>>(map,HttpStatus.OK);
@@ -59,45 +70,42 @@ public class BoardController {
 	}
 	
 	
-	@GetMapping("/list/{pgno}")
-	public ResponseEntity<?> list(@PathVariable("pgno") String pgno) throws Exception{
+	@GetMapping()
+	public ResponseEntity<?> list(@RequestParam Map<String,String> map) throws Exception{
+		String pgno = map.get("pgno");//페이지
+		String cate = map.get("cate");//말머리
+
+		int viewPage = 4;//페이지당 보여질 갯수
 		int page = ParameterCheck.notNumberToOne(pgno);
-		
-		Map<String, Object> map = new HashMap<String, Object>();
+		Map<String, Object> res = new HashMap<String, Object>();
 		try {
-			List<BoardDto> list = service.listArticle(page, 10);
+			int cnt = service.totalArticleCount(cate);
+			List<BoardDto> list = service.listArticle(page, viewPage,cate);
 			for (int i = 0; i < list.size(); i++) {				
 				list.get(i).setBoardId(ParameterCheck.nullToBlank(list.get(i).getBoardId()));
 				list.get(i).setTitle(ParameterCheck.nullToBlank(list.get(i).getTitle()));
 				list.get(i).setContent(toRN(list.get(i).getContent()));
 				list.get(i).setRegisterTime(ParameterCheck.nullToBlank(list.get(i).getRegisterTime()));
 			}
-	        map.put("boardList", list);
-	        map.put("status", "ok");
-			return new ResponseEntity<Map<String, Object>>(map,HttpStatus.OK);
+			
+			res.put("articleCnt", cnt);
+			res.put("boardList", list);
+			res.put("status", "ok");
+			return new ResponseEntity<Map<String, Object>>(res,HttpStatus.OK);
 		} catch (Exception e) {
 			e.printStackTrace();
-			map.put("status", "fail");
-			return new ResponseEntity<Map<String, Object>>(map,HttpStatus.OK);
+			res.put("status", "fail");
+			return new ResponseEntity<Map<String, Object>>(res,HttpStatus.OK);
 		}
 	}
 	
-//  이미지 출력
-   @GetMapping("/images/{boardId}")
-   @ResponseBody
-   public Resource downloadImage(@PathVariable("boardId") String boardId) throws Exception{
-	   System.out.println(boardId);
-	   BoardDto board = service.getArticle(Integer.parseInt(boardId));
-	   System.out.println("결과에요");
-	   System.out.println(board);
-	   System.out.println(board.getFilePath());
-       return new UrlResource("file:" + board.getFilePath());
-   }
+
    
    
    //게시글 작성
    @PostMapping()
-   public ResponseEntity<?> write(@RequestParam("file") MultipartFile file,@RequestParam Map<String,String> map, HttpServletRequest request) throws Exception {
+   public ResponseEntity<?> write(@RequestParam(value="file",required = false) MultipartFile file,@RequestParam Map<String,String> map, HttpServletRequest request) throws Exception {
+	   System.out.println("?");
 		Map<String, Object> res = new HashMap<String, Object>();
 
 		if (jwtService.checkToken(request.getHeader("access-token"))) {			
@@ -119,29 +127,24 @@ public class BoardController {
 	
 	
 	@PutMapping()
-	public ResponseEntity<?> modify(@RequestBody Map<String,String> map,HttpServletRequest request) throws Exception{
+	public ResponseEntity<?> modify(@RequestParam(value="file",required = false) MultipartFile file,@RequestParam Map<String,String> map,HttpServletRequest request) throws Exception{
 		Map<String, Object> res = new HashMap<String, Object>();
-		
 		if (jwtService.checkToken(request.getHeader("access-token"))) {
 			try {
 				String userId = jwtService.getUserId();
-				System.out.println(userId);
 				if(!userId.equals(map.get("userId"))) {
 					res.put("status", "fail");
 					return new ResponseEntity<Map<String, Object>>(res,HttpStatus.OK);
 				}
-				String boardId =map.get("boardId");
-				String title = map.get("title");
-				String content = map.get("content");
 				
 				BoardDto board = new BoardDto();
-				board.setBoardId(boardId);
-				board.setContent(toBR(content));
-				board.setTitle(title);
+				board.setBoardId(map.get("boardId"));
+				board.setTitle(map.get("title"));
+				board.setContent(toBR(map.get("content")));
 				board.setUserId(userId);
+				board.setCate(map.get("cate"));
 				
-				System.out.println(board);
-				service.modifyArticle(board);
+				service.modifyArticle(file,board);
 				res.put("status", "ok");
 				return new ResponseEntity<Map<String, Object>>(res,HttpStatus.OK);
 			}catch (Exception e) {

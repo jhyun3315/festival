@@ -59,23 +59,6 @@
                   </base-input>
                   <base-input alternative
                               class="mb-3"
-                              prepend-icon="ni ni-badge"
-                              placeholder="ID"
-                              name="id"
-                              :rules="{required: true}"
-                              v-model="model.id">
-                  </base-input>
-                  <base-input alternative
-                              class="mb-3"
-                              prepend-icon="ni ni-lock-circle-open"
-                              placeholder="password"
-                              type="password"
-                              name="Password"
-                              :rules="{required: true, min: 6}"
-                              v-model="model.password">
-                  </base-input>
-                  <base-input alternative
-                              class="mb-3"
                               prepend-icon="ni ni-hat-3"
                               placeholder="Name"
                               name="Name"
