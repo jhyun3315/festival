@@ -138,7 +138,11 @@ export default {
     ...mapActions(memberStore, ["getUserInfo"]),
     authorCheck(id){
       //id와 현재 id를 비교하여 true, false로 작성자 유무를 판별
-      return this.userInfo.userId===id;
+      if(this.userInfo===null){//로그인 하지 않으면 안나옴
+        return false;
+      }else{
+        return this.userInfo.userId===id;
+      }
     },
     showImage(boardId){//이미지 출력
       let tmp = getImage(boardId)
