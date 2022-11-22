@@ -39,7 +39,7 @@
                     {{ele.userId}}
                   </b-row>
                   <b-row v-if="authorCheck(ele.userId)">
-                    <b-button squared variant="danger" size="sm">삭제</b-button>
+                    <b-button squared variant="danger" size="sm" @click="commentDel(ele.id)">삭제</b-button>
                   </b-row>
                 </b-col>
               </b-row>
@@ -68,7 +68,7 @@
           <b-button variant="warning">
             수정
           </b-button>
-          <b-button variant="danger">
+          <b-button variant="danger" @click="articleDel">
             삭제
           </b-button>
         </div>
@@ -80,8 +80,8 @@
 </template>
 
 <script>
-import {getArticle,getImage} from "@/util/boardApi"
-import {writeComment,commentList} from "@/util/commentApi"
+import {getArticle,getImage,articleDelete} from "@/util/boardApi"
+import {writeComment,commentList,commentDelete} from "@/util/commentApi"
 
 import {mapState, mapGetters, mapActions} from "vuex";
 
@@ -170,7 +170,14 @@ export default {
       commentList(this.boardId,
       ({data})=>{
         //댓글 재 호출
-        this.comments = data.commentlist;
+        this.comments = data.commentlist.map(ele=>{
+          return {
+            id:ele.commentId,
+            content:ele.content,
+            userId:ele.userId,
+            registDate:ele.registerTime
+            }
+        });
       },
       ()=>{
         console.log("잘못된 접근")
@@ -180,6 +187,29 @@ export default {
     },
     golist(){
       this.$router.push(`/board/${this.festivalId}`)
+    },
+    async commentDel(id){
+      await this.getUserInfo(); // 토큰 확인 및 재발급진행
+      await commentDelete(
+        id,
+        ()=>{
+          this.getComment();//댓글 재호출
+        },
+        ()=>{
+          alert("잘못된 접근")
+        })
+    },
+    async articleDel(){
+      await this.getUserInfo(); // 토큰 확인 및 재발급진행
+      await articleDelete(
+        this.boardId,
+        ()=>{
+          this.golist();
+        },
+        ()=>{
+          alert("잘못된 접근입니다.")
+        }
+      )
     }
   },
   filters:{

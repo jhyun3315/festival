@@ -21,5 +21,11 @@ async function getArticle(boardId,success, fail) {
   await api.get(`/board/${boardId}`).then(success).catch(fail);
 }
 
-export { articleWrite, articleList, getImage, getArticle };
+//게시글 삭제
+async function articleDelete(boardId,success, fail) {
+  api.defaults.headers["access-token"] = sessionStorage.getItem("access-token");
+  await api.delete(`/board/${boardId}`).then(success).catch(fail);
+}
+
+export { articleWrite, articleList, getImage, getArticle ,articleDelete};
   

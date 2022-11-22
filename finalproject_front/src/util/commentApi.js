@@ -12,5 +12,11 @@ async function commentList(boardId,success, fail) {
 }
 
 
-export { writeComment, commentList };
+//댓글 삭제
+async function commentDelete(commentId,success, fail) {
+    api.defaults.headers["access-token"] = sessionStorage.getItem("access-token");
+    await api.delete(`/comment/${commentId}`).then(success).catch(fail);
+}
+
+export { writeComment, commentList,commentDelete };
   
