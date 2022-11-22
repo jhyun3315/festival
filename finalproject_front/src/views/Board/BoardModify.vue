@@ -1,49 +1,38 @@
 <template>
-<div>
-  <base-header class="pb-6 pb-8 pt-5 pt-md-4 bg-gradient-success"> 
-    <h1 class="display-2 text-white">반딧불 축제게시글 작성하기</h1>
-  </base-header> 
-  
-  <!-- <div class="write-wrap  pt-md-4"> -->
-  <b-container>
-    <b-row>
-      <b-col class="card-center">
-        <card class="col-md-6">
-          <b-row>
-            말머리
-            <b-form-select v-model="cate" :options="cateoptions"></b-form-select>
-          </b-row>
-          <b-row>
-            제목
-            <b-form-input v-model="title" required></b-form-input>
-          </b-row>
-          <b-row>
-            내용
-            <b-form-textarea rows="8" no-resize v-model="content" required></b-form-textarea>
-          </b-row>
-          <b-row>
-            <b-form-file accept="image/*" v-model="file" class="mt-3" plain  ></b-form-file>
-          </b-row>
-          <b-row align-h="center" align-v="center" >
-            <div>
-              <b-button variant="primary" @click="modiSubmit">
-                수정
-              </b-button>
-              <b-button variant="danger">
-                취소
-              </b-button>
-            </div>
+<b-container>
+<b-row>
+    <b-col class="card-center">
+    <card class="col-md-6">
+        <b-row>
+        말머리
+        <b-form-select v-model="cate" :options="cateoptions"></b-form-select>
+        </b-row>
+        <b-row>
+        제목
+        <b-form-input v-model="title" required></b-form-input>
+        </b-row>
+        <b-row>
+        내용
+        <b-form-textarea rows="8" no-resize v-model="content" required></b-form-textarea>
+        </b-row>
+        <b-row>
+        <b-form-file accept="image/*" v-model="file" class="mt-3" plain  ></b-form-file>
+        </b-row>
+        <b-row align-h="center" align-v="center" >
+        <div>
+            <b-button variant="primary" @click="modiSubmit">
+            수정
+            </b-button>
+            <b-button variant="danger" @click="modiCancle">
+            취소
+            </b-button>
+        </div>
 
-          </b-row>
-        </card>
-      </b-col>
-    </b-row>
-  </b-container>
-
-  
-  <!-- </div> -->
-   
-</div>
+        </b-row>
+    </card>
+    </b-col>
+</b-row>
+</b-container>
 </template>
 
 <script>
@@ -104,7 +93,7 @@ export default {
     ({data})=>{
       if(data.status==="ok"){
         alert("수정완료")
-        this.$router.push(`/board/${this.festivalId}`);
+        this.$router.push(`/boardlist/${this.festivalId}`);
       }else{
         alert("수정실패")
         this.$router.push("/")
@@ -114,6 +103,9 @@ export default {
       alert("수정실패")
       this.$router.push("/")
     })
+  },
+  modiCancle(){
+    this.$router.push(`/boardlist/${this.festivalId}`)
   }
  },computed:{
     ...mapState(memberStore, ["userInfo"]),

@@ -62,23 +62,31 @@ const routes = [
       {
         path: '/board/:festivalId',
         name: 'festivalboard',
-        component: () => import ('../views/BoardView.vue')
-      },
-      {
-        path: '/article/:festivalId/:boardId',
-        name: 'articleboard',
-        component: () => import ('../views/ArticleView.vue')
-      },
-      {
-        path: '/articlemodify/:festivalId/:boardId',
-        name: 'articlemodifyboard',
-        component: () => import ('../views/ArticlemodifyView.vue')
-      },
-      {
-        path: '/articlewrite/:festivalId',
-        name: 'articlewriteboard',
-        beforeEnter: onlyAuthUser,
-        component: () => import ('../views/ArticlewriteView.vue')
+        redirect: 'boardlist/:festivalId',
+        component: () => import ('../views/BoardView.vue'),
+        children:[
+          {
+            path: '/boardlist/:festivalId',
+            name: 'boardList',
+            component: () => import ('../views/Board/BoardList.vue')
+          },
+          {
+            path: '/boardmodify/:festivalId/:boardId',
+            name: 'boardModify',
+            component: () => import ('../views/Board/BoardModify.vue')
+          },
+          {
+            path: '/boardview/:festivalId/:boardId',
+            name: 'boardView',
+            component: () => import ('../views/Board/BoardView.vue')
+          },
+          {
+            path: '/boardwrite/:festivalId',
+            name: 'boardWrite',
+            beforeEnter: onlyAuthUser,
+            component: () => import ('../views/Board/BoardWrite.vue')
+          }
+        ]
       }
     ]
   },
