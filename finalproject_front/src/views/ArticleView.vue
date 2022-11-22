@@ -10,24 +10,17 @@
         <b-card class="comment-wrap">
           <b-row align-v="center" slot="header" >
             <b-col cols="8">
-              <h3 class="mb-0">제목이요 </h3>
+              <h3 class="mb-0">[{{article.cate | cateKor}}]{{article.title}}</h3>
             </b-col>
             <b-col cols="4" class="text-right">
-              <h6 class="mb-0">글쓴이요</h6>
+              <h6 class="mb-0">작성자 {{article.userId}}</h6>
             </b-col>
           </b-row>
           <div class="article-wrap">
-            <b-card-img src="https://www.mcst.go.kr/attachFiles/cultureInfoCourt/localFestival/notifyFestival/1666590171973.png"/>
+            <!-- <b-card-img src="https://www.mcst.go.kr/attachFiles/cultureInfoCourt/localFestival/notifyFestival/1666590171973.png"/> -->
+            <b-card-img :src="showImage(article.boardId)"/> 
             <b-card-text>
-              이런일을 했었따 - 좀더 이쁘게 보임 <br/>
-              hi
-              fdsaf<br/>
-              fdsaf<br/>
-              sefdsa<br/>
-              default<br/>
-              dhsafejio<br/>
-              러ㅑ덜아ㅣㅁㄴ<br/>
-              ㅓ댜<br/>
+              {{article.content}}
             </b-card-text>
           </div>
         </b-card>
@@ -36,123 +29,28 @@
         <card class="comment-wrap" >
           <div class="comment-content">
             <!-- 댓글 들어가는 자리-->
-            <b-row class="comment"  align-h="center" align-v="center" >
-              <b-col cols="10" >
-                댓글내용 
-              </b-col>
-              <b-col >
-                <b-row>
-                  작성자이름
-                </b-row>
-                <b-row v-show="isAuthor">
-                  <b-button squared variant="danger" size="sm">삭제</b-button>
-                </b-row>
-              </b-col>
-            </b-row>
+            <template v-for="(ele,i) in comments">
+              <b-row class="comment"  align-h="center" align-v="center" :key="i">
+                <b-col cols="10" >
+                  {{ele.content}}
+                </b-col>
+                <b-col >
+                  <b-row>
+                    {{ele.userId}}
+                  </b-row>
+                  <b-row >
+                    <b-button squared variant="danger" size="sm">삭제</b-button>
+                  </b-row>
+                </b-col>
+              </b-row>
+            </template>
 
-            <b-row class="comment">
-              <b-col cols="10" >
-                댓글내용 
-              </b-col>
-              <b-col >
-                <b-row>
-                  작성자이름
-                </b-row>
-                <b-row>
-                  <b-button squared variant="danger" size="sm">삭제</b-button>
-                </b-row>
-              </b-col>
-            </b-row>
-
-            <b-row class="comment">
-              <b-col cols="10" >
-                댓글내용 
-              </b-col>
-              <b-col >
-                <b-row>
-                  작성자이름
-                </b-row>
-                <b-row>
-                  <b-button squared variant="danger" size="sm">삭제</b-button>
-                </b-row>
-              </b-col>
-            </b-row>
-
-            <b-row class="comment">
-              <b-col cols="10" >
-                댓글내용 
-              </b-col>
-              <b-col >
-                <b-row>
-                  작성자이름
-                </b-row>
-                <b-row>
-                  <b-button squared variant="danger" size="sm">삭제</b-button>
-                </b-row>
-              </b-col>
-            </b-row>
-
-            <b-row class="comment">
-              <b-col cols="10" >
-                댓글내용 
-              </b-col>
-              <b-col >
-                <b-row>
-                  작성자이름
-                </b-row>
-                <b-row>
-                  <b-button squared variant="danger" size="sm">삭제</b-button>
-                </b-row>
-              </b-col>
-            </b-row>
-
-            <b-row class="comment">
-              <b-col cols="10" >
-                댓글내용 
-              </b-col>
-              <b-col >
-                <b-row>
-                  작성자이름
-                </b-row>
-                <b-row>
-                  <b-button squared variant="danger" size="sm">삭제</b-button>
-                </b-row>
-              </b-col>
-            </b-row>
-
-            <b-row class="comment">
-              <b-col cols="10" >
-                댓글내용 
-              </b-col>
-              <b-col >
-                <b-row>
-                  작성자아이디
-                </b-row>
-                <b-row>
-                  <b-button squared variant="danger" size="sm">삭제</b-button>
-                </b-row>
-              </b-col>
-            </b-row>
-
-            <b-row class="comment">
-              <b-col cols="10" >
-                댓글내용 댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용
-              </b-col>
-              <b-col >
-                <b-row>
-                  작성자이름
-                </b-row>
-                <b-row >
-                  <b-button squared variant="danger" size="sm">삭제</b-button>
-                </b-row>
-              </b-col>
-            </b-row>
 
           </div>
           <hr class="my-4"/>
           <b-row align-v="center"  align-h="center">
             <b-col cols="10" >
-              <b-form-input v-model="commenttext" placeholder="댓글"></b-form-input>
+              <b-form-input v-model="commentText" placeholder="댓글"></b-form-input>
             </b-col>
             <b-col >
               <b-button squared variant="primary" size="sm">등록</b-button>
@@ -166,7 +64,7 @@
         <b-button variant="primary">
           목록
         </b-button>
-        <div class="author" v-show="isAuthor">
+        <div class="author" >
           <b-button variant="warning">
             수정
           </b-button>
@@ -182,19 +80,83 @@
 </template>
 
 <script>
+import {getArticle,getImage} from "@/util/boardApi"
+import {mapState} from "vuex";
+
+const memberStore = "memberStore";
+
+
 export default {
+
+  async created(){
+    this.festivalId = this.$route.params.festivalId;
+    this.boardId = this.$route.params.boardId;
+    await getArticle(
+      this.boardId,
+      ({data})=>{
+        // console.log("무야호")
+        this.article = data.board[0]
+
+        //댓글
+        this.comments = data.board.filter(ele=>ele.commentId!=null).map(ele=>{
+          return {
+            id:commentId,
+            content:ele.commentContent,
+            userId:ele.commentUserId,
+            registDate:ele.commentRegisterTime
+            }
+        })
+        console.log(this.article)
+        // console.log(this.comments)
+      },
+      ()=>{
+        alert("잘못된 접근입니다.")
+        this.$router.push("/")
+      }
+    )
+  },
   data(){
     return {
-      isAuthor:false,
+      festivalId:"",
+      boardId:"",
+      commentText:"",//입력한 게시글
+      article:{//게시글 정보
+        boardId:"",
+        cate:"",
+        content:"",
+        festivalId:"",
+        registerTime:"",
+        title:"",
+        userId:""
+      },
+      comments:[]//댓글들
     }
   },
   computed:{
-    authorCheck(){
-      this.isAuthor
+    ...mapState(memberStore, ["isLogin", "userInfo"]),
+  },
+  methods:{
+    authorCheck(id){
+
+      //id와 현재 id를 비교하여 true, false로 작성자 유무를 판별
+      return this.userInfo.userId===id;
+    },
+    showImage(boardId){
+      let tmp = getImage(boardId)
+      return tmp
     }
   },
- methods:{
- }
+  filters:{
+    cateKor(cate){
+      if(cate==="hugi"){
+        return "후기"
+      }else if(cate==="deal"){
+        return "거래"
+      }else{
+        return "기타"
+      }
+    }
+  }
 }
 
 </script>

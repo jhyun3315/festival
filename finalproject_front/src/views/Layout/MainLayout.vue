@@ -37,7 +37,7 @@
         <sidebar-item
               :link="{
                 name: 'test게시글',
-                path: '/article/1095732/3',
+                path: '/article/1095732/21',
                 icon: 'ni ni-single-02 text-yellow'
                 }">
         </sidebar-item>

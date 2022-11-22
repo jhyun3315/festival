@@ -16,5 +16,10 @@ function getImage(boardId){
   return `${process.env.VUE_APP_BASE_URL}/board/image/${boardId}`;
 }
 
-export { articleWrite, articleList,getImage };
+//게시글 보기
+async function getArticle(boardId,success, fail) {
+  await api.get(`/board/${boardId}`).then(success).catch(fail);
+}
+
+export { articleWrite, articleList, getImage, getArticle };
   
