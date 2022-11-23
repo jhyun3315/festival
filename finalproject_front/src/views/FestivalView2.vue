@@ -1,11 +1,11 @@
 <template>
-<div>
-  <base-header class="pb-2 pt-5 pt-md-1 bg-gradient-success"> 
-    <h1 class="display-2 text-white">지역 축제현황</h1>
-  </base-header> 
-  <b-container class="map"> 
-    <b-row align-h="center" align-v="center">
-      <b-col>
+  <div>
+    <base-header class="pb-2 pt-5 pt-md-1 bg-gradient-success">
+      <h1 class="display-2 text-white">지역 축제현황</h1>
+    </base-header>
+    <b-container class="map">
+      <b-row align-h="center" align-v="center">
+        <b-col>
           <festival-map v-on:getFestival="getFestival"></festival-map>
       </b-col>
       <b-col cols="6">
@@ -27,9 +27,8 @@
 import {getAreaFestival} from "@/util/festivalApi.js"
 import FestivalCard2 from "@/views/Festival/FestivalCard2.vue"
 
-
-import FestivalMap from '@/views/Festival/DrawMap';  
-export default { 
+import FestivalMap from "@/views/Festival/DrawMap";
+export default {
   components: {
       FestivalMap, 
       FestivalCard2
@@ -41,33 +40,33 @@ export default {
       festivalInfo:{}
     }
   },
-  methods:{
-    getFestival(area){
+  methods: {
+    getFestival(area) {
       this.area = area;
       getAreaFestival(
         area,
-        ({data})=>{
+        ({ data }) => {
           this.festivals = data.festivalList;
-          console.log(this.festivals)
         },
-        ()=>{
-          alert("에러야")
-        })
+        () => {
+          alert("에러야");
+        }
+      );
     },
   }
 
 }
 </script>
-<style >
-.map{
-  margin-top: 10px;
+<style>
+.map {
+  margin-top: 50px;
 }
-.festivalContent{
+.festivalContent {
   white-space: normal;
   overflow-y: hidden;
   height: 110px;
 }
-.buttonRight{
+.buttonRight {
   display: flex;
   justify-content: right;
 }
