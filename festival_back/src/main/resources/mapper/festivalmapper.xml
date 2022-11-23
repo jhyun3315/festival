@@ -40,7 +40,15 @@
 				AND date(start_date) >= now()
 			</if>
 		</trim>
-		order by start_date asc
+		<choose>
+			<when test="now != null and now != ''">
+				order by start_date desc
+			</when>
+			<otherwise>
+				order by start_date asc
+			</otherwise>
+		</choose>
+
 		<!-- 페이징 -->
 		<if test="start != null">
 			limit #{start}, #{spp}

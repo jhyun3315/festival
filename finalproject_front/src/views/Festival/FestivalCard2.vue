@@ -19,7 +19,7 @@
                 <div class="buttonRight">
                 <b-button size="sm" variant="danger" @click="goBoard(festivalInfo.festivalId)">게시판</b-button>
                 <b-button size="sm" variant="primary" v-b-modal="festivalInfo.festivalId">상세보기</b-button>
-                <b-button size="sm" variant="success">
+                <b-button size="sm" variant="success" @click="addFavor(festivalInfo.festivalId)">
                     즐겨찾기 등록
                 </b-button>
                 </div>
@@ -62,12 +62,16 @@
 
 <script>
 import {getDefaultImage} from "@/util/boardApi"
+import {favorAdd} from "@/util/favorApi"
+import {mapState, mapGetters, mapActions} from "vuex";
+const memberStore = "memberStore";
 
 export default {
     props:{
         festivalInfo:Object
     },
     methods:{
+        ...mapActions(memberStore, ["getUserInfo"]),
         checkImage(imgsrc){
             if(imgsrc){
                 return imgsrc;
@@ -77,6 +81,21 @@ export default {
         },
         goBoard(festivalId){
             this.$router.push(`/board/${festivalId}`)
+        },
+        async addFavor(festivalId){
+            //토큰 확인
+            await this.getUserInfo(); // 토큰 확인 및 재발급진행
+            //등록하러가기
+            await favorAdd(
+                festivalId,
+                ({data})=>{
+                    console.log(data)
+                    console.log("등록완료")
+                },
+                ()=>{
+                    console.log("등록실패")
+                }
+                )
         }
     }
 }
