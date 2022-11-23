@@ -25,7 +25,6 @@
 </template>
 <script>
 import {getAreaFestival} from "@/util/festivalApi.js"
-import {getDefaultImage} from "@/util/boardApi"
 import FestivalCard2 from "@/views/Festival/FestivalCard2.vue"
 
 
