@@ -17,10 +17,13 @@
                                 :space="500"
                                 :clickable="true">
                                 
-                      <slide v-for="(slide, i) in slides" :index="i" :key="i">
-                        <!--https://source.unsplash.com/user/erondu/960x540-->
-                      <img src="https://source.unsplash.com/featured/?festival">
-                    </slide>
+                      <!-- <slide v-for="(slide, i) in slides" :index="i" :key="i">
+                        <img src="https://source.unsplash.com/featured/?festival">
+                      </slide> -->
+                      <slide v-for="(ele, i) in festivals" :index="i" :key="i">
+                        <!-- <img :src="checkImage(slide.originImage)"> -->
+                        <festival-card :festivalInfo="ele"></festival-card>
+                      </slide>
                    </carousel-3d>
                   </div>
                 </div>
@@ -35,20 +38,35 @@
   </div>
 </template>
 <script>
-  import { Carousel3d, Slide} from 'vue-carousel-3d';
+import { Carousel3d, Slide} from 'vue-carousel-3d';
+import {getNowFestival} from "@/util/festivalApi.js"
+import FestivalCard from "@/views/Festival/FestivalCard.vue"
 
-  export default {
-    components: {
-      Carousel3d,
-      Slide 
-    },
+export default {
+  created(){
+    getNowFestival(
+      ({data})=>{
+        this.festivals = data.festivalList;
+        console.log(data)
+      },
+      ()=>{
+        console.log("에러야")
+      }
+    )
+  },
+  components: {
+    Carousel3d,
+    Slide,
+    FestivalCard
+  },
   data() {
     return {
-        slides: 4, 
-
-      };
-    },
+      slides: 4, 
+      festivals:[]
+    };
+  },
   methods: { 
+    
   }
 }
  

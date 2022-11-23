@@ -65,11 +65,12 @@ public class FestivalController {
 				//area:지역명
 			//진행중인 축제
 				//now:true
-			
-			List<FestivalDto> list = service.listFestival(map);
-			for (int i = 0; i < list.size(); i++) {				
-				list.get(i).setFestivalContent(toRN(list.get(i).getFestivalContent()));
+			System.out.println(map);
+			if(map.get("start")!=null) {
+				map.put("start", Integer.parseInt((String)map.get("start")));				
+				map.put("spp", Integer.parseInt((String)map.get("spp")));
 			}
+			List<FestivalDto> list = service.listFestival(map);
 			res.put("festivalList", list);
 			res.put("status", "ok");
 			return new ResponseEntity<Map<String, Object>>(res,HttpStatus.OK);

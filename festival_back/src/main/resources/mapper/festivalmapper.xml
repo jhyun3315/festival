@@ -40,9 +40,9 @@
 				AND date(start_date) >= now()
 			</if>
 		</trim>
-		
+		order by start_date asc
 		<!-- 페이징 -->
-		<if test="start != null and start !=''">
+		<if test="start != null">
 			limit #{start}, #{spp}
 		</if>
 	</select>

@@ -12,7 +12,7 @@ async function getEveryFestival(success, fail) {
 
 //현재 진행중
 async function getNowFestival(success, fail) {
-    await api.get(`/festival/list`, {params:{now:true}}).then(success).catch(fail);
+    await api.get(`/festival/list`, {params:{now:true,start:0,spp:10}}).then(success).catch(fail);
 }
 
 //지역 검색
