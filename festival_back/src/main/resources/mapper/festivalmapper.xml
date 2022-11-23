@@ -39,6 +39,9 @@
 			<if test="every != null and every != ''">
 				AND date(start_date) >= now()
 			</if>
+			<if test ="month!=null and month!=''"> 
+			    AND DATE_FORMAT(#{month}, '%Y-%m') BETWEEN DATE_FORMAT(start_date, '%Y-%m') AND DATE_FORMAT(end_date, '%Y-%m')
+			</if>
 		</trim>
 		<choose>
 			<when test="now != null and now != ''">
