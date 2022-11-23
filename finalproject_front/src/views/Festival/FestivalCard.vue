@@ -36,7 +36,8 @@
                 <template v-if="festivalInfo.homepage">
                 홈페이지 : <div v-html="festivalInfo.homepage"></div><br>
                 </template>
-                <b-button size="sm" variant="success" @click="goBoard(festivalInfo.festivalId)">게시판으로 </b-button><br>
+                <b-button size="sm" variant="success" @click="goBoard(festivalInfo.festivalId)">게시판으로 </b-button>
+                <b-button size="sm" variant="warning" @click="addFavor(festivalInfo.festivalId)">즐겨찾기 등록</b-button>
             </b-col>
             </b-row>
             <b-row v-html="festivalInfo.festivalContent">
@@ -48,12 +49,16 @@
 
 <script>
 import {getDefaultImage} from "@/util/boardApi"
+import {favorAdd} from "@/util/favorApi"
+import {mapState, mapGetters, mapActions} from "vuex";
+const memberStore = "memberStore"
 
 export default {
     props:{
         festivalInfo:Object
     },
     methods:{
+        ...mapActions(memberStore, ["getUserInfo"]),
         checkImage(imgsrc){
             if(imgsrc){
                 return imgsrc;
@@ -64,6 +69,22 @@ export default {
         goBoard(festivalId){
             this.$router.push(`/board/${festivalId}`)
         },
+        async addFavor(festivalId){
+            //토큰 확인
+            await this.getUserInfo(); // 토큰 확인 및 재발급진행
+            //등록하러가기
+            await favorAdd(
+                festivalId,
+                ({data})=>{
+                    console.log(data)
+                    console.log("등록완료")
+                },
+                ()=>{
+                    console.log("등록실패")
+                    alert("로그인해주세요")
+                }
+                )
+        }
     }
 }
 </script>
