@@ -14,7 +14,8 @@
           <b-card no-body class="overflow-hidden" style="max-width: 600px; max-height: 400px;" >
             <b-row no-gutters align-v="center">
               <b-col md="6" >
-                <b-card-img :src="ele.originImage"  :alt="ele.festivalName" class="rounded-0"></b-card-img>
+                <b-card-img v-if="ele.originImage!==''" :src="ele.originImage"  :alt="ele.festivalName" class="rounded-0"></b-card-img>
+                <b-card-img v-else :src="defaultImage()"  alt="기본이미지" class="rounded-0"></b-card-img>
               </b-col>
               <b-col md="6">
                 <b-card-body :title="ele.festivalName">
@@ -47,6 +48,7 @@
 </template>
 <script>
 import {getAreaFestival} from "@/util/festivalApi.js"
+import {getDefaultImage} from "@/util/boardApi"
 
 
 import FestivalMap from '@/views/Festival/DrawMap';  
@@ -72,6 +74,9 @@ export default {
         ()=>{
           alert("에러야")
         })
+    },
+    defaultImage(){
+      return getDefaultImage();
     }
   }
 
