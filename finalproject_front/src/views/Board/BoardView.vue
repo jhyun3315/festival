@@ -31,7 +31,7 @@
         <hr class="my-4"/>
         <b-row align-v="center"  align-h="center">
         <b-col cols="10" >
-            <b-form-input v-model="commentText" placeholder="댓글"></b-form-input>
+            <b-form-input v-model="commentText" placeholder="댓글" @keydown.native="keydown_handler"></b-form-input>
         </b-col>
         <b-col >
             <b-button squared variant="primary" size="sm" @click="commentWrite">등록</b-button>
@@ -198,6 +198,11 @@ export default {
     },
     articleModi(){
       this.$router.push(`/boardmodify/${this.festivalId}/${this.boardId}`)
+    },
+    keydown_handler(e){//엔터키 누르면 동작
+      if (e.which === 13) {
+        this.commentWrite();
+     }
     }
   },
   filters:{
