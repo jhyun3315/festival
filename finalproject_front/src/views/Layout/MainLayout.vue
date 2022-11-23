@@ -26,14 +26,6 @@
                   icon: 'ni ni-bullet-list-67 text-red'
                 }">
         </sidebar-item>
-        
-        <sidebar-item
-              :link="{
-                name: 'test게시판',
-                path: '/board/1095732',
-                icon: 'ni ni-single-02 text-yellow'
-                }">
-        </sidebar-item>
       </template> 
     </side-bar>
     <div class="main-content">
