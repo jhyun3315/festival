@@ -82,8 +82,8 @@ public class BoardController {
 		int page = ParameterCheck.notNumberToOne(pgno);
 		Map<String, Object> res = new HashMap<String, Object>();
 		try {
-			int cnt = service.totalArticleCount(cate);
-			List<BoardDto> list = service.listArticle(page, viewPage,cate);
+			int cnt = service.totalArticleCount(cate,map.get("festivalId"));
+			List<BoardDto> list = service.listArticle(page, viewPage,cate,map.get("festivalId"));
 			for (int i = 0; i < list.size(); i++) {				
 				list.get(i).setBoardId(ParameterCheck.nullToBlank(list.get(i).getBoardId()));
 				list.get(i).setTitle(ParameterCheck.nullToBlank(list.get(i).getTitle()));

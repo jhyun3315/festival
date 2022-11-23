@@ -10,8 +10,8 @@ import com.ssafy.board.model.BoardDto;
 public interface BoardService {
 //	int writeArticle(BoardDto board) throws Exception;
 	int writeArticle(MultipartFile file, Map<String,String> map) throws Exception;
-	List<BoardDto> listArticle(int page, int viewPage,String cate) throws Exception;
-	int totalArticleCount(String cate) throws Exception;
+	List<BoardDto> listArticle(int page, int viewPage,String cate, String festivalId) throws Exception;
+	int totalArticleCount(String cate,String festivalId) throws Exception;
 	List<BoardDto> getArticleDetail(int boardId) throws Exception;
 	BoardDto getArticle(int boardId) throws Exception;
 	void modifyArticle(MultipartFile file,BoardDto board) throws Exception;

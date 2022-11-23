@@ -28,8 +28,10 @@
                       {{ele.festivalContent}}
                     </div>
                   </b-card-text>
+                  <hr class="my-4"/>
                   <div class="buttonRight">
-                    <b-button size="sm" variant="primary" v-b-modal.modal-center>상세보기</b-button>
+                    <b-button size="sm" variant="danger" v-b-modal.modal-center @click="goBoard(ele.festivalId)">게시판</b-button>
+                    <b-button size="sm" variant="primary" v-b-modal.modal-center @click="detail(ele)">상세보기</b-button>
                     <b-button size="sm" variant="success">
                       즐겨찾기 등록
                     </b-button>
@@ -50,8 +52,10 @@
 </b-container>
 
 <!--상세 축제 정보 모달-->
-<b-modal id="modal-center" centered title="BootstrapVue">
-  <p class="my-4">Vertically centered modal!</p>
+<b-modal id="modal-center" centered :title="festivalInfo.festivalName">
+  <b-card>
+    hi
+  </b-card>
 </b-modal>
 
 </div>
@@ -69,7 +73,8 @@ export default {
   data() {
     return {
       area:"",
-      festivals:[]
+      festivals:[],
+      festivalInfo:{}
     }
   },
   methods:{
@@ -87,6 +92,12 @@ export default {
     },
     defaultImage(){
       return getDefaultImage();
+    },
+    detail(festival){
+      this.festivalInfo = festival;
+    },
+    goBoard(festivalId){
+      this.$router.push(`/board/${festivalId}`)
     }
   }
 
@@ -99,7 +110,7 @@ export default {
 .festivalContent{
   white-space: normal;
   overflow-y: hidden;
-  height: 120px;
+  height: 110px;
 }
 .buttonRight{
   display: flex;

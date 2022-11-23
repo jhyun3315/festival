@@ -12,7 +12,7 @@ import com.ssafy.board.model.BoardDto;
 public interface BoardMapper {
 	int writeArticle(BoardDto board) throws Exception;
 	List<BoardDto> listArticle(Map<String,Object> map) throws Exception;
-	int totalArticleCount(String cate) throws Exception;
+	int totalArticleCount(Map<String,Object> map) throws Exception;
 	List<BoardDto> getArticleDetail(int boardId) throws Exception;
 	BoardDto getArticle(int boardId) throws Exception;
 	void modifyArticle(BoardDto board) throws Exception;

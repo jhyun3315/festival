@@ -69,6 +69,7 @@ export default {
     this.festivalId = this.$route.params.festivalId;//축제 번호
     articleList(
       {
+        festivalId:this.festivalId,
         pgno:this.currentPage,
         cate:this.cate
       },
@@ -87,6 +88,7 @@ export default {
       this.currentPage = page;
       articleList(
         {
+          festivalId:this.festivalId,
           pgno:this.currentPage,
           cate:this.cate
         },
@@ -102,6 +104,7 @@ export default {
       this.cate = cate;
       articleList(
       {
+        festivalId:this.festivalId,
         pgno:1,
         cate:this.cate
       },
