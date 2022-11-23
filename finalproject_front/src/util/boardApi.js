@@ -33,5 +33,10 @@ async function articleUpdate(article, success, fail) {
   await fileApi.put(`/board`,article).then(success).catch(fail);
 }
 
-export { articleWrite, articleList, getImage, getArticle ,articleDelete,articleUpdate};
+//기본 이미지 가져오기
+function getDefaultImage(){
+  return `${process.env.VUE_APP_BASE_URL}/board/defaultimage`;
+}
+
+export { articleWrite, articleList, getImage, getDefaultImage,getArticle ,articleDelete,articleUpdate};
   

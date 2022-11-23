@@ -7,6 +7,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.http.HttpStatus;
@@ -40,19 +41,21 @@ public class BoardController {
 		this.jwtService= jwtService;
 	}
 	
+	@Value("${file.path}")
+    private String fileDir;
+	
 //  이미지 출력
    @GetMapping("/image/{boardId}")
    @ResponseBody
    public Resource downloadImage(@PathVariable("boardId") String boardId) throws Exception{
-	   System.out.println("이미지 가지로옴");
-	   System.out.println(boardId);
 	   BoardDto board = service.getArticle(Integer.parseInt(boardId));
-	   System.out.println("결과에요");
-	   System.out.println(board);
-	   System.out.println(board.getFilePath());
        return new UrlResource("file:" + board.getFilePath());
    }
    
+   @GetMapping("/defaultimage")
+   public Resource defaultImage() throws Exception{
+       return new UrlResource("file:"+fileDir+"default.png");
+   }
 	//게시판 가져오기
 	@GetMapping("/{boardId}")
 	public ResponseEntity<?> getarticle(@PathVariable("boardId") String boardId) throws Exception{

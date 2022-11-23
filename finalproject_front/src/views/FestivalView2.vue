@@ -1,44 +1,126 @@
 <template>
-  <b-container class="map"> 
-    <b-row>
-        <b-col >
-          <festival-map></festival-map>
-      </b-col>
-      <b-col cols="6">
-			<div id="listgroup-ex" style="overflow-y:auto; width:500px; height:600px">
-                <h4 id="list-item-1">Item 1</h4>
-                <p>{{ text }}</p>
-                <h4 id="list-item-2">Item 2</h4>
-                <p>{{ text }}</p>
-                <h4 id="list-item-3">Item 3</h4>
-                <p>{{ text }}</p>
-                <h4 id="list-item-4">Item 4</h4>
-                <p>{{ text }}</p>
-                <h4 id="list-item-5">Item 5</h4>
-                <p>{{ text }}</p>
-		    </div>
-		</b-col>    
-  </b-row>
-</b-container>
+  <div>
+    <base-header class="pb-2 pt-5 pt-md-1 bg-gradient-success">
+      <h1 class="display-2 text-white">지역 축제현황</h1>
+    </base-header>
+    <b-container class="map">
+      <b-row align-h="center" align-v="center">
+        <b-col>
+          <festival-map v-on:getFestival="getFestival"></festival-map>
+        </b-col>
+        <b-col cols="5">
+          <div
+            id="listgroup-ex"
+            style="overflow-y: auto; width: 600px; height: 850px"
+          >
+            <!--축제 리스트-->
+            <div v-for="(ele, i) in festivals" :key="i">
+              <b-card
+                no-body
+                class="overflow-hidden"
+                style="max-width: 600px; max-height: 400px"
+              >
+                <b-row no-gutters align-v="center">
+                  <b-col md="6">
+                    <b-card-img
+                      v-if="ele.originImage !== ''"
+                      :src="ele.originImage"
+                      :alt="ele.festivalName"
+                      class="rounded-0"
+                    ></b-card-img>
+                    <b-card-img
+                      v-else
+                      :src="defaultImage()"
+                      alt="기본이미지"
+                      class="rounded-0"
+                    ></b-card-img>
+                  </b-col>
+                  <b-col md="6">
+                    <b-card-body :title="ele.festivalName">
+                      <b-card-text>
+                        {{ ele.startDate }} ~ {{ ele.endDate }}
+                      </b-card-text>
+                      <b-card-text>
+                        <div class="festivalContent">
+                          {{ ele.festivalContent }}
+                        </div>
+                      </b-card-text>
+                      <div class="buttonRight">
+                        <b-button
+                          size="sm"
+                          variant="primary"
+                          v-b-modal.modal-center
+                          >상세보기</b-button
+                        >
+                        <b-button size="sm" variant="success">
+                          즐겨찾기 등록
+                        </b-button>
+                      </div>
+                    </b-card-body>
+                  </b-col>
+                </b-row>
+              </b-card>
+            </div>
+            <div v-if="festivals.length === 0 && area !== ''">
+              진행중인 축제가 없어요!
+            </div>
+            <!-- -->
+          </div>
+        </b-col>
+      </b-row>
+    </b-container>
+
+    <!--상세 축제 정보 모달-->
+    <b-modal id="modal-center" centered title="BootstrapVue">
+      <p class="my-4">Vertically centered modal!</p>
+    </b-modal>
+  </div>
 </template>
 <script>
+import { getAreaFestival } from "@/util/festivalApi.js";
+import { getDefaultImage } from "@/util/boardApi";
 
-import FestivalMap from '@/views/Festival/DrawMap';  
-export default { 
-    components: {
-        FestivalMap, 
+import FestivalMap from "@/views/Festival/DrawMap";
+export default {
+  components: {
+    FestivalMap,
   },
   data() {
     return {
-      text:"Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."
-        
-    }
+      area: "",
+      festivals: [],
+    };
   },
-
-}
+  methods: {
+    getFestival(area) {
+      this.area = area;
+      getAreaFestival(
+        area,
+        ({ data }) => {
+          this.festivals = data.festivalList;
+        },
+        () => {
+          alert("에러야");
+        }
+      );
+    },
+    defaultImage() {
+      return getDefaultImage();
+    },
+  },
+};
 </script>
-<style >
- .map{
-    margin-top: 200px;
-  }
+<style>
+.map {
+  margin-top: 50px;
+}
+.festivalContent {
+  white-space: normal;
+  overflow-y: hidden;
+  height: 120px;
+}
+.buttonRight {
+  display: flex;
+  justify-content: right;
+}
 </style>

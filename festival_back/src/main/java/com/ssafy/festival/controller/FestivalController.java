@@ -14,11 +14,13 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ssafy.festival.model.FestivalDto;
 import com.ssafy.festival.service.FestivalService;
 import com.ssafy.jwt.service.JwtService;
+import com.ssafy.util.ParameterCheck;
 
 @RestController
 @RequestMapping("/festival")
@@ -52,12 +54,22 @@ public class FestivalController {
 	
 	//축제 리스트
 	@GetMapping("/list")
-	public ResponseEntity<?> list() throws Exception{
-		Map<String, Object> map = new HashMap<String, Object>();
+	public ResponseEntity<?> list(@RequestParam Map<String,Object> map) throws Exception{
 		Map<String, Object> res = new HashMap<String, Object>();
 		try {
-			map.put("every", true);//현재 날짜 이후 축제들 불러오기
+			
+			//현재 날짜 이후 모든 축제
+				//every
+			//map.put("every", true);//현재 날짜 이후 축제들 불러오기			
+			//해당 지역의 축제
+				//area:지역명
+			//진행중인 축제
+				//now:true
+			
 			List<FestivalDto> list = service.listFestival(map);
+			for (int i = 0; i < list.size(); i++) {				
+				list.get(i).setFestivalContent(toRN(list.get(i).getFestivalContent()));
+			}
 			res.put("festivalList", list);
 			res.put("status", "ok");
 			return new ResponseEntity<Map<String, Object>>(res,HttpStatus.OK);
@@ -93,5 +105,16 @@ public class FestivalController {
 			res.put("status", "fail");
 			return new ResponseEntity<Map<String, Object>>(res,HttpStatus.OK);
 		}
+	}
+	
+	private String toBR(String content) {
+		String contents = "";
+		contents = content.replace("\r\n", "<br>");
+		return contents;
+	}
+	private String toRN(String content) {
+		String contents = "";
+		contents = content.replace("<br>","\r\n");
+		return contents;
 	}
 }
