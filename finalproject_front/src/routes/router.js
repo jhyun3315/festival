@@ -42,7 +42,6 @@ const routes = [
         name: 'main', 
         component: () => import(/* webpackChunkName: "demo" */ '../views/MainView.vue')
       },
- 
       {
         path: '/profile',
         name: 'profile',
@@ -50,9 +49,28 @@ const routes = [
         component: () => import(/* webpackChunkName: "demo" */ '../views/User/UserProfile.vue')
       },
       {
+        path: '/myFestival',
+        name: 'myfes',
+        beforeEnter: onlyAuthUser,
+        redirect: 'mycalendar',
+        component: () => import('../views/MyFestivalView.vue'),
+        children:[
+          {
+            path: '/mymap',
+            name: 'mymap',
+            component: () => import ('@/views/Festival/DrawMap')
+          },
+          {
+            path: '/mycalendar',
+            name: 'mycal',
+            component: () => import ('@fullcalendar/vue')
+          }
+        ]
+      },
+      {
         path: '/festival',
         name: 'festival',
-        redirect: 'calender',
+        redirect: 'calendar',
         component: () => import(/* webpackChunkName: "demo" */ '../views/FestivalView.vue'),
         children:[
           {
@@ -61,7 +79,7 @@ const routes = [
             component: () => import ('@/views/Festival/DrawMap')
           },
           {
-            path: '/calender',
+            path: '/calendar',
             name: 'mapcal',
             component: () => import ('@fullcalendar/vue')
           }

@@ -10,8 +10,8 @@
             </b-col> 
         <b-col cols="6" class="festival-wrap">
             <div>
-                <b-button @click="goFestivalV('/calendar')" :variant="colorCheck('/calendar')">캘린더</b-button>
-                <b-button @click="goFestivalV('/map')" :variant="colorCheck('/map')">지도</b-button>
+                <b-button @click="goFestivalV('/mycalendar')" :variant="colorCheck('/mycalendar')">캘린더</b-button>
+                <b-button @click="goFestivalV('/mymap')" :variant="colorCheck('/mymap')">지도</b-button>
             </div>
             <div class="festival-list">
                 <!--축제 리스트-->
@@ -31,21 +31,25 @@
 import '@fullcalendar/core/vdom' // solves problem with Vite
 import dayGridPlugin from '@fullcalendar/daygrid'
 import interactionPlugin from '@fullcalendar/interaction'
-import { getEveryFestival, getNowFestival, getMonthFestival } from "@/util/festivalApi.js";
 import { getDefaultImage } from "@/util/boardApi";  
 import FestivalCard from "@/views/Festival/FestivalSmallCard.vue"
-import {getAreaFestival} from "@/util/festivalApi.js"
+import {mapActions} from "vuex";
+import {favorGet} from "@/util/favorApi.js"
+const memberStore = "memberStore";
 
 export default {
 components: {
   FestivalCard
 },
-mounted() {
- getEveryFestival(({ data }) => {
+async mounted() {
+  await this.getUserInfo(); // 토큰 확인 및 재발급진행
+  await favorGet(({ data }) => {
   if (data.status == "ok") {
     // console.log("데이터 테스트");
-    let lst = data.festivalList;
-    this.festivals = data.festivalList;
+    let lst = data.favorlist;
+    this.festivals = data.favorlist;
+    this.backupFestivals = data.favorlist;
+    console.log(this.data)
       // console.log(this.festivals);  
       for (var i = 0; i < lst.length; i++) {
         var obj = lst[i];  
@@ -79,50 +83,7 @@ data() {
         left: '',
         right: "prev today next",
         center: "title", 
-      }, 
-      customButtons: { 
-        today: { // this overrides the prev button
-          text: "TODAY",
-          click: () => {
-            let calendarApi = this.$refs.fullCalendar.getApi();
-            calendarApi.today();
-            let date = document.getElementsByClassName("fc-toolbar-title")[0].innerText;
-            var dateString = date.split(" ");
-            var dat = new Date('1 ' + dateString[0] + ' 1999');
-            var firstDate = (dateString[1] + "-" + (dat.getMonth() + 1) + "-01"); 
-          
-          this.changeDate(firstDate);
-          }
-        },
-      prev: {
-        text: "PREV", 
-        click: () => {       
-          let calendarApi = this.$refs.fullCalendar.getApi();
-          calendarApi.prev();
-          let date = document.getElementsByClassName("fc-toolbar-title")[0].innerText;
-          var dateString = date.split(" ");
-          var dat = new Date('1 ' + dateString[0] + ' 1999');
-          var firstDate = (dateString[1] + "-" + (dat.getMonth() + 1) + "-01"); 
-          
-          this.changeDate(firstDate);
-
-        }
       },
-      next: { // this overrides the next button
-        text: "NEXT",
-        click: () => {
-          
-          let calendarApi = this.$refs.fullCalendar.getApi(); 
-          calendarApi.next(); 
-          let date = document.getElementsByClassName("fc-toolbar-title")[0].innerText;
-          var dateString = date.split(" ");
-          var dat = new Date('1 ' + dateString[0] + ' 1999');
-          var firstDate = (dateString[1] + "-" + (dat.getMonth() + 1) + "-01"); 
-
-          this.changeDate(firstDate);
-        }
-      }
-    },
       height: 1000,
       events : [],
       initialEvents: [], // alternatively, use the `events` setting to fetch from a feed
@@ -138,7 +99,9 @@ data() {
 
     date: "",
     events: [],
-    festivals: [], 
+    festivals: [],
+    backupFestivals: [],  
+    areaFestivals:[],
     colors: [
       "#FFB2D9", "#8BBDFF", "#FFE08C", "#F15F5F", "#86E57F",
       "#8F8AFF", "#5CD1E5", "#BCE55C", "#8C8C8C", "#F29661"
@@ -149,6 +112,7 @@ data() {
   }
 },
 methods: { 
+  ...mapActions(memberStore, ["getUserInfo"]),
   colorCheck(path){
     if(this.$router.currentRoute.path===path){
         return "primary"
@@ -158,16 +122,9 @@ methods: {
   },
   goFestivalV(path){   
     if(this.$router.currentRoute.path!==path){
-        this.festivals=[]
-        this.area=""
-        this.$router.push(path)
-        if(path==="/calendar"){
-            let date = new Date();
-            console.log(date)
-            let firstDate = `${date.getFullYear()}-${date.getMonth()+1}-01`
-            console.log(firstDate)
-            this.changeDate(firstDate);
-        }
+      this.festivals = this.backupFestivals;
+      this.area=""
+      this.$router.push(path)
     }
   },
   randomColor() {
@@ -195,16 +152,10 @@ methods: {
     return getDefaultImage();
   },
   getFestival(area) {
-        this.area = area;
-        getAreaFestival(
-        area,
-        ({ data }) => {
-            this.festivals = data.festivalList;
-        },
-        () => {
-            alert("에러야");
-        }
-        );
+    this.area = area;
+    this.festivals = this.backupFestivals.filter(ele=>{
+      return ele.address.includes(area)
+    })
   },
 },
 };
