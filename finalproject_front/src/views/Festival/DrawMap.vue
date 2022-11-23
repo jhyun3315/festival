@@ -146,8 +146,10 @@
         let clicked=(d)=>{ //---------------------------------------------------------------클릭시 진행
           var x, y, k;
 
-          console.log(d.properties.CTP_KOR_NM);
-          this.getFestival(d.properties.CTP_KOR_NM)
+          if(d!==undefined){
+            console.log(d.properties.CTP_KOR_NM);
+            this.getFestival(d.properties.CTP_KOR_NM)
+          }
           // Compute centroid of the selected path
           if (d && centered !== d) {
             var centroid = path.centroid(d);
