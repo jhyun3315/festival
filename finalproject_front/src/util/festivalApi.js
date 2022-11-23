@@ -1,5 +1,9 @@
 import {api} from "./api.js";
 
+//축제 확인
+async function getFestival(id,success, fail) {
+    await api.get(`/festival/${id}`).then(success).catch(fail);
+}
 
 //모든 축제
 async function getEveryFestival(success, fail) {
@@ -16,4 +20,4 @@ async function getAreaFestival(area,success, fail) {
     await api.get(`/festival/list`, {params:{area:area}}).then(success).catch(fail);
 }
 
-export { getAreaFestival,getEveryFestival,getNowFestival};
+export { getAreaFestival,getEveryFestival,getNowFestival,getFestival};
