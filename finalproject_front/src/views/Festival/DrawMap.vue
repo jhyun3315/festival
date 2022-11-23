@@ -198,7 +198,7 @@ export default {
         // g.transition()
         //   .duration(750)
         //   .attr('transform', 'translate(' + width / 2 + ',' + height / 2 + ')scale(' + k + ')translate(' + -x + ',' + -y + ')');
-      };
+      //};
 
       function mouseover(d) {
         // Highlight hovered province
