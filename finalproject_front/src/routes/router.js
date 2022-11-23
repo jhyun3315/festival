@@ -50,14 +50,22 @@ const routes = [
         component: () => import(/* webpackChunkName: "demo" */ '../views/User/UserProfile.vue')
       },
       {
-        path: '/festivalcal',
-        name: 'festivalcal',
-        component: () => import(/* webpackChunkName: "demo" */ '../views/FestivalView.vue')
-      },
-      {
-        path: '/festivalmap',
-        name: 'festivalmap',
-        component: () => import(/* webpackChunkName: "demo" */ '../views/FestivalView2.vue')
+        path: '/festival',
+        name: 'festival',
+        redirect: 'calender',
+        component: () => import(/* webpackChunkName: "demo" */ '../views/FestivalView.vue'),
+        children:[
+          {
+            path: '/map',
+            name: 'mapmap',
+            component: () => import ('@/views/Festival/DrawMap')
+          },
+          {
+            path: '/calender',
+            name: 'mapcal',
+            component: () => import ('@fullcalendar/vue')
+          }
+        ]
       },
       {
         path: '/board/:festivalId',

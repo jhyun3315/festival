@@ -12,16 +12,13 @@
                 </b-card-text>
                 <b-card-text >
                 <div class="festivalContent" v-html="festivalInfo.festivalContent">
-                    {{festivalInfo.festivalContent}}
                 </div>
                 </b-card-text>
                 <hr class="my-4"/>
                 <div class="buttonRight">
                 <b-button size="sm" variant="danger" @click="goBoard(festivalInfo.festivalId)">게시판</b-button>
                 <b-button size="sm" variant="primary" v-b-modal="festivalInfo.festivalId">상세보기</b-button>
-                <b-button size="sm" variant="success" @click="addFavor(festivalInfo.festivalId)">
-                    즐겨찾기 등록
-                </b-button>
+                <b-button size="sm" variant="success" @click="addFavor(festivalInfo.festivalId)">즐겨찾기 등록</b-button>
                 </div>
             </b-card-body>
             </b-col>
@@ -48,7 +45,8 @@
                 <template v-if="festivalInfo.homepage">
                 홈페이지 : <div v-html="festivalInfo.homepage"></div><br>
                 </template>
-                <b-button size="sm" variant="success" @click="goBoard(festivalInfo.festivalId)">게시판으로 </b-button><br>
+                <b-button size="sm" variant="success" @click="goBoard(festivalInfo.festivalId)">게시판으로 </b-button>
+                <b-button size="sm" variant="warning" @click="addFavor(festivalInfo.festivalId)">즐겨찾기 등록</b-button>
             </b-col>
             </b-row>
             <b-row v-html="festivalInfo.festivalContent">
@@ -100,3 +98,15 @@ export default {
     }
 }
 </script>
+
+<style scoped>
+.festivalContent {
+  white-space: normal;
+  overflow-y: hidden;
+  height: 110px;
+}
+.buttonRight {
+  display: flex;
+  justify-content: right;
+}
+</style>
