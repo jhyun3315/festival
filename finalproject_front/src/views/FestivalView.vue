@@ -78,9 +78,8 @@ import '@fullcalendar/core/vdom' // solves problem with Vite
 import FullCalendar from '@fullcalendar/vue'
 import dayGridPlugin from '@fullcalendar/daygrid'
 import interactionPlugin from '@fullcalendar/interaction'
-import { getEveryFestival, getMonthFestival } from "@/util/festivalApi.js";
-import { getDefaultImage } from "@/util/boardApi"; 
-import { mapGetters } from 'vuex';
+import { getEveryFestival, getNowFestival, getMonthFestival } from "@/util/festivalApi.js";
+import { getDefaultImage } from "@/util/boardApi";  
 
 export default {
   components: {
@@ -165,11 +164,7 @@ export default {
       text: "",
     }
   },
-  methods: {
-
-    handleMonthChange(date) {
-      alert(date);  
-    },
+  methods: { 
 
     randomColor() {
       return this.colors[Math.floor(Math.random() * 10)];
@@ -187,10 +182,10 @@ export default {
     },
     changeDate(date) {
         this.date = date;
-        // console.log(date);
+        console.log(date);
         getMonthFestival(date, ({ data }) => {
           this.festivals = data.festivalList;
-          // console.log(this.festivals);
+          console.log(this.festivals);
         });
       },
       defaultImage() {
