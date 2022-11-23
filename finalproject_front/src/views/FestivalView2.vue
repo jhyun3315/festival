@@ -10,6 +10,7 @@
       </b-col>
       <b-col cols="6">
 			<div id="listgroup-ex" style="overflow-y:auto; width:600px; height:600px">
+        <!--축제 리스트-->
         <div v-for="(ele,i) in festivals" :key="i">
           <b-card no-body class="overflow-hidden" style="max-width: 600px; max-height: 400px;" >
             <b-row no-gutters align-v="center">
@@ -28,6 +29,7 @@
                     </div>
                   </b-card-text>
                   <div class="buttonRight">
+                    <b-button size="sm" variant="primary" v-b-modal.modal-center>상세보기</b-button>
                     <b-button size="sm" variant="success">
                       즐겨찾기 등록
                     </b-button>
@@ -40,10 +42,18 @@
         <div v-if="festivals.length===0 && area!==''">
           진행중인 축제가 없어요!
         </div>
+        <!-- -->
+
       </div>
 		</b-col>    
   </b-row>
 </b-container>
+
+<!--상세 축제 정보 모달-->
+<b-modal id="modal-center" centered title="BootstrapVue">
+  <p class="my-4">Vertically centered modal!</p>
+</b-modal>
+
 </div>
 </template>
 <script>
