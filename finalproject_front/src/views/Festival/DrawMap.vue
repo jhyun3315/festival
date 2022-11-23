@@ -81,75 +81,113 @@ export default {
       // 지도를 그리기 위한 svg 생성
       const svg = d3
         // .select('.d3')
-        .select(".map-wrapper")
-        .append("svg")
-        .attr("width", width)
-        .attr("height", height);
+          .select('.map-wrapper')
+          .append('svg')
+          .attr('width', width)
+          .attr('height', height);
+  
+        // 배경 그리기
+        const background = svg.append('rect')
+          .attr('class', 'background')
+          .attr('width', width)
+          .attr('height', height)
+  
+        // 지도가 그려지는 그래픽 노드(g) 생성
+        const g = svg.append('g');
+        // const effectLayer = g.append('g').classed('effect-layer', true);
+        // 지도가 그려지는 그래픽 노드
+        const mapLayer = g.append('g').classed('map-layer', true);
+        // 아이콘이 그려지는 그래픽 노드
+        const iconsLayer = g.append('g').classed('icons-layer', true);
+  
+        // 지도의 출력 방법을 선택(메로카토르)
+        let projection = d3.geoMercator()
+          .scale(1)
+          .translate([0, 0]); 
+  
+        // svg 그림의 크기에 따라 출력될 지도의 크기를 다시 계산
+        const path = d3.geoPath().projection(projection);
+        const bounds = path.bounds(geojson);
+        const widthScale = (bounds[1][0] - bounds[0][0]) / width; 
+        const heightScale = (bounds[1][1] - bounds[0][1]) / height; 
+        const scale = 0.95 / Math.max(widthScale, heightScale);
+        const xoffset = width/2 - scale * (bounds[1][0] + bounds[0][0]) /2 + 0; 
+        const yoffset = height/2 - scale * (bounds[1][1] + bounds[0][1])/2 + 0; 
+        const offset = [xoffset, yoffset];
+        projection.scale(scale).translate(offset);
+  
+        const color = d3.scaleLinear()
+          .domain([1, 20])
+          .clamp(true)
+          // .range(['#08304b', '#08304b']);
+          .range(['#cdcdd6', '#cdcdd6']);
+  
+        const _this = this;
+        // Get province color
+        function fillFn(d){
+          // console.log(d, nameLength(d));
+          // console.log(d.properties); 
+          return color(nameLength(d));
+        }
+  
+        
+        let clicked=(d)=>{ //---------------------------------------------------------------클릭시 진행
+          var x, y, k;
 
-      // 배경 그리기
-      const background = svg
-        .append("rect")
-        .attr("class", "background")
-        .attr("width", width)
-        .attr("height", height);
-
-      // 지도가 그려지는 그래픽 노드(g) 생성
-      const g = svg.append("g");
-      // const effectLayer = g.append('g').classed('effect-layer', true);
-      // 지도가 그려지는 그래픽 노드
-      const mapLayer = g.append("g").classed("map-layer", true);
-      // 아이콘이 그려지는 그래픽 노드
-      const iconsLayer = g.append("g").classed("icons-layer", true);
-
-      // 지도의 출력 방법을 선택(메로카토르)
-      let projection = d3.geoMercator().scale(1).translate([0, 0]);
-
-      // svg 그림의 크기에 따라 출력될 지도의 크기를 다시 계산
-      const path = d3.geoPath().projection(projection);
-      const bounds = path.bounds(geojson);
-      const widthScale = (bounds[1][0] - bounds[0][0]) / width;
-      const heightScale = (bounds[1][1] - bounds[0][1]) / height;
-      const scale = 0.95 / Math.max(widthScale, heightScale);
-      const xoffset =
-        width / 2 - (scale * (bounds[1][0] + bounds[0][0])) / 2 + 0;
-      const yoffset =
-        height / 2 - (scale * (bounds[1][1] + bounds[0][1])) / 2 + 0;
-      const offset = [xoffset, yoffset];
-      projection.scale(scale).translate(offset);
-
-      const color = d3
-        .scaleLinear()
-        .domain([1, 20])
-        .clamp(true)
-        // .range(['#08304b', '#08304b']);
-        .range(["#cdcdd6", "#cdcdd6"]);
-
-      const _this = this;
-      // Get province color
-      function fillFn(d) {
-        // console.log(d, nameLength(d));
-        // console.log(d.properties);
-        return color(nameLength(d));
-      }
-
-      let clicked = (d) => {
-        //---------------------------------------------------------------클릭시 진행
-        var x, y, k;
-
-        // console.log(d.properties.CTP_KOR_NM);
-        this.getFestival(d.properties.CTP_KOR_NM);
-        // Compute centroid of the selected path
-        if (d && centered !== d) {
-          var centroid = path.centroid(d);
-          x = centroid[0];
-          y = centroid[1];
-          k = 4;
-          centered = d;
-        } else {
-          x = width / 2;
-          y = height / 2;
-          k = 1;
-          centered = null;
+          if(d!==undefined){
+            console.log(d.properties.CTP_KOR_NM);
+            this.getFestival(d.properties.CTP_KOR_NM)
+          }
+          // Compute centroid of the selected path
+          if (d && centered !== d) {
+            var centroid = path.centroid(d);
+            x = centroid[0];
+            y = centroid[1];
+            k = 4;
+            centered = d; 
+          } else {
+            x = width / 2;
+            y = height / 2;
+            k = 1;
+            centered = null; 
+          }
+  
+          // Highlight the clicked province
+          mapLayer.selectAll('path')
+            .style('fill', function(d){
+              return centered && d===centered ? '#FF9900' : fillFn(d);
+          });
+   
+          // g.transition()
+          //   .duration(750)
+          //   .attr('transform', 'translate(' + width / 2 + ',' + height / 2 + ')scale(' + k + ')translate(' + -x + ',' + -y + ')');
+        }
+  
+  
+        function mouseover(d){
+          // Highlight hovered province
+          d3.select(this).style('fill', '#00CCFF');
+          // d3.select(this).style('fill', '#004EA2');
+          if(d) {
+            // console.log(d.properties);
+            _this.selectProvince(d.properties);
+          }
+        }
+  
+        function mouseout(d){
+          _this.selectProvince(undefined);
+          // Reset province color
+ 
+          mapLayer.selectAll('path')
+            .style('fill', (d) => {
+              return centered && d===centered ? '#FF9900' : fillFn(d);
+            });
+        }
+  
+        // Get province name length
+        function nameLength(d){
+          const n = nameFn(d);
+          return n ? n.length : 0;
         }
 
         // Highlight the clicked province

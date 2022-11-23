@@ -76,22 +76,22 @@ public class BoardServiceImpl implements BoardService{
 
 
 	@Override
-	public List<BoardDto> listArticle(int page, int viewPage,String cate) throws Exception {
-		System.out.println("리스트 서비스임");
+	public List<BoardDto> listArticle(int page, int viewPage,String cate,String festivalId) throws Exception {
 		int start = (page-1)*viewPage;
 		Map<String, Object> map = new HashMap<String, Object>();
-		System.out.println(start);
-		System.out.println(viewPage);
 		map.put("start", start);
 		map.put("viewPage", viewPage);
 		map.put("cate",cate);
-		System.out.println(map);
+		map.put("festivalId", festivalId);
 		return mapper.listArticle(map);
 	}
 
 	@Override
-	public int totalArticleCount(String cate) throws Exception {
-		return mapper.totalArticleCount(cate);
+	public int totalArticleCount(String cate,String festivalId) throws Exception {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("cate", cate);
+		map.put("festivalId", festivalId);
+		return mapper.totalArticleCount(map);
 	}
 
 	@Override

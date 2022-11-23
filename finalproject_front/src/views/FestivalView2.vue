@@ -7,89 +7,38 @@
       <b-row align-h="center" align-v="center">
         <b-col>
           <festival-map v-on:getFestival="getFestival"></festival-map>
-        </b-col>
-        <b-col cols="5">
-          <div
-            id="listgroup-ex"
-            style="overflow-y: auto; width: 600px; height: 850px"
-          >
-            <!--축제 리스트-->
-            <div v-for="(ele, i) in festivals" :key="i">
-              <b-card
-                no-body
-                class="overflow-hidden"
-                style="max-width: 600px; max-height: 400px"
-              >
-                <b-row no-gutters align-v="center">
-                  <b-col md="6">
-                    <b-card-img
-                      v-if="ele.originImage !== ''"
-                      :src="ele.originImage"
-                      :alt="ele.festivalName"
-                      class="rounded-0"
-                    ></b-card-img>
-                    <b-card-img
-                      v-else
-                      :src="defaultImage()"
-                      alt="기본이미지"
-                      class="rounded-0"
-                    ></b-card-img>
-                  </b-col>
-                  <b-col md="6">
-                    <b-card-body :title="ele.festivalName">
-                      <b-card-text>
-                        {{ ele.startDate }} ~ {{ ele.endDate }}
-                      </b-card-text>
-                      <b-card-text>
-                        <div class="festivalContent">
-                          {{ ele.festivalContent }}
-                        </div>
-                      </b-card-text>
-                      <div class="buttonRight">
-                        <b-button
-                          size="sm"
-                          variant="primary"
-                          v-b-modal.modal-center
-                          >상세보기</b-button
-                        >
-                        <b-button size="sm" variant="success">
-                          즐겨찾기 등록
-                        </b-button>
-                      </div>
-                    </b-card-body>
-                  </b-col>
-                </b-row>
-              </b-card>
-            </div>
-            <div v-if="festivals.length === 0 && area !== ''">
-              진행중인 축제가 없어요!
-            </div>
-            <!-- -->
-          </div>
-        </b-col>
-      </b-row>
-    </b-container>
-
-    <!--상세 축제 정보 모달-->
-    <b-modal id="modal-center" centered title="BootstrapVue">
-      <p class="my-4">Vertically centered modal!</p>
-    </b-modal>
-  </div>
+      </b-col>
+      <b-col cols="6">
+			<div id="listgroup-ex" style="overflow-y:auto; width:600px; height:600px">
+        <!--축제 리스트-->
+        <div v-for="(ele,i) in festivals" :key="i">
+          <festival-card2 :festivalInfo="ele"></festival-card2>
+        </div>
+        <div v-if="festivals.length===0 && area!==''">
+          진행중인 축제가 없어요!
+        </div>
+      </div>
+		</b-col>    
+  </b-row>
+</b-container>
+</div>
 </template>
 <script>
-import { getAreaFestival } from "@/util/festivalApi.js";
-import { getDefaultImage } from "@/util/boardApi";
+import {getAreaFestival} from "@/util/festivalApi.js"
+import FestivalCard2 from "@/views/Festival/FestivalCard2.vue"
 
 import FestivalMap from "@/views/Festival/DrawMap";
 export default {
   components: {
-    FestivalMap,
+      FestivalMap, 
+      FestivalCard2
   },
   data() {
     return {
-      area: "",
-      festivals: [],
-    };
+      area:"",
+      festivals:[],
+      festivalInfo:{}
+    }
   },
   methods: {
     getFestival(area) {
@@ -104,11 +53,9 @@ export default {
         }
       );
     },
-    defaultImage() {
-      return getDefaultImage();
-    },
-  },
-};
+  }
+
+}
 </script>
 <style>
 .map {
@@ -117,7 +64,7 @@ export default {
 .festivalContent {
   white-space: normal;
   overflow-y: hidden;
-  height: 120px;
+  height: 110px;
 }
 .buttonRight {
   display: flex;
