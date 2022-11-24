@@ -72,22 +72,22 @@ const memberStore = {
           }
         },
         async (error) => {
-          console.log("getUserInfo() error code [토큰 만료되어 사용 불가능.] ::: ", error.response.status);
+          // console.log("getUserInfo() error code [토큰 만료되어 사용 불가능.] ::: ", error.response.status);
           commit("SET_IS_VALID_TOKEN", false);
           await dispatch("tokenRegeneration");
         }
       );
     },
     async tokenRegeneration({ commit,state }) {
-      console.log("토큰 재발급 >> 기존 토큰 정보 : {}", sessionStorage.getItem("access-token"));
-      console.log("뭐야진짜")
-      console.log(state)
+      // console.log("토큰 재발급 >> 기존 토큰 정보 : {}", sessionStorage.getItem("access-token"));
+      // console.log("뭐야진짜")
+      // console.log(state)
       await tokenRegeneration(
         state.userInfo,
         ({ data }) => {
           if (data.status === "ok") {
             let accessToken = data["access-token"];
-            console.log("재발급 완료 >> 새로운 토큰 : {}", accessToken);
+            // console.log("재발급 완료 >> 새로운 토큰 : {}", accessToken);
             sessionStorage.setItem("access-token", accessToken);
             commit("SET_IS_VALID_TOKEN", true);
           }
@@ -131,8 +131,8 @@ const memberStore = {
             commit("SET_USER_INFO", null);
             commit("SET_IS_VALID_TOKEN", false);
           } else {
-            console.log("로그아웃해야지")
-            console.log("유저 정보 없음!!!!");
+            // console.log("로그아웃해야지")
+            // console.log("유저 정보 없음!!!!");
           }
         },
         (error) => {
@@ -141,12 +141,12 @@ const memberStore = {
       );
     },
     async userUpdate({ commit,dispatch,state },user){
-      console.log("유저 정보 수정점요")
+      // console.log("유저 정보 수정점요")
       console.log(user)
       await update(
         user,
         ({data})=>{
-          console.log("와 수정완료")
+          // console.log("와 수정완료")
           if (data.status === "ok") {
             commit("SET_USER_INFO", user);
           } else {
