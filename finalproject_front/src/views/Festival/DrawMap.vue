@@ -1,5 +1,10 @@
 <template>
-  <div id="map-wrapper" class="map-wrapper"></div>
+  <div>
+    <div class="area_title">
+      <h1>{{area | areaFilter}}</h1>
+    </div>
+    <div id="map-wrapper" class="map-wrapper"></div>
+  </div>
 </template>
 
 <script>
@@ -10,7 +15,9 @@ const MAP_AREA = require("./Map/map.area.json");
 
 export default {
   components: {},
-  props: {},
+  props: {
+    area:String
+  },
   data() {
     return {
       province: undefined, // 마우스가 지역구 위에 있을 때 정보
@@ -268,10 +275,23 @@ export default {
       // svg.call(zoom)
     },
   },
+  filters:{
+    areaFilter(area){
+      if(area===""){
+        return "지역을 선택해주세요"
+      }else{
+        return area+"지역"
+      }
+    }
+  }
 };
 </script>
 
 <style lang="scss">
+.area_title{
+  display: flex;
+  justify-content: center;
+}
 .map-wrapper {
   position: relative;
   text-align: center;

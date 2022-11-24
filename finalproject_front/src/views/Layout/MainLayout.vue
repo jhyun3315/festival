@@ -12,18 +12,10 @@
         >
         </sidebar-item>  
         <sidebar-item
-              :link="{
-                name: '축제 캘린더',
-                path: '/festivalcal',
-                icon: 'ni ni-pin-3 text-orange'
-              }">
-        </sidebar-item>
-
-        <sidebar-item
                 :link="{
-                  name: '축제 지도',
-                  path: '/festivalmap',
-                  icon: 'ni ni-bullet-list-67 text-red'
+                  name: '축제 확인하기',
+                  path: '/festival',
+                  icon: 'ni ni-pin-3 text-red'
                 }">
         </sidebar-item>
       </template> 

@@ -42,7 +42,7 @@
 <script>
 import { Carousel3d, Slide} from 'vue-carousel-3d';
 import {getNowFestival} from "@/util/festivalApi.js"
-import FestivalCard from "@/views/Festival/FestivalCard.vue"
+import FestivalCard from "@/views/Festival/FestivalBigCard.vue"
 
 export default {
   created(){

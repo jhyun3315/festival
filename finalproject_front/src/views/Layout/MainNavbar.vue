@@ -33,7 +33,7 @@
                 <i class="ni ni-single-02"></i>
                 <span>회원정보</span>
             </b-dropdown-item>
-            <b-dropdown-item href="#!">
+            <b-dropdown-item @click="goMyfestival">
                 <i class="ni ni-calendar-grid-58"></i>
                 <span>나의 축제</span>
             </b-dropdown-item>
@@ -118,6 +118,10 @@ export default {
         sessionStorage.removeItem("refresh-token"); //저장된 토큰 없애기
         console.log("끝")
         if (this.$route.path != "/main") this.$router.push({name:"main"});//메인으로 이동
+    }
+    ,
+    async goMyfestival(){
+      this.$router.push("/myFestival");      
     }
   },
   computed:{
