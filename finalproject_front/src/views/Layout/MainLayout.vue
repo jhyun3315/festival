@@ -10,18 +10,19 @@
             icon: 'ni ni-tv-2 text-primary',
           }"
         >
-        </sidebar-item>  
-        <sidebar-item
-                :link="{
-                  name: '축제 확인하기',
-                  path: '/festival',
-                  icon: 'ni ni-pin-3 text-red'
-                }">
         </sidebar-item>
-      </template> 
+        <sidebar-item
+          :link="{
+            name: '축제 확인하기',
+            path: '/festival',
+            icon: 'ni ni-pin-3 text-red',
+          }"
+        >
+        </sidebar-item>
+      </template>
     </side-bar>
     <div class="main-content">
-      <main-navbar :type="$route.meta.navbarType"></main-navbar> 
+      <main-navbar :type="$route.meta.navbarType"></main-navbar>
       <div @click="$sidebar.displaySidebar(false)">
         <fade-transition :duration="200" origin="center top" mode="out-in">
           <!-- your content here -->
@@ -34,8 +35,8 @@
 </template>
 <script>
 /* eslint-disable no-new */
-import PerfectScrollbar from 'perfect-scrollbar';
-import 'perfect-scrollbar/css/perfect-scrollbar.css';
+import PerfectScrollbar from "perfect-scrollbar";
+import "perfect-scrollbar/css/perfect-scrollbar.css";
 
 function hasElement(className) {
   return document.getElementsByClassName(className).length > 0;
@@ -52,33 +53,32 @@ function initScrollbar(className) {
   }
 }
 
-import MainNavbar from './MainNavbar.vue';
-import ContentFooter from './ContentFooter.vue';
-import MainContent from './Content.vue';
-import { FadeTransition } from 'vue2-transitions';
+import MainNavbar from "./MainNavbar.vue";
+import ContentFooter from "./ContentFooter.vue";
+import MainContent from "./Content.vue";
+import { FadeTransition } from "vue2-transitions";
 
 export default {
   components: {
     MainNavbar,
     ContentFooter,
     MainContent,
-    FadeTransition
+    FadeTransition,
   },
   methods: {
     initScrollbar() {
-      let isWindows = navigator.platform.startsWith('Win');
+      let isWindows = navigator.platform.startsWith("Win");
       if (isWindows) {
-        initScrollbar('sidenav');
+        initScrollbar("sidenav");
       }
     },
-    testetste(){
-      console.log("dsafljdsakl")
-    }
+    testetste() {
+      console.log("dsafljdsakl");
+    },
   },
   mounted() {
-    this.initScrollbar()
-  }
+    this.initScrollbar();
+  },
 };
 </script>
-<style lang="scss">
-</style>
+<style lang="scss"></style>
