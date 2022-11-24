@@ -1,7 +1,9 @@
 # Final프로젝트
 
-- 축제 게시판
+- 축제 게시판(Fit - 축제다 축제)
 - 2022.11.17~2022.11.25
+
+![fit로고](https://user-images.githubusercontent.com/24247768/203729877-177a09a0-11af-4406-9424-875a21401908.png)
 
 ## wiki보러 가기
 
@@ -18,7 +20,16 @@
 
 ## version
 
-node.js v14.17.3
+- node.js v14.17.3
+
+## 이미지 파일 저장 위치
+
+- c:/board/upload
+  - 해당위치에 readme의 default.png파일을 위치해줘서 기본 이미지 설정을 해줍니다.
+
+## frontapi의 .env.local생성
+
+- `VUE_APP_BASE_URL=be서버주소`를 작성
 
 ## 팀
 

@@ -7,7 +7,10 @@
       <!--Toggler-->
       <navbar-toggle-button @click.native="showSidebar"> </navbar-toggle-button>
       <router-link class="navbar-brand" to="/">
-        <div class="logo-wrap" style="background-image: url(img/brand/green.png);"></div>
+        <div
+          class="logo-wrap"
+          style="background-image: url(img/brand/green.png)"
+        ></div>
       </router-link>
 
       <slot name="mobile-right">
@@ -91,13 +94,13 @@
         </ul>
         <!--Divider-->
 
-        <div class="nav-item" style="height: 500px"></div>
+        <div class="nav-item" style="height: 350px"></div>
         <h6 class="navbar-heading text-muted">Made By</h6>
         <hr class="my-3" />
         <div class="nav-item">
-          <i class="ni ni-circle-08"></i> 이지현: jiannalee3@gmail.com 
-          <br/>
-          <i class="ni ni-circle-08"></i> 서준배: sjb378@me.com 
+          <i class="ni ni-circle-08"></i> 이지현: jiannalee3@gmail.com
+          <br />
+          <i class="ni ni-circle-08"></i> 서준배: sjb378@me.com
         </div>
         <br />
         <base-button icon class="btn-github btn-icon">
@@ -158,8 +161,8 @@ export default {
 </script>
 
 <style scoped>
-.logo-wrap{
-  height:150px;
+.logo-wrap {
+  height: 150px;
   background-size: cover;
   min-width: 100%;
   min-height: 100%;
