@@ -1,7 +1,7 @@
 <template>
     <div>
     <base-header class="pb-2 pt-5 pt-md-1 bg-gradient-success">
-      <h1 class="display-2 text-white">지역 축제현황 캘린더</h1>
+      <h1 class="display-4 text-white">지역 축제현황 캘린더</h1>
     </base-header>
     <b-container fluid >
         <b-row>
@@ -123,7 +123,7 @@ data() {
         }
       }
     },
-      height: 1000,
+      height: 800,
       events : [],
       initialEvents: [], // alternatively, use the `events` setting to fetch from a feed
       // editable: true,
@@ -163,9 +163,9 @@ methods: {
         this.$router.push(path)
         if(path==="/calendar"){
             let date = new Date();
-            console.log(date)
+            // console.log(date)
             let firstDate = `${date.getFullYear()}-${date.getMonth()+1}-01`
-            console.log(firstDate)
+            // console.log(firstDate)
             this.changeDate(firstDate);
         }
     }
@@ -202,7 +202,7 @@ methods: {
             this.festivals = data.festivalList;
         },
         () => {
-            alert("에러야");
+            alert("Error");
         }
         );
   },
@@ -219,7 +219,7 @@ methods: {
   margin-top: 20px;
   overflow-y: auto; 
   width: 600px; 
-  height: 940px;
+  height: 750px;
 }
 
 #calframe {

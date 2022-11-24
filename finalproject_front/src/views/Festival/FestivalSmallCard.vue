@@ -68,7 +68,7 @@ const memberStore = "memberStore";
 
 export default {
     created(){
-        console.log(this.myfestival)
+        // console.log(this.myfestival)
     },
     props:{
         festivalInfo:Object,
@@ -93,11 +93,11 @@ export default {
             await favorAdd(
                 festivalId,
                 ({data})=>{
-                    console.log(data)
-                    console.log("등록완료")
+                    // console.log(data)
+                    alert("즐겨찾기 등록완료");
                 },
                 ()=>{
-                    console.log("등록실패")
+                    alert("로그인 후 이용 가능합니다");
                 }
                 )
         },
@@ -108,12 +108,12 @@ export default {
             await favorDelete(
                 festivalId,
                 ({data})=>{
-                    console.log(data)
-                    console.log("삭제완료")
+                    // console.log(data)
+                    alert("삭제완료")
                     this.$emit("refreshData")
                 },
                 ()=>{
-                    console.log("삭제실패")
+                    alert("로그인 후 이용 가능합니다");
                 }
                 )
         }

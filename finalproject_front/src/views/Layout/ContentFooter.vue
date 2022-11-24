@@ -11,7 +11,7 @@
             >Creative Tim</a
           >
         </div>
-      </b-col>
+      </b-col> 
       <b-col lg="6">
         <b-nav align="center" class="nav-footer justify-content-lg-end">
           <b-nav-item

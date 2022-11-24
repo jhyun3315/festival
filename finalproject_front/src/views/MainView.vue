@@ -1,6 +1,6 @@
 <template>
   <div>
-    <base-header class="pb-3 pb-6 pt-5 pt-md-8 bg-gradient-success">
+    <base-header class="pb-3 pb-6 pt-5 pt-md-9 bg-gradient-success">
       <div class="wrap-home-resources">
         <div class="home-resources-content">
           <div class="container">
@@ -13,7 +13,7 @@
                   <div v-if="festivals.length">
                     <carousel-3d
                       :autoplay="true"
-                      :autoplay-timeout="5000"
+                      :autoplay-timeout="3000"
                       :perspective="30"
                       :border="0"
                       :width="960"
@@ -52,7 +52,7 @@ export default {
         this.festivals = data.festivalList;
       },
       () => {
-        console.log("에러야");
+        alert("Error");
       }
     );
   },

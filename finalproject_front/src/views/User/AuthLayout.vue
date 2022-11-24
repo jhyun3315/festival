@@ -9,7 +9,7 @@
     >
       <div slot="brand" class="navbar-wrapper">
         <b-navbar-brand to="/">
-          <div class="logo-wrap" style="background-image: url(img/brand/green.png);"></div>
+          <div class="logo-wrap" style="height:100px; width: 100px; background-image: url(img/brand/green.png);"></div>
         </b-navbar-brand>
       </div>
 
@@ -59,10 +59,10 @@
       </zoom-center-transition>
     </div>
 
-    <footer class="py-5" id="footer-main">
-      <b-container>
+    <footer class="py-5" >
+      <b-container fluid>
         <b-row align-v="center" class="justify-content-xl-between">
-          <b-col xl="6">
+          <b-col>
             <div class="copyright text-center text-xl-left text-muted">
               © {{ year }}
               <a
@@ -73,7 +73,7 @@
               >
             </div>
           </b-col>
-          <b-col xl="6" class="col-xl-6">
+          <b-col>
             <b-nav
               class="nav-footer justify-content-center justify-content-xl-end"
             >

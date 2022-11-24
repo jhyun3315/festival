@@ -56,7 +56,7 @@ data() {
         right: "prev today next",
         center: "title", 
       },
-      height: 1000,
+      height: 800,
       events : [],
       initialEvents: [], // alternatively, use the `events` setting to fetch from a feed
       // editable: true,
@@ -165,7 +165,7 @@ methods: {
   margin-top: 20px;
   overflow-y: auto; 
   width: 600px; 
-  height: 940px;
+  height: 730px;
 }
 
 #calframe {

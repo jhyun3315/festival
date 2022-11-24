@@ -1,20 +1,14 @@
 <template>
   <!-- Header -->
   <div class="header bg-gradient-success py-7 py-lg-8 pt-lg-9" id="vantaRef">
-    <b-container class="container">
-      <div class="header-body text-center mb-8">
-        <b-row class="justify-content-center"> 
-            <h1 class="text-white">로그인</h1>
-          </b-col>
+    <b-container class="mb-5">  
+        <b-row class="justify-content-center my-5"> 
+          <h1 class="text-white">로그인</h1> 
         </b-row>
-      </div>
-    </b-container>
-    <div class="separator separator-bottom separator-skew zindex-100"></div>
-
     <!-- Page content -->
     <b-row class="justify-content-center">
       <b-col md="3.5">
-        <b-card no-body style="width: 500px">
+        <b-card no-body style="width: 400px">
           <b-card-body>
             <div class="text-center text-muted mb-4">
               <!-- <small>Or sign in with credentials</small> -->
@@ -65,7 +59,8 @@
           </b-col>
         </b-row>
       </b-col>
-    </b-row>
+    </b-row> 
+  </b-container>
   </div>
 </template>
 <script>
@@ -97,7 +92,7 @@ export default {
         await this.getUserInfo(); //유저정보 가져오기
         this.$router.push({ name: "main" });
       } else {
-        console.log("로그인 안됨");
+        alert("아이디와 비밀번호를 확인해주세요."); 
       }
     },
   },

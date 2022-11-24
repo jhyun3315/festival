@@ -1,14 +1,15 @@
 <template>
   <div>
-    <base-header class="pb-6 pb-8 pt-5 pt-md-4 bg-gradient-success"> 
-      <h1 class="display-2 text-white">마이페이지</h1>
+    <base-header class="pb-3 pb-6 pt-5 pt-md-8 bg-gradient-success"> 
+      <h2 class="text-white">마이페이지</h2>
     </base-header> 
-    <b-container class="bv-example-row">
-      <card>
+    <b-container class="my-5 col-6">
+      <card class="mb-5">
         <b-card-header>
           {{userData.userId}}님의 정보
         </b-card-header>
-        <b-card-body>
+
+        <b-card-body> 
           <base-input alternative
                       class="mb-3"
                       prepend-icon="ni ni-lock-circle-open"
