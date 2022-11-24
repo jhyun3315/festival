@@ -9,7 +9,7 @@
     >
       <div slot="brand" class="navbar-wrapper">
         <b-navbar-brand to="/">
-          <img src="@/assets/logo.png" style="width: 100px; height: 100px" />
+          <div class="logo-wrap" style="background-image: url(img/brand/green.png);"></div>
         </b-navbar-brand>
       </div>
 
@@ -203,8 +203,15 @@ $scaleSize: 0.8;
     transform: scale3d($scaleSize, $scaleSize, $scaleSize);
   }
 }
-
 .main-content .zoomOut {
   animation-name: zoomOut8;
+}
+
+.logo-wrap{
+  height:150px;
+  width:200px;
+  background-size: cover;
+  min-width: 100%;
+  min-height: 100%;
 }
 </style>

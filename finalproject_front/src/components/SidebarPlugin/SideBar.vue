@@ -99,9 +99,9 @@
         <h6 class="navbar-heading text-muted">Made By</h6>
         <hr class="my-3" />
         <div class="nav-item">
-          <i class="ni ni-circle-08"></i> 서준배:sjb@ssafy.com
-          <br />
-          <i class="ni ni-circle-08"></i> 이지현:ljh@ssafy.com
+          <i class="ni ni-circle-08"></i> 이지현: jiannalee3@gmail.com 
+          <br/>
+          <i class="ni ni-circle-08"></i> 서준배: sjb378@me.com 
         </div>
         <br />
         <base-button icon class="btn-github btn-icon">
@@ -160,3 +160,12 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+.logo-wrap{
+  height:150px;
+  background-size: cover;
+  min-width: 100%;
+  min-height: 100%;
+}
+</style>
