@@ -18,7 +18,8 @@
                 <div class="buttonRight">
                 <b-button size="sm" variant="danger" @click="goBoard(festivalInfo.festivalId)">게시판</b-button>
                 <b-button size="sm" variant="primary" v-b-modal="festivalInfo.festivalId">상세보기</b-button>
-                <b-button size="sm" variant="success" @click="addFavor(festivalInfo.festivalId)">즐겨찾기 등록</b-button>
+                <b-button v-if="myfestival" size="sm" variant="danger" @click="delFavor(festivalInfo.festivalId)">즐겨찾기 삭제</b-button>
+                <b-button v-else size="sm" variant="success" @click="addFavor(festivalInfo.festivalId)">즐겨찾기 등록</b-button>
                 </div>
             </b-card-body>
             </b-col>
@@ -46,7 +47,8 @@
                 홈페이지 : <div v-html="festivalInfo.homepage"></div><br>
                 </template>
                 <b-button size="sm" variant="success" @click="goBoard(festivalInfo.festivalId)">게시판으로 </b-button>
-                <b-button size="sm" variant="warning" @click="addFavor(festivalInfo.festivalId)">즐겨찾기 등록</b-button>
+                <b-button v-if="myfestival" size="sm" variant="danger" @click="delFavor(festivalInfo.festivalId)">즐겨찾기 삭제</b-button>
+                <b-button v-else size="sm" variant="success" @click="addFavor(festivalInfo.festivalId)">즐겨찾기 등록</b-button>
             </b-col>
             </b-row>
             <b-row v-html="festivalInfo.festivalContent">
@@ -60,13 +62,17 @@
 
 <script>
 import {getDefaultImage} from "@/util/boardApi"
-import {favorAdd} from "@/util/favorApi"
+import {favorAdd,favorDelete} from "@/util/favorApi"
 import {mapState, mapGetters, mapActions} from "vuex";
 const memberStore = "memberStore";
 
 export default {
+    created(){
+        console.log(this.myfestival)
+    },
     props:{
-        festivalInfo:Object
+        festivalInfo:Object,
+        myfestival:String
     },
     methods:{
         ...mapActions(memberStore, ["getUserInfo"]),
@@ -92,6 +98,22 @@ export default {
                 },
                 ()=>{
                     console.log("등록실패")
+                }
+                )
+        },
+        async delFavor(festivalId){
+            //토큰 확인
+            await this.getUserInfo(); // 토큰 확인 및 재발급진행
+            //등록하러가기
+            await favorDelete(
+                festivalId,
+                ({data})=>{
+                    console.log(data)
+                    console.log("삭제완료")
+                    this.$emit("refreshData")
+                },
+                ()=>{
+                    console.log("삭제실패")
                 }
                 )
         }

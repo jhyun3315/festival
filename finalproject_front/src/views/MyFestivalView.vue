@@ -1,7 +1,7 @@
 <template>
     <div>
     <base-header class="pb-2 pt-5 pt-md-1 bg-gradient-success">
-      <h1 class="display-2 text-white">지역 축제현황 캘린더</h1>
+      <h1 class="display-2 text-white">나의 축제</h1>
     </base-header>
     <b-container fluid >
         <b-row>
@@ -16,7 +16,7 @@
             <div class="festival-list">
                 <!--축제 리스트-->
                 <div v-for="(ele, i) in festivals" :key="i">
-                <festival-card :festivalInfo="ele"></festival-card>
+                <festival-card :festivalInfo="ele" myfestival="true" v-on:refreshData="getMyFestival"></festival-card>
                 </div>
                 <!-- -->
             </div>
@@ -42,35 +42,7 @@ components: {
   FestivalCard
 },
 async mounted() {
-  await this.getUserInfo(); // 토큰 확인 및 재발급진행
-  await favorGet(({ data }) => {
-  if (data.status == "ok") {
-    // console.log("데이터 테스트");
-    let lst = data.favorlist;
-    this.festivals = data.favorlist;
-    this.backupFestivals = data.favorlist;
-    console.log(this.data)
-      // console.log(this.festivals);  
-      for (var i = 0; i < lst.length; i++) {
-        var obj = lst[i];  
-        let tmp = new Date(obj.endDate);
-        this.events.push({
-          id: obj.festivalId,
-          title: obj.festivalName, 
-          date: new Date(obj.startDate),
-          end: tmp.setDate(tmp.getDate()+1),  
-          backgroundColor: this.randomColor(),
-          borderColor: "#FFFFFF",
-          allDay: true,
-          festival: obj
-        });
-    }
-    this.calendarOptions.events = this.events; 
-    } else {
-      alert("Error");
-      this.$router.go();
-    } 
-  });
+  await this.getMyFestival();
 }, 
 data() {
   return {
@@ -113,6 +85,37 @@ data() {
 },
 methods: { 
   ...mapActions(memberStore, ["getUserInfo"]),
+  async getMyFestival(){
+    await this.getUserInfo(); // 토큰 확인 및 재발급진행
+    await favorGet(({ data }) => {
+    if (data.status == "ok") {
+      // console.log("데이터 테스트");
+      let lst = data.favorlist;
+      this.festivals = data.favorlist;
+      this.backupFestivals = data.favorlist;
+      this.events=[]
+        // console.log(this.festivals);  
+        for (var i = 0; i < lst.length; i++) {
+          var obj = lst[i];  
+          let tmp = new Date(obj.endDate);
+          this.events.push({
+            id: obj.festivalId,
+            title: obj.festivalName, 
+            date: new Date(obj.startDate),
+            end: tmp.setDate(tmp.getDate()+1),  
+            backgroundColor: this.randomColor(),
+            borderColor: "#FFFFFF",
+            allDay: true,
+            festival: obj
+          });
+      }
+      this.calendarOptions.events = this.events; 
+      } else {
+        alert("Error");
+        this.$router.go();
+      } 
+    });
+  },
   colorCheck(path){
     if(this.$router.currentRoute.path===path){
         return "primary"
@@ -139,14 +142,6 @@ methods: {
   },
   handleDateClick: function (arg) {
     alert('date click! ' + arg.dateStr)
-  },
-  changeDate(date) {
-    this.date = date;
-    console.log(date);
-    getMonthFestival(date, ({ data }) => {
-    this.festivals = data.festivalList;
-    console.log(this.festivals);
-    });
   },
   defaultImage() {
     return getDefaultImage();
