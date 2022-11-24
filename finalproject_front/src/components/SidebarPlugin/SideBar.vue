@@ -7,7 +7,7 @@
                 
             </navbar-toggle-button>
             <router-link class="navbar-brand" to="/">
-                <img :src="logo" class="navbar-brand-img" alt="...">
+              <div class="logo-wrap" style="background-image: url(img/brand/green.png);"></div>
             </router-link>
 
             <slot name="mobile-right">
@@ -86,9 +86,9 @@
                 <!--Navigation--> 
 
                 <div class="nav-item">
-                        <i class="ni ni-circle-08"></i> 이지현: ljh@ssafy.com
+                        <i class="ni ni-circle-08"></i> 이지현: jiannalee3@gmail.com 
                         <br/>
-                        <i class="ni ni-circle-08"></i> 서준배: sjb@ssafy.com 
+                        <i class="ni ni-circle-08"></i> 서준배: sjb378@me.com 
                 </div>
                 <br/>
                 
@@ -146,3 +146,12 @@
     }
   };
 </script>
+
+<style scoped>
+.logo-wrap{
+  height:150px;
+  background-size: cover;
+  min-width: 100%;
+  min-height: 100%;
+}
+</style>

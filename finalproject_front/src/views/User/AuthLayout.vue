@@ -9,7 +9,7 @@
     >
       <div slot="brand" class="navbar-wrapper">
         <b-navbar-brand to="/">
-          <img src="img/brand/white.png">
+          <div class="logo-wrap" style="background-image: url(img/brand/green.png);"></div>
         </b-navbar-brand>
       </div>
 
@@ -165,6 +165,7 @@
   };
 </script>
 <style lang="scss">
+
   $scaleSize: 0.8;
   @keyframes zoomIn8 {
     from {
@@ -193,4 +194,12 @@
   .main-content .zoomOut {
     animation-name: zoomOut8;
   }
+
+.logo-wrap{
+  height:150px;
+  width:200px;
+  background-size: cover;
+  min-width: 100%;
+  min-height: 100%;
+}
 </style>
