@@ -7,11 +7,7 @@
       <!--Toggler-->
       <navbar-toggle-button @click.native="showSidebar"> </navbar-toggle-button>
       <router-link class="navbar-brand" to="/">
-        <img
-          src="@/assets/logo.png"
-          style="width: 100px; height: 100px"
-          class="navbar-brand-img"
-        />
+        <div class="logo-wrap" style="background-image: url(img/brand/green.png);"></div>
       </router-link>
 
       <slot name="mobile-right">
