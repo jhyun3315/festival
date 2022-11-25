@@ -7,7 +7,7 @@
 
 ## 시연영상 보러가기
 
-- [시연영상](https://youtu.be/QYNwbZHmh8g?t=0s)
+- [시연영상](https://www.youtube.com/watch?v=dHSFuy7bUDU)
 
 ## wiki보러 가기
 
