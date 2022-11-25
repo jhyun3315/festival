@@ -5,6 +5,10 @@
 
 ![fit로고](https://user-images.githubusercontent.com/24247768/203729877-177a09a0-11af-4406-9424-875a21401908.png)
 
+## 시연영상 보러가기
+
+- [시연영상](https://youtu.be/QYNwbZHmh8g?t=0s)
+
 ## wiki보러 가기
 
 - [wiki](https://lab.ssafy.com/sjb378/finalfestival/-/wikis/home)
