@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ssafy.festival.mapper.FestivalMapper">
+	
+	<resultMap type="festivalDto" id="festivalmap">
+		<result column="festival_id" property="festivalId" />
+		<result column="festival_name" property="festivalName" />
+		<result column="festival_content" property="festivalContent" />
+		<result column="start_date" property="startDate" />
+		<result column="end_date" property="endDate" />
+		<result column="phone_number" property="phoneNumber" />
+		<result column="origin_image" property="originImage" />
+		<result column="thumb_image" property="thumbnailImage" />
+		<result column="org_name" property="orgName" />
+	</resultMap>
+	
+	
+	
+	<insert id="writeFestival" parameterType="festivalDto">
+		insert into festival (festival_id,festival_name, festival_content, start_date, end_date, phone_number,origin_image,thumb_image,homepage,address,lat,lng,org_name)
+		values (#{festivalId},#{festivalName},#{festivalContent},#{startDate},#{endDate},#{phoneNumber},#{originImage},#{thumbnailImage},#{homepage},#{address},#{lat},#{lng},#{orgName})
+	</insert>
+	
+	<select id="listFestival" parameterType="map" resultMap="festivalmap">
+		select festival_id,festival_name, festival_content, date_format(start_date,'%Y-%m-%d') start_date, date_format(end_date,'%Y-%m-%d') end_date, phone_number,origin_image,thumb_image,homepage,address,lat,lng,org_name
+		from festival
+		<trim prefix="where" prefixOverrides="AND">
+			<!-- 지역관련 -->
+			<if test="area != null and area != ''">
+				address like concat(#{area}, '%')
+			</if>
+			<!-- 현재 날짜 기준 진행중 -->
+			<if test="now != null and now != ''">
+				AND date(now()) between date(start_date) and date(end_date)
+			</if>
+			<!-- 오늘이후 모든 축제 -->
+			<if test="every != null and every != ''">
+				AND date(start_date) >= now()
+			</if>
+			<if test ="month!=null and month!=''"> 
+			    AND DATE_FORMAT(#{month}, '%Y-%m') BETWEEN DATE_FORMAT(start_date, '%Y-%m') AND DATE_FORMAT(end_date, '%Y-%m')
+			</if>
+		</trim>
+		<choose>
+			<when test="now != null and now != ''">
+				order by start_date desc
+			</when>
+			<otherwise>
+				order by start_date asc
+			</otherwise>
+		</choose>
+
+		<!-- 페이징 -->
+		<if test="start != null">
+			limit #{start}, #{spp}
+		</if>
+	</select>
+	
+	<select id="totalFestivalCount" resultType="int">
+		select count(festival_id)
+		from festival
+	</select>
+	
+	<select id="getFestival" parameterType="string" resultMap="festivalmap">
+		select festival_id,festival_name, festival_content, date_format(start_date,'%Y-%m-%d') start_date, date_format(end_date,'%Y-%m-%d') end_date, phone_number,origin_image,thumb_image,homepage,address,lat,lng,org_name
+		from festival
+		where festival_id=#{festivalId}
+	</select>
+	
+	<delete id="deleteFestival" parameterType="int">
+		delete from festival
+		where festival_id = #{festivalId}
+	</delete>	
+</mapper>

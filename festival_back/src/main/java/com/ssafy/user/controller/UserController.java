@@ -65,6 +65,7 @@ public class UserController {
 	//마이 페이지
 	@GetMapping()
 	public ResponseEntity<?> mypage(HttpServletRequest request) throws Exception {
+		System.out.println("마이페이지야");
 		Map<String, Object> map = new HashMap<String, Object>();
 		if (jwtService.checkToken(request.getHeader("access-token"))) {			
 			try {			
@@ -75,7 +76,7 @@ public class UserController {
 					map.put("user", userDto);
 					return new ResponseEntity<Map<String, Object>>(map,HttpStatus.OK);
 				}else {
-					System.out.println("실패");
+					System.out.println("내 유저가 아님");
 					map.put("status", "fail");
 					return new ResponseEntity<Map<String, Object>>(map,HttpStatus.OK);	
 				}
@@ -85,6 +86,7 @@ public class UserController {
 				return new ResponseEntity<Map<String, Object>>(map,HttpStatus.OK);	
 			}
 		}else {
+			System.out.println("인증만료");
 			map.put("status", "fail");
 			return new ResponseEntity<Map<String, Object>>(map,HttpStatus.UNAUTHORIZED);	
 		}
@@ -190,19 +192,21 @@ public class UserController {
 		}
 	}
 	
-	@GetMapping("/logout")
-	public ResponseEntity<?> logout() {
+	@GetMapping("/logout/{userId}")
+	public ResponseEntity<?> logout(@PathVariable("userId") String userId, HttpServletRequest request) {
 		Map<String, Object> res = new HashMap<>();
 		HttpStatus status = HttpStatus.ACCEPTED;
 		try {
+//			String token = request.getHeader("refresh-token");
+//			System.out.println(token);
 			System.out.println("가자");
-			String userId = jwtService.getUserId();
+//			String userId = jwtService.getUserId();
 			System.out.println("로그인 확인"+userId);
 			userService.deleteRefreshToken(userId);
-			res.put("states", "ok");
+			res.put("status", "ok");
 			status = HttpStatus.ACCEPTED;
 		} catch (Exception e) {
-			res.put("states", "fail");
+			res.put("status", "fail");
 			status = HttpStatus.INTERNAL_SERVER_ERROR;
 		}
 		return new ResponseEntity<Map<String, Object>>(res, status);

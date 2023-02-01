@@ -18,6 +18,8 @@ USE `ssafyfestival` ;
 -- -----------------------------------------------------
 -- Table `ssafyfestival`.`user`
 -- -----------------------------------------------------
+DROP TABLE IF EXISTS `ssafyfestival`.`user` ;
+
 CREATE TABLE IF NOT EXISTS `ssafyfestival`.`user` (
   `id` VARCHAR(100) NOT NULL,
   `pw` VARCHAR(100) NULL,
@@ -30,47 +32,92 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
+-- Table `ssafyfestival`.`festival`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `ssafyfestival`.`festival` ;
+
+CREATE TABLE IF NOT EXISTS `ssafyfestival`.`festival` (
+  `festival_id` VARCHAR(100) NOT NULL,
+  `festival_name` VARCHAR(1000) NULL,
+  `festival_content` VARCHAR(2000) NULL,
+  `start_date` TIMESTAMP NULL,
+  `end_date` TIMESTAMP NULL,
+  `phone_number` VARCHAR(1000) NULL,
+  `homepage` VARCHAR(1000) NULL,
+  `lat` VARCHAR(45) NULL,
+  `lng` VARCHAR(45) NULL,
+  `address` VARCHAR(1000) NULL,
+  `origin_image` VARCHAR(1000) NULL,
+  `thumb_image` VARCHAR(1000) NULL,
+  `org_name` VARCHAR(1000) NULL,
+  PRIMARY KEY (`festival_id`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
 -- Table `ssafyfestival`.`favor`
 -- -----------------------------------------------------
+DROP TABLE IF EXISTS `ssafyfestival`.`favor` ;
+
 CREATE TABLE IF NOT EXISTS `ssafyfestival`.`favor` (
   `user_id` VARCHAR(100) NOT NULL,
   `festival_id` VARCHAR(100) NOT NULL,
   PRIMARY KEY (`user_id`, `festival_id`),
+  INDEX `favor_festival_id_idx` (`festival_id` ASC) VISIBLE,
   CONSTRAINT `favor_user_id`
     FOREIGN KEY (`user_id`)
     REFERENCES `ssafyfestival`.`user` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
+  CONSTRAINT `favor_festival_id`
+    FOREIGN KEY (`festival_id`)
+    REFERENCES `ssafyfestival`.`festival` (`festival_id`)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
 -- Table `ssafyfestival`.`board`
 -- -----------------------------------------------------
+DROP TABLE IF EXISTS `ssafyfestival`.`board` ;
+
 CREATE TABLE IF NOT EXISTS `ssafyfestival`.`board` (
   `board_id` INT NOT NULL AUTO_INCREMENT,
   `title` VARCHAR(100) NULL,
   `content` VARCHAR(2000) NULL,
   `regist_date` TIMESTAMP NULL,
-  `user_id` VARCHAR(100) NULL,
+  `user_id` VARCHAR(100) NOT NULL,
   `festival_id` VARCHAR(100) NOT NULL,
+  `cate` VARCHAR(45) NULL,
+  `file_ori_name` VARCHAR(1000) NULL,
+  `file_path` VARCHAR(4000) NULL,
+  `file_save_name` VARCHAR(1000) NULL,
   PRIMARY KEY (`board_id`),
   INDEX `user_id_idx` (`user_id` ASC) VISIBLE,
+  INDEX `board_festival_id_idx` (`festival_id` ASC) VISIBLE,
   CONSTRAINT `board_user_id`
     FOREIGN KEY (`user_id`)
     REFERENCES `ssafyfestival`.`user` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
+  CONSTRAINT `board_festival_id`
+    FOREIGN KEY (`festival_id`)
+    REFERENCES `ssafyfestival`.`festival` (`festival_id`)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
 -- Table `ssafyfestival`.`comment`
 -- -----------------------------------------------------
+DROP TABLE IF EXISTS `ssafyfestival`.`comment` ;
+
 CREATE TABLE IF NOT EXISTS `ssafyfestival`.`comment` (
   `comment_id` INT NOT NULL AUTO_INCREMENT,
-  `board_id` INT NULL,
-  `user_id` VARCHAR(100) NULL,
+  `board_id` INT NOT NULL,
+  `user_id` VARCHAR(100) NOT NULL,
   `content` VARCHAR(1000) NULL,
   `regist_date` TIMESTAMP NULL,
   INDEX `user_id_idx` (`user_id` ASC) VISIBLE,
@@ -79,13 +126,13 @@ CREATE TABLE IF NOT EXISTS `ssafyfestival`.`comment` (
   CONSTRAINT `com_user_id`
     FOREIGN KEY (`user_id`)
     REFERENCES `ssafyfestival`.`user` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
   CONSTRAINT `com_board_id`
     FOREIGN KEY (`board_id`)
     REFERENCES `ssafyfestival`.`board` (`board_id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE)
 ENGINE = InnoDB;
 
 

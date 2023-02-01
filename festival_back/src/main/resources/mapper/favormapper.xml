@@ -7,6 +7,15 @@
 	<resultMap type="favorDto" id="favormap">
 		<result column="user_id" property="userId" />
 		<result column="festival_id" property="festivalId" />
+		
+		<result column="festival_name" property="festivalName" />
+		<result column="festival_content" property="festivalContent" />
+		<result column="start_date" property="startDate" />
+		<result column="end_date" property="endDate" />
+		<result column="phone_number" property="phoneNumber" />
+		<result column="origin_image" property="originImage" />
+		<result column="thumb_image" property="thumbnailImage" />
+		<result column="org_name" property="orgName" />
 	</resultMap>
 	
 	<delete id="favorDelete" parameterType="map">
@@ -22,9 +31,9 @@
 	</insert>
 	
 	<select id="favorList" parameterType="string" resultMap="favormap">
-		select user_id, festival_id
-		from favor
-		where user_id = #{userId}
+		select s.user_id, s.festival_id, f.festival_name, f.festival_content, f.start_date, f.end_date, f.phone_number, f.homepage, f.lat, f.lng, f.address, f.origin_image, f.thumb_image, f.org_name
+		from favor s join festival f on s.festival_id=f.festival_id
+		where user_id= #{userId}
 	</select>
 	
 </mapper>
